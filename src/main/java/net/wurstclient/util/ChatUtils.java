@@ -28,13 +28,13 @@ public enum ChatUtils
 	private static final String GRAY_FORMAT = "\u00a77";
 	
 	public static final String WURST_PREFIX =
-		GRAY_FORMAT + "WurstLite\u00a7r \u00a78\u00bb\u00a7r ";
+		GRAY_FORMAT + "WurstLite\u00a7r \u00a7u\u00bb\u00a7r ";
 	private static final String WARNING_PREFIX =
-		GRAY_FORMAT + "WurstLite\u00a7r \u00a76\u00bb\u00a7r ";
+		GRAY_FORMAT + "WurstLite\u00a7r \u00a7u\u00bb\u00a7r ";
 	private static final String ERROR_PREFIX =
-		GRAY_FORMAT + "WurstLite\u00a7r \u00a75\u00bb\u00a7r ";
+		GRAY_FORMAT + "WurstLite\u00a7r \u00a7u\u00bb\u00a7r ";
 	private static final String SYNTAX_ERROR_PREFIX =
-		GRAY_FORMAT + "WurstLite\u00a7r \u00a75\u00bb\u00a7r ";
+		GRAY_FORMAT + "WurstLite\u00a7r \u00a7u\u00bb\u00a7r ";
 	
 	private static boolean enabled = true;
 	

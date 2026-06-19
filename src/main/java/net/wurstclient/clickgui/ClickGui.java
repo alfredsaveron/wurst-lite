@@ -163,7 +163,6 @@ public final class ClickGui
 		Window uiSettings = new Window("Settings");
 		uiSettings.add(new FeatureButton(WURST.getOtfs().wurstLogoOtf));
 		uiSettings.add(new FeatureButton(WURST.getOtfs().hackListOtf));
-		uiSettings.add(new FeatureButton(WURST.getOtfs().keybindManagerOtf));
 		uiSettings.add(new FeatureButton(WURST.getHax().viewmodelHack));
 		uiSettings.add(new FeatureButton(WURST.getOtfs().resetGuiOtf));
 		uiSettings.add(new FeatureButton(WURST.getOtfs().resetKeybindsOtf));
@@ -194,7 +193,18 @@ public final class ClickGui
 			window.pack();
 			
 			if(window.getTitle().equals("Search"))
+			{
+				window.setX((scaledWidth - window.getWidth()) / 2);
+				window.setY(scaledHeight - window.getHeight() - 10);
 				continue;
+			}
+			
+			if(window.getTitle().equals("Settings"))
+			{
+				window.setX(scaledWidth - window.getWidth() - 5);
+				window.setY(5);
+				continue;
+			}
 			
 			if(x + window.getWidth() + 5 > scaledWidth)
 			{
@@ -301,6 +311,13 @@ public final class ClickGui
 			{
 				window.setX((scaledWidth - window.getWidth()) / 2);
 				window.setY(scaledHeight - window.getHeight() - 10);
+				continue;
+			}
+			
+			if(window.getTitle().equals("Settings"))
+			{
+				window.setX(scaledWidth - window.getWidth() - 5);
+				window.setY(5);
 				continue;
 			}
 			
