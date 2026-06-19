@@ -41,6 +41,13 @@ public final class FeatureButton extends Component
 	@Override
 	public void handleMouseClick(double mouseX, double mouseY, int mouseButton)
 	{
+		if(mouseButton == 1)
+		{
+			if(hasSettings)
+				toggleSettingsWindow();
+			return;
+		}
+		
 		if(mouseButton != 0)
 			return;
 		

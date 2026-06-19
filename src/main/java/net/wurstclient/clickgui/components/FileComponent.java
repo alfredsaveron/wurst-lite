@@ -61,7 +61,7 @@ public final class FileComponent extends Component
 		if(hText)
 			GUI.setTooltip(setting.getWrappedDescription(200));
 		else if(hBox)
-			GUI.setTooltip("\u00a7e[left-click]\u00a7r to select file");
+			GUI.setTooltip("\u00a7e[LEFT-CLICK]\u00a7r to select file");
 		
 		// background
 		context.fill(x1, y1, x3, y2, getFillColor(false));

@@ -115,8 +115,8 @@ public final class BlockComponent extends Component
 		int blockNumber = Block.getId(state);
 		tooltip += "\n\u00a76Block #:\u00a7r " + blockNumber;
 		
-		tooltip += "\n\n\u00a7e[left-click]\u00a7r to edit";
-		tooltip += "\n\u00a7e[right-click]\u00a7r to reset";
+		tooltip += "\n\n\u00a7e[LEFT-CLICK]\u00a7r to edit";
+		tooltip += "\n\u00a7e[RIGHT-CLICK]\u00a7r to reset";
 		
 		return tooltip;
 	}
