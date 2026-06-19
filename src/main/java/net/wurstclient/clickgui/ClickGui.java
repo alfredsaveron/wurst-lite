@@ -277,6 +277,8 @@ public final class ClickGui
 	
 	private int getWindowPriority(Window w)
 	{
+		if(w.getTitle().equals("Search"))
+			return 1;
 		for(Category c : Category.values())
 		{
 			if(c != Category.FUN && c.getName().equals(w.getTitle()))
@@ -284,8 +286,6 @@ public final class ClickGui
 		}
 		if(w.getTitle().equals("Settings"))
 			return 50;
-		if(w.getTitle().equals("Search"))
-			return 40;
 		return 10;
 	}
 	
