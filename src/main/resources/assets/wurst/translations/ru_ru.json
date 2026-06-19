@@ -73,7 +73,6 @@
   "description.wurst.hack.fish": "Отключает притяжение под водой, можно плавать как рыба.",
   "description.wurst.hack.flight": "Позволяет вам летать.\n\n§c§lВНИМАНИЕ:§r Вы будете получать урон от падения если не включите NoFall.",
   "description.wurst.hack.follow": "Бот, который следует за ближайшей сущностью.\nОчень назойливо.\n\nИспользуйте .follow, чтобы следовать за кем-то конкретным.",
-  "description.wurst.hack.forceop": "Перебирает пароли AuthMe.\nМожно попробовать подобрать пароль админа :) .",
   "description.wurst.hack.freecam": "Позволяет перемещать камеру не двигая персонажа.",
   "description.wurst.hack.fullbright": "Позволяет видеть в темноте.",
   "description.wurst.hack.glide": "Замедляет падение.\n\n§c§lВНИМАНИЕ:§r Вы всё равно будете получать урон от падения, если не включите NoFall.",

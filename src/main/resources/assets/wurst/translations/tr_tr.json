@@ -120,7 +120,6 @@
   "description.wurst.setting.follow.filter_invisible": "Görünmez varlıkları takip etmez.",
   "description.wurst.setting.follow.filter_armor_stands": "Zırh standlarını takip etmez.",
   "description.wurst.setting.follow.filter_minecarts": "Minecartları takip etmez.",
-  "description.wurst.hack.forceop": "AuthMe şifrelerini kırar.\nOP almak için kullanılabilir.",
   "description.wurst.hack.freecam": "Karakterinizi hareket ettirmeden kamerayı hareket ettirmenizi sağlar.",
   "description.wurst.hack.fullbright": "Karanlıkta görmenizi sağlar.",
   "description.wurst.hack.glide": "Düşerken yavaşça süzülmenizi sağlar.\n\n§c§lUYARI:§r NoFall kullanmazsanız düşme hasarı alırsınız.",

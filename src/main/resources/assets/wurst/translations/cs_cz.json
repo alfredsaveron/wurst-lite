@@ -73,7 +73,6 @@
   "description.wurst.hack.fish": "Deaktivuje podvodní gravitaci, takže můžete plavat jako ryba.",
   "description.wurst.hack.flight": "Umožňuje létat.\n\n§c§lUPOZORNĚNÍ:§r Budete poškozeni pádem, pokud nepoužijete NoFall.",
   "description.wurst.hack.follow": "Bot, který následuje nejbližší entitu.\nVelice otravné.\n\nPoužijte .follow pro sledování konkrétní entity.",
-  "description.wurst.hack.forceop": "Prolomuje AuthMe hesla.\nLze použít k získání OP.",
   "description.wurst.hack.freecam": "Umožňuje pohybovat kamerou, aniž byste pohnuli postavou.",
   "description.wurst.hack.fullbright": "Umožňuje vidět ve tmě.",
   "description.wurst.hack.glide": "Při pádu padáte dolů pomalu.\n\n§c§lUPOZORNĚNÍ:§r Pokud nepoužíváte NoFall, zraníte se pádem.",

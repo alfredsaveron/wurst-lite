@@ -94,7 +94,6 @@
   "description.wurst.setting.follow.filter_invisible": "見えないエンティティをフォローしない。",
   "description.wurst.setting.follow.filter_armor_stands": "防具立てをフォローしない。",
   "description.wurst.setting.follow.filter_minecarts": "トロッコをフォローしない。",
-  "description.wurst.hack.forceop": "AuthMeと呼ばれるPluginにおいて、パスワードの総当たりを行うことができる。\nOP権限を取得するために使用できる。",
   "description.wurst.hack.freecam": "キャラクターを動かすことなくカメラを動かすことができる。",
   "description.wurst.hack.fullbright": "暗い場所での視認性を高める。",
   "description.wurst.hack.glide": "落下中、ゆっくり滑空する。\n\n§c§l注意: §rNoFallと併用しない場合、落下ダメージが発生する。",

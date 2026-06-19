@@ -126,7 +126,6 @@
   "description.wurst.setting.follow.filter_invisible": "Nie będzie podążać za niewidzialnymi bytami.",
   "description.wurst.setting.follow.filter_armor_stands": "Nie będzie podążać za stojakami na zbroję.",
   "description.wurst.setting.follow.filter_minecarts": "Nie będzie podążać za wagonikami.",
-  "description.wurst.hack.forceop": "Łamie hasła AuthMe.\nMoże być użyty do uzyskania OP.",
   "description.wurst.hack.freecam": "Pozwala poruszać kamerą bez poruszania postacią.",
   "description.wurst.hack.fullbright": "Pozwala widzieć w ciemności.",
   "description.wurst.hack.glide": "Sprawia, że powoli szybujesz, gdy spadasz w dół.\n\n§c§lOSTRZEŻENIE:§r Odniesiesz obrażenia od upadku, jeśli nie użyjesz NoFall.",

@@ -73,7 +73,6 @@
   "description.wurst.hack.fish": "關閉水底的重力，所以你可以像魚一樣游泳。",
   "description.wurst.hack.flight": "允許你飛天。\n\n§c§l警告：§r如果你不使用NoFall，會導致受到掉落傷害。",
   "description.wurst.hack.follow": "跟機器人一樣跟隨最近的實體。\n非常惹惱人。\n\n使用.follow指令跟隨特定的實體。",
-  "description.wurst.hack.forceop": "破解AuthMe登入挿件密碼。\n一般用於獲得OP。（PS：只是撞庫，跑密碼的軟件）",
   "description.wurst.hack.freecam": "允許在不移動你角色的情况下自由移動角色。（靈魂出竅）",
   "description.wurst.hack.fullbright": "可以在黑暗中看的一清二楚。（無限夜視）",
   "description.wurst.hack.glide": "使你在下落時緩慢下降。\n\n§c§l警告：§r如果你不使用NoFall則可能會摔落致死。",

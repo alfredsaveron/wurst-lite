@@ -126,7 +126,6 @@
   "description.wurst.setting.follow.filter_invisible": "Won't follow invisible entities.",
   "description.wurst.setting.follow.filter_armor_stands": "Won't follow armor stands.",
   "description.wurst.setting.follow.filter_minecarts": "Won't follow minecarts.",
-  "description.wurst.hack.forceop": "Cracks AuthMe passwords.\nCan be used to get OP.",
   "description.wurst.hack.freecam": "Allows you to move the camera without moving your character.",
   "description.wurst.hack.fullbright": "Allows you to see in the dark.",
   "description.wurst.hack.glide": "Makes you glide down slowly when falling.\n\n§c§lWARNING:§r You will take fall damage if you don't use NoFall.",

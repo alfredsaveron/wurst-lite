@@ -70,7 +70,6 @@
   "description.wurst.hack.fish": "Désactive la gravité sous-marine pour que vous puissiez nager comme un poisson.",
   "description.wurst.hack.flight": "Permet de voler.\n\n§c§lATTENTION:§r Vous subirez des dégâts de chute si vous n'utilisez pas le NoFall.",
   "description.wurst.hack.follow": "Un bot qui suit l'entité la plus proche.\nTrès ennuyant.\n\nUtilisez .follow pour suivre une entité spécifique.",
-  "description.wurst.hack.forceop": "Cracke les mots de passe AuthMe.\nPeut être utilisé pour devenir OP.",
   "description.wurst.hack.freecam": "Permet de déplacer la caméra sans déplacer votre personnage.",
   "description.wurst.hack.fullbright": "Permet de voir dans le noir.",
   "description.wurst.hack.glide": "Vous fait glisser lentement en tombant.\n\n§c§lATTENTION:§r Vous subirez des dégâts de chute si vous n'utilisez pas le NoFall.",
