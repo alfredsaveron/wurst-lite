@@ -14,17 +14,15 @@ import net.wurstclient.hack.DontSaveState;
 import net.wurstclient.hack.Hack;
 import net.wurstclient.settings.SliderSetting;
 import net.wurstclient.settings.SliderSetting.ValueDisplay;
+import net.wurstclient.settings.TextFieldSetting;
 
 @DontSaveState
 @DontBlock
 @SearchTags({"click gui", "WindowGUI", "window gui", "HackMenu", "hack menu"})
 public final class ClickGuiHack extends Hack
 {
-	private final SliderSetting opacity = new SliderSetting("Opacity", 0.5,
-		0.15, 0.85, 0.01, ValueDisplay.PERCENTAGE);
-	
 	private final SliderSetting ttOpacity = new SliderSetting("Tooltip opacity",
-		0.75, 0.15, 1, 0.01, ValueDisplay.PERCENTAGE);
+		"Opacity of tooltips", 0.75, 0.15, 1, 0.01, ValueDisplay.PERCENTAGE);
 	
 	private final SliderSetting maxHeight = new SliderSetting("Max height",
 		"Maximum window height\n" + "0 = no limit", 400, 0, 1000, 50,
@@ -35,13 +33,23 @@ public final class ClickGuiHack extends Hack
 			"Maximum height for settings windows\n" + "0 = no limit", 200, 0,
 			1000, 50, ValueDisplay.INTEGER);
 	
+	private final TextFieldSetting guiKeybind =
+		new TextFieldSetting("GUI Keybind",
+			"Key to open the ClickGUI (e.g. right.control, right.shift, g, u).",
+			"right.shift");
+	
 	public ClickGuiHack()
 	{
 		super("ClickGUI");
-		addSetting(opacity);
 		addSetting(ttOpacity);
 		addSetting(maxHeight);
 		addSetting(maxSettingsHeight);
+		addSetting(guiKeybind);
+	}
+	
+	public String getGuiKeybind()
+	{
+		return guiKeybind.getValue();
 	}
 	
 	@Override
@@ -63,7 +71,7 @@ public final class ClickGuiHack extends Hack
 	
 	public float getOpacity()
 	{
-		return opacity.getValueF();
+		return 0.5F;
 	}
 	
 	public float getTooltipOpacity()

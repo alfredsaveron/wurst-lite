@@ -178,6 +178,7 @@ public final class HackList implements UpdateListener
 	public final TriggerBotHack triggerBotHack = new TriggerBotHack();
 	public final TrueSightHack trueSightHack = new TrueSightHack();
 	public final TunnellerHack tunnellerHack = new TunnellerHack();
+	public final ViewmodelHack viewmodelHack = new ViewmodelHack();
 	public final VeinMinerHack veinMinerHack = new VeinMinerHack();
 	public final XRayHack xRayHack = new XRayHack();
 	

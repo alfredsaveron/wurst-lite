@@ -39,7 +39,8 @@ public final class ClickGuiScreen extends Screen
 		gui.render(context, mouseX, mouseY, partialTicks);
 		
 		net.minecraft.client.gui.Font tr = this.minecraft.font;
-		context.drawString(tr, "Based on the original Wurst Client", 5,
+		context.drawString(tr,
+			"Based on the original Wurst Client by Alexander01998", 5,
 			this.height - tr.lineHeight - 5, 0x80FFFFFF, false);
 		
 		if(net.wurstclient.WurstClient.INSTANCE.getOtfs().wurstLogoOtf

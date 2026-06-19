@@ -295,8 +295,9 @@ public final class XRayHack extends Hack implements UpdateListener,
 							int sz = pSectionZ + dz;
 							
 							if(sy >= minSectionY && sy <= maxSectionY)
-								MC.levelRenderer.setSectionDirty(sx, sy, sz,
-									false);
+								MC.levelRenderer.setBlocksDirty(sx << 4, sy << 4,
+									sz << 4, (sx << 4) + 15, (sy << 4) + 15,
+									(sz << 4) + 15);
 						}
 					
 				stage++;

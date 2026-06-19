@@ -33,6 +33,7 @@ import net.wurstclient.Category;
 import net.wurstclient.Feature;
 import net.wurstclient.WurstClient;
 import net.wurstclient.clickgui.components.FeatureButton;
+import net.wurstclient.clickgui.components.ResetGuiButton;
 import net.wurstclient.hacks.ClickGuiHack;
 import net.wurstclient.settings.Setting;
 import net.wurstclient.util.RenderUtils;
@@ -152,6 +153,7 @@ public final class ClickGui
 		uiSettings.add(new FeatureButton(WURST.getOtfs().wurstLogoOtf));
 		uiSettings.add(new FeatureButton(WURST.getOtfs().hackListOtf));
 		uiSettings.add(new FeatureButton(WURST.getOtfs().keybindManagerOtf));
+		uiSettings.add(new ResetGuiButton());
 		ClickGuiHack clickGuiHack = WURST.getHax().clickGuiHack;
 		Stream<Setting> settings = clickGuiHack.getSettings().values().stream();
 		settings.map(Setting::getComponent).forEach(c -> uiSettings.add(c));
@@ -236,11 +238,12 @@ public final class ClickGui
 		saveWindows();
 	}
 	
-	public void onOpen(int scaledWidth)
+	public void resetGui()
 	{
 		int x = 5;
 		int y = 5;
 		int maxYInRow = 0;
+		int scaledWidth = MC.getWindow().getGuiScaledWidth();
 		for(Window window : windows)
 		{
 			window.setMinimized(false);
@@ -259,6 +262,7 @@ public final class ClickGui
 			if(window.getHeight() > maxYInRow)
 				maxYInRow = window.getHeight();
 		}
+		saveWindows();
 	}
 	
 	private void saveWindows()
@@ -479,7 +483,7 @@ public final class ClickGui
 	{
 		int x2 = window.getX() + window.getWidth();
 		int y1 = window.getY();
-		if(window.isMinimizable() && mouseButton == 0 && mouseX >= x2 - 14
+		if(window.isMinimizable() && mouseButton == 0 && mouseX >= x2 - 12
 			&& mouseX <= x2 - 3 && mouseY >= y1 + 2 && mouseY <= y1 + 11)
 		{
 			window.setMinimized(!window.isMinimized());
@@ -810,7 +814,7 @@ public final class ClickGui
 		
 		if(window.isMinimizable())
 		{
-			int bx1 = x2 - 14;
+			int bx1 = x2 - 12;
 			int by1 = y1 + 2;
 			int bx2 = x2 - 3;
 			int by2 = y1 + 11;
@@ -820,7 +824,7 @@ public final class ClickGui
 				hovering ? 0x50FFFFFF : 0x20FFFFFF);
 			String buttonText = window.isMinimized() ? "+" : "-";
 			context.drawString(tr, buttonText,
-				bx1 + (11 - tr.width(buttonText)) / 2,
+				bx1 + (9 - tr.width(buttonText)) / 2,
 				by1 + (9 - tr.lineHeight) / 2 + 1, 0xFFFFFFFF, false);
 		}
 	}

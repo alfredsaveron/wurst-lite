@@ -25,6 +25,15 @@ import net.wurstclient.WurstClient;
 @Mixin(ItemInHandRenderer.class)
 public abstract class HeldItemRendererMixin
 {
+	@Inject(at = @At("HEAD"), method = "renderArmWithItem")
+	private void onRenderArmWithItem(AbstractClientPlayer player,
+		float tickDelta, float pitch, InteractionHand hand, float swingProgress,
+		ItemStack item, float equipProgress, PoseStack matrices,
+		MultiBufferSource vertexConsumers, int light, CallbackInfo ci)
+	{
+		WurstClient.INSTANCE.getHax().viewmodelHack.apply(matrices, hand);
+	}
+	
 	@Inject(at = {@At(value = "INVOKE",
 		target = "Lnet/minecraft/client/renderer/ItemInHandRenderer;applyItemArmTransform(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/entity/HumanoidArm;F)V",
 		ordinal = 4)}, method = "renderArmWithItem")
