@@ -20,6 +20,9 @@ public final class ResetGuiButton extends Component
 	private static final ClickGui GUI = WURST.getGui();
 	private static final Font TR = MC.font;
 	
+	private final String buttonText = "Reset";
+	private final int buttonWidth = TR.width(buttonText) + 4;
+	
 	public ResetGuiButton()
 	{
 		setWidth(getDefaultWidth());
@@ -29,8 +32,13 @@ public final class ResetGuiButton extends Component
 	@Override
 	public void handleMouseClick(double mouseX, double mouseY, int mouseButton)
 	{
-		if(mouseButton == GLFW.GLFW_MOUSE_BUTTON_LEFT)
-			GUI.resetGui();
+		if(mouseButton != GLFW.GLFW_MOUSE_BUTTON_LEFT)
+			return;
+		
+		if(mouseX < getX() + getWidth() - buttonWidth - 4)
+			return;
+		
+		GUI.resetGui();
 	}
 	
 	@Override
@@ -39,27 +47,34 @@ public final class ResetGuiButton extends Component
 	{
 		int x1 = getX();
 		int x2 = x1 + getWidth();
+		int x3 = x2 - buttonWidth - 4;
 		int y1 = getY();
 		int y2 = y1 + getHeight();
 		
 		boolean hovering = isHovering(mouseX, mouseY);
+		boolean hBox = hovering && mouseX >= x3;
 		
-		float opacity = GUI.getOpacity() * (hovering ? 1.5F : 1);
-		int color = RenderUtils.toIntColor(GUI.getBgColor(), opacity);
-		context.fill(x1, y1, x2, y2, color);
+		context.fill(x1, y1, x3, y2, getFillColor(false));
+		context.fill(x3, y1, x2, y2, getFillColor(hBox));
+		
 		int outlineColor = RenderUtils.toIntColor(GUI.getAcColor(), 0.5F);
-		RenderUtils.drawBorder2D(context, x1, y1, x2, y2, outlineColor);
+		RenderUtils.drawBorder2D(context, x3, y1, x2, y2, outlineColor);
 		
 		int txtColor = GUI.getTxtColor();
-		String text = "Reset GUI Layout";
-		context.drawString(TR, text, x1 + (getWidth() - TR.width(text)) / 2,
-			y1 + 2, txtColor, false);
+		context.drawString(TR, "Reset GUI Layout", x1, y1 + 2, txtColor, false);
+		context.drawString(TR, buttonText, x3 + 2, y1 + 2, txtColor, false);
+	}
+	
+	private int getFillColor(boolean hovering)
+	{
+		float opacity = GUI.getOpacity() * (hovering ? 1.5F : 1);
+		return RenderUtils.toIntColor(GUI.getBgColor(), opacity);
 	}
 	
 	@Override
 	public int getDefaultWidth()
 	{
-		return 100;
+		return TR.width("Reset GUI Layout") + buttonWidth + 8;
 	}
 	
 	@Override

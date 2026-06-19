@@ -40,7 +40,7 @@ public final class ClickGuiScreen extends Screen
 		
 		net.minecraft.client.gui.Font tr = this.minecraft.font;
 		context.drawString(tr,
-			"Based on the original Wurst Client by Alexander01998", 5,
+			"Wurst Client by Alexander01998 - Wurst Lite by alfredsaveron", 5,
 			this.height - tr.lineHeight - 5, 0x80FFFFFF, false);
 		
 		if(net.wurstclient.WurstClient.INSTANCE.getOtfs().wurstLogoOtf
@@ -53,6 +53,30 @@ public final class ClickGuiScreen extends Screen
 			context.blit(WURST_LOGO_TEXTURE, x, y, logoWidth, logoHeight, 0.0F,
 				0.0F, 574, 356, 574, 356);
 		}
+	}
+	
+	@Override
+	public boolean keyPressed(int keyCode, int scanCode, int modifiers)
+	{
+		if(keyCode == org.lwjgl.glfw.GLFW.GLFW_KEY_BACKSPACE)
+		{
+			String current = gui.getSearchQuery();
+			if(!current.isEmpty())
+				gui.setSearchQuery(current.substring(0, current.length() - 1));
+			return true;
+		}
+		return super.keyPressed(keyCode, scanCode, modifiers);
+	}
+	
+	@Override
+	public boolean charTyped(char chr, int modifiers)
+	{
+		if(chr >= 32 && chr != 127)
+		{
+			gui.setSearchQuery(gui.getSearchQuery() + chr);
+			return true;
+		}
+		return super.charTyped(chr, modifiers);
 	}
 	
 	@Override

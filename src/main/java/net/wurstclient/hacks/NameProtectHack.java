@@ -12,14 +12,26 @@ import net.minecraft.client.player.AbstractClientPlayer;
 import net.wurstclient.Category;
 import net.wurstclient.SearchTags;
 import net.wurstclient.hack.Hack;
+import net.wurstclient.settings.CheckboxSetting;
+import net.wurstclient.settings.TextFieldSetting;
 
 @SearchTags({"name protect"})
 public final class NameProtectHack extends Hack
 {
+	private final TextFieldSetting customName =
+		new TextFieldSetting("Name", "Name to display", "Me");
+	private final CheckboxSetting boldSetting =
+		new CheckboxSetting("Bold", false);
+	private final CheckboxSetting italicSetting =
+		new CheckboxSetting("Italic", true);
+	
 	public NameProtectHack()
 	{
 		super("NameProtect");
 		setCategory(Category.RENDER);
+		addSetting(customName);
+		addSetting(boldSetting);
+		addSetting(italicSetting);
 	}
 	
 	public String protect(String string)
@@ -29,7 +41,15 @@ public final class NameProtectHack extends Hack
 		
 		String me = MC.getUser().getName();
 		if(string.contains(me))
-			return string.replace(me, "\u00a7oMe\u00a7r");
+		{
+			String replacement = customName.getValue();
+			String prefix = "";
+			if(boldSetting.isChecked())
+				prefix += "\u00a7l";
+			if(italicSetting.isChecked())
+				prefix += "\u00a7o";
+			return string.replace(me, prefix + replacement + "\u00a7r");
+		}
 		
 		int i = 0;
 		for(PlayerInfo info : MC.player.connection.getOnlinePlayers())

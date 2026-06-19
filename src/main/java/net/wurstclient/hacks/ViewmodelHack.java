@@ -10,7 +10,6 @@ package net.wurstclient.hacks;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.world.InteractionHand;
-import net.wurstclient.Category;
 import net.wurstclient.DontBlock;
 import net.wurstclient.SearchTags;
 import net.wurstclient.hack.Hack;
@@ -36,10 +35,15 @@ public final class ViewmodelHack extends Hack
 	public ViewmodelHack()
 	{
 		super("Viewmodel");
-		setCategory(Category.RENDER);
 		addSetting(xOffset);
 		addSetting(yOffset);
 		addSetting(zOffset);
+	}
+	
+	@Override
+	public String getDescription()
+	{
+		return "Changes the visual position of items in your hand.";
 	}
 	
 	public void apply(PoseStack matrices, InteractionHand hand)

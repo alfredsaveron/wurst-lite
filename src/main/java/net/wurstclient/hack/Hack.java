@@ -50,7 +50,7 @@ public abstract class Hack extends Feature
 	}
 	
 	@Override
-	public final String getDescription()
+	public String getDescription()
 	{
 		return WURST.translate(description);
 	}

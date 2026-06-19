@@ -95,6 +95,20 @@ public final class FeatureButton extends Component
 		if(hFeature)
 			GUI.setTooltip(feature.getWrappedDescription(200));
 		
+		String query = GUI.getSearchQuery().trim().toLowerCase();
+		boolean matched =
+			!query.isEmpty() && (feature.getName().toLowerCase().contains(query)
+				|| feature.getSearchTags().toLowerCase().contains(query));
+		
+		if(matched)
+		{
+			float pulse =
+				(float)(Math.sin(System.currentTimeMillis() / 150.0) * 0.5
+					+ 0.5);
+			int highlightColor = ((int)(0x15 + pulse * 0x30) << 24) | 0xA273A6;
+			context.fill(x1, y1, x2, y2, highlightColor);
+		}
+		
 		if(hovering)
 			context.fill(x1, y1, x2, y2, 0x1AFFFFFF);
 		

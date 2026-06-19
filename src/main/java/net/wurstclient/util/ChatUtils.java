@@ -25,14 +25,17 @@ public enum ChatUtils
 	
 	private static final Minecraft MC = WurstClient.MC;
 	
+	private static final String GRAY_FORMAT =
+		"\u00a7x\u00a78\u00a70\u00a78\u00a70\u00a78\u00a70";
+	
 	public static final String WURST_PREFIX =
-		"\u00a7d\u00a7lWurstLite\u00a7r \u00a78\u00bb\u00a7r ";
+		GRAY_FORMAT + "\u00a7lWurstLite\u00a7r \u00a78\u00bb\u00a7r ";
 	private static final String WARNING_PREFIX =
-		"\u00a7d\u00a7lWurstLite\u00a7r \u00a76\u00bb\u00a7r ";
+		GRAY_FORMAT + "\u00a7lWurstLite\u00a7r \u00a76\u00bb\u00a7r ";
 	private static final String ERROR_PREFIX =
-		"\u00a7d\u00a7lWurstLite\u00a7r \u00a75\u00bb\u00a7r ";
+		GRAY_FORMAT + "\u00a7lWurstLite\u00a7r \u00a75\u00bb\u00a7r ";
 	private static final String SYNTAX_ERROR_PREFIX =
-		"\u00a7d\u00a7lWurstLite\u00a7r \u00a75\u00bb\u00a7r ";
+		GRAY_FORMAT + "\u00a7lWurstLite\u00a7r \u00a75\u00bb\u00a7r ";
 	
 	private static boolean enabled = true;
 	
@@ -61,7 +64,7 @@ public enum ChatUtils
 		{
 			String formatted = line;
 			if(!formatted.startsWith("\u00a7"))
-				formatted = "\u00a77" + formatted;
+				formatted = GRAY_FORMAT + formatted;
 			chatHud.addMessage(Component.literal(WURST_PREFIX + formatted));
 		}
 	}
@@ -72,7 +75,7 @@ public enum ChatUtils
 			return;
 		ChatComponent chatHud = MC.gui.getChat();
 		chatHud.addMessage(
-			Component.literal(WARNING_PREFIX + "\u00a7e" + message));
+			Component.literal(WARNING_PREFIX + GRAY_FORMAT + message));
 	}
 	
 	public static void error(String message)
@@ -80,8 +83,8 @@ public enum ChatUtils
 		if(!enabled)
 			return;
 		ChatComponent chatHud = MC.gui.getChat();
-		chatHud
-			.addMessage(Component.literal(ERROR_PREFIX + "\u00a7d" + message));
+		chatHud.addMessage(
+			Component.literal(ERROR_PREFIX + GRAY_FORMAT + message));
 	}
 	
 	public static void syntaxError(String message)
@@ -90,7 +93,7 @@ public enum ChatUtils
 			return;
 		ChatComponent chatHud = MC.gui.getChat();
 		chatHud.addMessage(
-			Component.literal(SYNTAX_ERROR_PREFIX + "\u00a7d" + message));
+			Component.literal(SYNTAX_ERROR_PREFIX + GRAY_FORMAT + message));
 	}
 	
 	public static String getAsString(GuiMessage.Line visible)

@@ -50,20 +50,11 @@ public final class KeybindProcessor implements KeyPressListener
 		
 		String keyName = getKeyName(event);
 		
-		String guiKey =
-			WurstClient.INSTANCE.getHax().clickGuiHack.getGuiKeybind();
-		if(guiKey != null && !guiKey.isEmpty())
+		if(keyName.equalsIgnoreCase("key.keyboard.right.shift"))
 		{
-			String cleanKey = guiKey.toLowerCase().replace(" ", ".");
-			String cleanName =
-				keyName.replace("key.keyboard.", "").toLowerCase();
-			if(cleanName.equals(cleanKey)
-				|| keyName.equalsIgnoreCase("key.keyboard." + cleanKey))
-			{
-				WurstClient.MC.setScreen(
-					new ClickGuiScreen(WurstClient.INSTANCE.getGui()));
-				return;
-			}
+			WurstClient.MC
+				.setScreen(new ClickGuiScreen(WurstClient.INSTANCE.getGui()));
+			return;
 		}
 		
 		String cmds = keybinds.getCommands(keyName);

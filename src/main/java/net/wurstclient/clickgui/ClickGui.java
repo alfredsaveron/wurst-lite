@@ -34,6 +34,7 @@ import net.wurstclient.Feature;
 import net.wurstclient.WurstClient;
 import net.wurstclient.clickgui.components.FeatureButton;
 import net.wurstclient.clickgui.components.ResetGuiButton;
+import net.wurstclient.clickgui.components.SearchQueryComponent;
 import net.wurstclient.hacks.ClickGuiHack;
 import net.wurstclient.settings.Setting;
 import net.wurstclient.util.RenderUtils;
@@ -122,6 +123,18 @@ public final class ClickGui
 	
 	private boolean leftMouseButtonPressed;
 	
+	private String searchQuery = "";
+	
+	public String getSearchQuery()
+	{
+		return searchQuery;
+	}
+	
+	public void setSearchQuery(String searchQuery)
+	{
+		this.searchQuery = searchQuery;
+	}
+	
 	public ClickGui(Path windowsFile)
 	{
 		this.windowsFile = windowsFile;
@@ -140,7 +153,6 @@ public final class ClickGui
 		features.addAll(WURST.getHax().getAllHax());
 		features.addAll(WURST.getCmds().getAllCmds());
 		features.addAll(WURST.getOtfs().getAllOtfs());
-		
 		for(Feature f : features)
 			if(f.getCategory() != null && f.getCategory() != Category.FUN)
 				windowMap.get(f.getCategory()).add(new FeatureButton(f));
@@ -153,11 +165,21 @@ public final class ClickGui
 		uiSettings.add(new FeatureButton(WURST.getOtfs().wurstLogoOtf));
 		uiSettings.add(new FeatureButton(WURST.getOtfs().hackListOtf));
 		uiSettings.add(new FeatureButton(WURST.getOtfs().keybindManagerOtf));
+		uiSettings.add(new FeatureButton(WURST.getHax().viewmodelHack));
 		uiSettings.add(new ResetGuiButton());
 		ClickGuiHack clickGuiHack = WURST.getHax().clickGuiHack;
 		Stream<Setting> settings = clickGuiHack.getSettings().values().stream();
 		settings.map(Setting::getComponent).forEach(c -> uiSettings.add(c));
 		windows.add(uiSettings);
+		
+		Window searchWindow = new Window("Search");
+		searchWindow.add(new SearchQueryComponent());
+		int scaledWidth = MC.getWindow().getGuiScaledWidth();
+		int scaledHeight = MC.getWindow().getGuiScaledHeight();
+		searchWindow.pack();
+		searchWindow.setX((scaledWidth - searchWindow.getWidth()) / 2);
+		searchWindow.setY(scaledHeight - searchWindow.getHeight() - 10);
+		windows.add(searchWindow);
 		
 		for(Window window : windows)
 			window.setMinimized(false);
@@ -167,10 +189,12 @@ public final class ClickGui
 		int x = 5;
 		int y = 5;
 		int maxYInRow = 0;
-		int scaledWidth = MC.getWindow().getGuiScaledWidth();
 		for(Window window : windows)
 		{
 			window.pack();
+			
+			if(window.getTitle().equals("Search"))
+				continue;
 			
 			if(x + window.getWidth() + 5 > scaledWidth)
 			{
@@ -207,6 +231,9 @@ public final class ClickGui
 		
 		for(Window window : windows)
 		{
+			if(window.getTitle().equals("Search"))
+				continue;
+			
 			JsonElement jsonWindow = json.get(window.getTitle());
 			if(jsonWindow == null || !jsonWindow.isJsonObject())
 				continue;
@@ -238,16 +265,41 @@ public final class ClickGui
 		saveWindows();
 	}
 	
+	private int getWindowPriority(Window w)
+	{
+		for(Category c : Category.values())
+		{
+			if(c != Category.FUN && c.getName().equals(w.getTitle()))
+				return 100 + w.countChildren();
+		}
+		if(w.getTitle().equals("Settings"))
+			return 50;
+		if(w.getTitle().equals("Search"))
+			return 40;
+		return 10;
+	}
+	
 	public void resetGui()
 	{
+		windows.sort((w1, w2) -> Integer.compare(getWindowPriority(w2),
+			getWindowPriority(w1)));
+		
 		int x = 5;
 		int y = 5;
 		int maxYInRow = 0;
 		int scaledWidth = MC.getWindow().getGuiScaledWidth();
+		int scaledHeight = MC.getWindow().getGuiScaledHeight();
 		for(Window window : windows)
 		{
 			window.setMinimized(false);
 			window.pack();
+			
+			if(window.getTitle().equals("Search"))
+			{
+				window.setX((scaledWidth - window.getWidth()) / 2);
+				window.setY(scaledHeight - window.getHeight() - 10);
+				continue;
+			}
 			
 			if(x + window.getWidth() + 5 > scaledWidth)
 			{
@@ -271,7 +323,7 @@ public final class ClickGui
 		
 		for(Window window : windows)
 		{
-			if(window.isClosable())
+			if(window.isClosable() || window.getTitle().equals("Search"))
 				continue;
 			
 			JsonObject jsonWindow = new JsonObject();
@@ -820,8 +872,6 @@ public final class ClickGui
 			int by2 = y1 + 11;
 			boolean hovering = mouseX >= bx1 && mouseX <= bx2 && mouseY >= by1
 				&& mouseY <= by2;
-			context.fill(bx1, by1, bx2, by2,
-				hovering ? 0x50FFFFFF : 0x20FFFFFF);
 			String buttonText = window.isMinimized() ? "+" : "-";
 			context.drawString(tr, buttonText,
 				bx1 + (9 - tr.width(buttonText)) / 2,
