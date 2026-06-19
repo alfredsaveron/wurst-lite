@@ -23,6 +23,10 @@ public final class SettingsWindow extends Window
 		Stream<Setting> settings = feature.getSettings().values().stream();
 		settings.map(Setting::getComponent).forEach(this::add);
 		
+		if(feature instanceof net.wurstclient.hack.Hack)
+			add(new net.wurstclient.clickgui.components.FeatureBindButton(
+				(net.wurstclient.hack.Hack)feature));
+		
 		setClosable(true);
 		setMinimizable(false);
 		setMaxHeight(200);

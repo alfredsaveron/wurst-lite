@@ -156,7 +156,7 @@ public enum ClickGuiIcons
 		
 		// check
 		int checkColor =
-			grayedOut ? 0xC0808080 : hovering ? 0xFF00FF00 : 0xFF00D900;
+			grayedOut ? 0xC0808080 : hovering ? 0xFFF2D5F7 : 0xFFD8A8DC;
 		float[][] checkVertices = {{xc2, yc3}, {xc1, yc4}, {xc3, yc6},
 			{xc3, yc5}, {xc3, yc5}, {xc3, yc6}, {xc5, yc2}, {xc4, yc1}};
 		RenderUtils.fillQuads2D(context, checkVertices, checkColor);

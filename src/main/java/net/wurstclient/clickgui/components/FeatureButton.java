@@ -34,7 +34,8 @@ public final class FeatureButton extends Component
 		this.feature = Objects.requireNonNull(feature);
 		setWidth(getDefaultWidth());
 		setHeight(getDefaultHeight());
-		hasSettings = !feature.getSettings().isEmpty();
+		hasSettings = !feature.getSettings().isEmpty()
+			|| (feature instanceof net.wurstclient.hack.Hack);
 	}
 	
 	@Override

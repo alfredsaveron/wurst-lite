@@ -44,18 +44,21 @@ public final class KeybindProcessor implements KeyPressListener
 			GLFW.GLFW_KEY_F3))
 			return;
 		
-		Screen screen = WurstClient.MC.screen;
-		if(screen != null && !(screen instanceof ClickGuiScreen))
-			return;
-		
 		String keyName = getKeyName(event);
+		Screen screen = WurstClient.MC.screen;
 		
 		if(keyName.equalsIgnoreCase("key.keyboard.right.shift"))
 		{
-			WurstClient.MC
-				.setScreen(new ClickGuiScreen(WurstClient.INSTANCE.getGui()));
+			if(screen instanceof ClickGuiScreen)
+				WurstClient.MC.setScreen((Screen)null);
+			else if(screen == null)
+				WurstClient.MC.setScreen(
+					new ClickGuiScreen(WurstClient.INSTANCE.getGui()));
 			return;
 		}
+		
+		if(screen != null)
+			return;
 		
 		String cmds = keybinds.getCommands(keyName);
 		if(cmds == null)

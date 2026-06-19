@@ -33,7 +33,6 @@ import net.wurstclient.Category;
 import net.wurstclient.Feature;
 import net.wurstclient.WurstClient;
 import net.wurstclient.clickgui.components.FeatureButton;
-import net.wurstclient.clickgui.components.ResetGuiButton;
 import net.wurstclient.clickgui.components.SearchQueryComponent;
 import net.wurstclient.hacks.ClickGuiHack;
 import net.wurstclient.settings.Setting;
@@ -166,7 +165,8 @@ public final class ClickGui
 		uiSettings.add(new FeatureButton(WURST.getOtfs().hackListOtf));
 		uiSettings.add(new FeatureButton(WURST.getOtfs().keybindManagerOtf));
 		uiSettings.add(new FeatureButton(WURST.getHax().viewmodelHack));
-		uiSettings.add(new ResetGuiButton());
+		uiSettings.add(new FeatureButton(WURST.getOtfs().resetGuiOtf));
+		uiSettings.add(new FeatureButton(WURST.getOtfs().resetKeybindsOtf));
 		ClickGuiHack clickGuiHack = WURST.getHax().clickGuiHack;
 		Stream<Setting> settings = clickGuiHack.getSettings().values().stream();
 		settings.map(Setting::getComponent).forEach(c -> uiSettings.add(c));
@@ -291,6 +291,9 @@ public final class ClickGui
 		int scaledHeight = MC.getWindow().getGuiScaledHeight();
 		for(Window window : windows)
 		{
+			if(window.isClosable())
+				continue;
+			
 			window.setMinimized(false);
 			window.pack();
 			

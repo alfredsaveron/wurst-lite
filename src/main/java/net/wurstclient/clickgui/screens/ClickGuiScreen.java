@@ -58,6 +58,13 @@ public final class ClickGuiScreen extends Screen
 	@Override
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers)
 	{
+		if(net.wurstclient.clickgui.components.FeatureBindButton.currentlyBinding != null)
+		{
+			net.wurstclient.clickgui.components.FeatureBindButton.currentlyBinding
+				.onKeyCaptured(keyCode, scanCode);
+			return true;
+		}
+		
 		if(keyCode == org.lwjgl.glfw.GLFW.GLFW_KEY_BACKSPACE)
 		{
 			String current = gui.getSearchQuery();
@@ -71,6 +78,9 @@ public final class ClickGuiScreen extends Screen
 	@Override
 	public boolean charTyped(char chr, int modifiers)
 	{
+		if(net.wurstclient.clickgui.components.FeatureBindButton.currentlyBinding != null)
+			return true;
+		
 		if(chr >= 32 && chr != 127)
 		{
 			gui.setSearchQuery(gui.getSearchQuery() + chr);
