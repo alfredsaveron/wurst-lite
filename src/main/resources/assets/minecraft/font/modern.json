@@ -1,0 +1,14 @@
+{
+  "providers": [
+    {
+      "type": "ttf",
+      "file": "minecraft:opensans-regular.ttf",
+      "shift": [
+        0,
+        0
+      ],
+      "size": 9.0,
+      "oversample": 3.0
+    }
+  ]
+}
