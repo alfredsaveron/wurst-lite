@@ -149,9 +149,7 @@ public final class SliderComponent extends Component
 		
 		// knob
 		float xk1 = x1 + (x2 - x1 - 8) * (float)setting.getPercentage();
-		float xk2 = xk1 + 8;
 		float yk1 = y3 + 1.5F;
-		float yk2 = y2 - 1.5F;
 		int knobColor = grayedOut ? 0xC0808080 : RenderUtils
 			.toIntColor(setting.getKnobColor(), hSlider ? 1 : 0.75F);
 		

@@ -30,12 +30,6 @@ public final class HackListOtf extends OtherFeature
 			+ "\u00a7lCount\u00a7r mode only renders the number of active hacks.\n"
 			+ "\u00a7lHidden\u00a7r mode renders nothing.",
 		Mode.values(), Mode.AUTO);
-	
-	private final EnumSetting<Position> position = new EnumSetting<>("Position",
-		"Which side of the screen the HackList should be shown on."
-			+ "\nChange this to \u00a7lRight\u00a7r when using TabGUI.",
-		Position.values(), Position.RIGHT);
-	
 	private final ColorSetting color = new ColorSetting("Color",
 		"Color of the HackList text.\n"
 			+ "Only visible when \u00a76RainbowUI\u00a7r is disabled.",

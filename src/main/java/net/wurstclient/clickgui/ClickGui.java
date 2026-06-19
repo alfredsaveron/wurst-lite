@@ -829,25 +829,6 @@ public final class ClickGui
 		}
 	}
 	
-	private void renderTitleBarButton(GuiGraphics context, int x1, int y1,
-		int x2, int y2, boolean hovering)
-	{
-		int x3 = x2 + 2;
-		
-		// button background
-		int buttonBgColor = RenderUtils.toIntColor(bgColor,
-			hovering ? opacity * 1.5F : opacity);
-		context.fill(x1, y1, x2, y2, buttonBgColor);
-		
-		// background between buttons
-		int windowBgColor = RenderUtils.toIntColor(acColor, opacity);
-		context.fill(x2, y1, x3, y2, windowBgColor);
-		
-		// button outline
-		int outlineColor = RenderUtils.toIntColor(acColor, 0.5F);
-		RenderUtils.drawBorder2D(context, x1, y1, x2, y2, outlineColor);
-	}
-	
 	public float[] getBgColor()
 	{
 		return bgColor;
