@@ -28,11 +28,11 @@ public enum ChatUtils
 	public static final String WURST_PREFIX =
 		"\u00a7d\u00a7lWurstLite\u00a7r \u00a78\u00bb\u00a7r ";
 	private static final String WARNING_PREFIX =
-		"\u00a7d\u00a7lWurstLite\u00a7r \u00a7e\u00bb\u00a7r ";
+		"\u00a7d\u00a7lWurstLite\u00a7r \u00a76\u00bb\u00a7r ";
 	private static final String ERROR_PREFIX =
-		"\u00a7d\u00a7lWurstLite\u00a7r \u00a7c\u00bb\u00a7r ";
+		"\u00a7d\u00a7lWurstLite\u00a7r \u00a75\u00bb\u00a7r ";
 	private static final String SYNTAX_ERROR_PREFIX =
-		"\u00a7d\u00a7lWurstLite\u00a7r \u00a7c\u00bb\u00a7r ";
+		"\u00a7d\u00a7lWurstLite\u00a7r \u00a75\u00bb\u00a7r ";
 	
 	private static boolean enabled = true;
 	
@@ -81,7 +81,7 @@ public enum ChatUtils
 			return;
 		ChatComponent chatHud = MC.gui.getChat();
 		chatHud
-			.addMessage(Component.literal(ERROR_PREFIX + "\u00a7c" + message));
+			.addMessage(Component.literal(ERROR_PREFIX + "\u00a7d" + message));
 	}
 	
 	public static void syntaxError(String message)
@@ -90,7 +90,7 @@ public enum ChatUtils
 			return;
 		ChatComponent chatHud = MC.gui.getChat();
 		chatHud.addMessage(
-			Component.literal(SYNTAX_ERROR_PREFIX + "\u00a7c" + message));
+			Component.literal(SYNTAX_ERROR_PREFIX + "\u00a7d" + message));
 	}
 	
 	public static String getAsString(GuiMessage.Line visible)

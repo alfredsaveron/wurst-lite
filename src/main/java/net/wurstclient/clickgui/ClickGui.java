@@ -209,10 +209,26 @@ public final class ClickGui
 			if(jsonWindow == null || !jsonWindow.isJsonObject())
 				continue;
 			
-			window.setMinimized(false);
+			JsonElement jsonX = jsonWindow.getAsJsonObject().get("x");
+			if(jsonX != null && jsonX.isJsonPrimitive()
+				&& jsonX.getAsJsonPrimitive().isNumber())
+				window.setX(jsonX.getAsInt());
+			
+			JsonElement jsonY = jsonWindow.getAsJsonObject().get("y");
+			if(jsonY != null && jsonY.isJsonPrimitive()
+				&& jsonY.getAsJsonPrimitive().isNumber())
+				window.setY(jsonY.getAsInt());
+			
+			JsonElement jsonMinimized =
+				jsonWindow.getAsJsonObject().get("minimized");
+			if(jsonMinimized != null && jsonMinimized.isJsonPrimitive()
+				&& jsonMinimized.getAsJsonPrimitive().isBoolean())
+				window.setMinimized(jsonMinimized.getAsBoolean());
+			else
+				window.setMinimized(false);
 			
 			JsonElement jsonPinned = jsonWindow.getAsJsonObject().get("pinned");
-			if(jsonPinned.isJsonPrimitive()
+			if(jsonPinned != null && jsonPinned.isJsonPrimitive()
 				&& jsonPinned.getAsJsonPrimitive().isBoolean())
 				window.setPinned(jsonPinned.getAsBoolean());
 		}
@@ -461,6 +477,16 @@ public final class ClickGui
 	private void handleTitleBarMouseClick(Window window, int mouseX, int mouseY,
 		int mouseButton)
 	{
+		int x2 = window.getX() + window.getWidth();
+		int y1 = window.getY();
+		if(window.isMinimizable() && mouseButton == 0 && mouseX >= x2 - 14
+			&& mouseX <= x2 - 3 && mouseY >= y1 + 2 && mouseY <= y1 + 11)
+		{
+			window.setMinimized(!window.isMinimized());
+			saveWindows();
+			return;
+		}
+		
 		if(mouseButton == 1)
 		{
 			window.setMinimized(!window.isMinimized());
@@ -781,6 +807,22 @@ public final class ClickGui
 		
 		context.drawString(tr, modern(titleText), x1 + 6, y1 + 2, 0xFFFFFFFF,
 			false);
+		
+		if(window.isMinimizable())
+		{
+			int bx1 = x2 - 14;
+			int by1 = y1 + 2;
+			int bx2 = x2 - 3;
+			int by2 = y1 + 11;
+			boolean hovering = mouseX >= bx1 && mouseX <= bx2 && mouseY >= by1
+				&& mouseY <= by2;
+			context.fill(bx1, by1, bx2, by2,
+				hovering ? 0x50FFFFFF : 0x20FFFFFF);
+			String buttonText = window.isMinimized() ? "+" : "-";
+			context.drawString(tr, buttonText,
+				bx1 + (11 - tr.width(buttonText)) / 2,
+				by1 + (9 - tr.lineHeight) / 2 + 1, 0xFFFFFFFF, false);
+		}
 	}
 	
 	private void renderTitleBarButton(GuiGraphics context, int x1, int y1,
@@ -834,6 +876,12 @@ public final class ClickGui
 	
 	public void addWindow(Window window)
 	{
+		if(window instanceof SettingsWindow)
+		{
+			for(Window w : windows)
+				if(w instanceof SettingsWindow)
+					w.close();
+		}
 		windows.add(window);
 	}
 	

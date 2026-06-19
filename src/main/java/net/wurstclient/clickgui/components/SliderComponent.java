@@ -154,8 +154,41 @@ public final class SliderComponent extends Component
 		float yk2 = y2 - 1.5F;
 		int knobColor = grayedOut ? 0xC0808080 : RenderUtils
 			.toIntColor(setting.getKnobColor(), hSlider ? 1 : 0.75F);
-		RenderUtils.fill2D(context, xk1, yk1, xk2, yk2, knobColor);
-		RenderUtils.drawBorder2D(context, xk1, yk1, xk2, yk2, 0x80101010);
+		
+		float cx = xk1 + 4.0F;
+		float cy = yk1 + 4.0F;
+		int outlineColor = 0x80101010;
+		
+		RenderUtils.fill2D(context, cx - 2, cy - 4, cx + 2, cy - 3, knobColor);
+		RenderUtils.fill2D(context, cx - 3, cy - 3, cx + 3, cy - 2, knobColor);
+		RenderUtils.fill2D(context, cx - 4, cy - 2, cx + 4, cy + 2, knobColor);
+		RenderUtils.fill2D(context, cx - 3, cy + 2, cx + 3, cy + 3, knobColor);
+		RenderUtils.fill2D(context, cx - 2, cy + 3, cx + 2, cy + 4, knobColor);
+		
+		RenderUtils.fill2D(context, cx - 2, cy - 5, cx + 2, cy - 4,
+			outlineColor);
+		RenderUtils.fill2D(context, cx - 2, cy + 4, cx + 2, cy + 5,
+			outlineColor);
+		RenderUtils.fill2D(context, cx - 5, cy - 2, cx - 4, cy + 2,
+			outlineColor);
+		RenderUtils.fill2D(context, cx + 4, cy - 2, cx + 5, cy + 2,
+			outlineColor);
+		RenderUtils.fill2D(context, cx - 3, cy - 4, cx - 2, cy - 3,
+			outlineColor);
+		RenderUtils.fill2D(context, cx - 4, cy - 3, cx - 3, cy - 2,
+			outlineColor);
+		RenderUtils.fill2D(context, cx + 2, cy - 4, cx + 3, cy - 3,
+			outlineColor);
+		RenderUtils.fill2D(context, cx + 3, cy - 3, cx + 4, cy - 2,
+			outlineColor);
+		RenderUtils.fill2D(context, cx - 3, cy + 3, cx - 2, cy + 4,
+			outlineColor);
+		RenderUtils.fill2D(context, cx - 4, cy + 2, cx - 3, cy + 3,
+			outlineColor);
+		RenderUtils.fill2D(context, cx + 2, cy + 3, cx + 3, cy + 4,
+			outlineColor);
+		RenderUtils.fill2D(context, cx + 3, cy + 2, cx + 4, cy + 3,
+			outlineColor);
 		
 		matrices.popPose();
 		

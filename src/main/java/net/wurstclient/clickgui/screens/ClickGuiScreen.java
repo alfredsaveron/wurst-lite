@@ -26,12 +26,6 @@ public final class ClickGuiScreen extends Screen
 	}
 	
 	@Override
-	protected void init()
-	{
-		gui.onOpen(this.width);
-	}
-	
-	@Override
 	public boolean isPauseScreen()
 	{
 		return false;
@@ -43,6 +37,10 @@ public final class ClickGuiScreen extends Screen
 	{
 		context.fill(0, 0, this.width, this.height, 0x75000000);
 		gui.render(context, mouseX, mouseY, partialTicks);
+		
+		net.minecraft.client.gui.Font tr = this.minecraft.font;
+		context.drawString(tr, "Based on the original Wurst Client", 5,
+			this.height - tr.lineHeight - 5, 0x80FFFFFF, false);
 		
 		if(net.wurstclient.WurstClient.INSTANCE.getOtfs().wurstLogoOtf
 			.isShowInGui())
