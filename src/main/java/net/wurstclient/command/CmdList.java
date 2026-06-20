@@ -18,13 +18,10 @@ import net.wurstclient.commands.*;
 public final class CmdList
 {
 	public final AddAltCmd addAltCmd = new AddAltCmd();
-	public final AnnoyCmd annoyCmd = new AnnoyCmd();
-	public final AuthorCmd authorCmd = new AuthorCmd();
 	public final BindCmd bindCmd = new BindCmd();
 	public final BindsCmd bindsCmd = new BindsCmd();
 	public final BlinkCmd blinkCmd = new BlinkCmd();
 	public final BlockListCmd blockListCmd = new BlockListCmd();
-	public final ClearCmd clearCmd = new ClearCmd();
 	public final CopyItemCmd copyitemCmd = new CopyItemCmd();
 	public final DamageCmd damageCmd = new DamageCmd();
 	public final DigCmd digCmd = new DigCmd();
@@ -44,7 +41,6 @@ public final class CmdList
 	public final IpCmd ipCmd = new IpCmd();
 	public final ItemListCmd itemListCmd = new ItemListCmd();
 	public final JumpCmd jumpCmd = new JumpCmd();
-	public final LeaveCmd leaveCmd = new LeaveCmd();
 	public final ModifyCmd modifyCmd = new ModifyCmd();
 	public final PathCmd pathCmd = new PathCmd();
 	public final PotionCmd potionCmd = new PotionCmd();
@@ -53,7 +49,6 @@ public final class CmdList
 	public final RepairCmd repairCmd = new RepairCmd();
 	public final RvCmd rvCmd = new RvCmd();
 	public final SvCmd svCmd = new SvCmd();
-	public final SayCmd sayCmd = new SayCmd();
 	public final SetBlockCmd setBlockCmd = new SetBlockCmd();
 	public final SetCheckboxCmd setCheckboxCmd = new SetCheckboxCmd();
 	public final SetColorCmd setColorCmd = new SetColorCmd();
