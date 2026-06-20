@@ -38,13 +38,16 @@ public final class HackListHUD implements UpdateListener
 		if(otf.getMode() == Mode.HIDDEN)
 			return;
 		
-		if(otf.getPosition() == Position.LEFT
+		Position pos = otf.getPosition();
+		
+		if(pos.isBottom())
+			posY = context.guiHeight() - 2 - activeHax.size() * 9;
+		else if(pos.isLeft()
 			&& WurstClient.INSTANCE.getOtfs().wurstLogoOtf.isVisible())
 			posY = 22;
 		else
 			posY = 2;
 		
-		// color
 		if(WurstClient.INSTANCE.getHax().rainbowUiHack.isEnabled())
 		{
 			float[] acColor = WurstClient.INSTANCE.getGui().getAcColor();
@@ -56,7 +59,8 @@ public final class HackListHUD implements UpdateListener
 		
 		int height = posY + activeHax.size() * 9;
 		
-		if(otf.getMode() == Mode.COUNT || height > context.guiHeight())
+		if(otf.getMode() == Mode.COUNT
+			|| (!pos.isBottom() && height > context.guiHeight()))
 			drawCounter(context);
 		else
 			drawHackList(context, partialTicks);
@@ -132,7 +136,7 @@ public final class HackListHUD implements UpdateListener
 		Font tr = WurstClient.MC.font;
 		int posX;
 		
-		if(otf.getPosition() == Position.LEFT)
+		if(otf.getPosition().isLeft())
 			posX = 2;
 		else
 		{
@@ -158,7 +162,7 @@ public final class HackListHUD implements UpdateListener
 			e.offset * partialTicks + e.prevOffset * (1 - partialTicks);
 		
 		float posX;
-		if(otf.getPosition() == Position.LEFT)
+		if(otf.getPosition().isLeft())
 			posX = 2 - 5 * offset;
 		else
 		{

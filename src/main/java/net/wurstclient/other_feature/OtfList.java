@@ -30,7 +30,6 @@ public final class OtfList
 	public final ResetKeybindsOtf resetKeybindsOtf = new ResetKeybindsOtf();
 	public final ServerFinderOtf serverFinderOtf = new ServerFinderOtf();
 	public final TabGuiOtf tabGuiOtf = new TabGuiOtf();
-	public final TranslationsOtf translationsOtf = new TranslationsOtf();
 	public final VanillaSpoofOtf vanillaSpoofOtf = new VanillaSpoofOtf();
 	public final WikiDataExportOtf wikiDataExportOtf = new WikiDataExportOtf();
 	public final WurstCapesOtf wurstCapesOtf = new WurstCapesOtf();

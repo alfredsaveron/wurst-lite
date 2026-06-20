@@ -59,8 +59,6 @@ public class WurstOptionsScreen extends Screen
 		CheckboxSetting middleClickFriends = friendsCmd.getMiddleClickFriends();
 		PlausibleAnalytics plausible = wurst.getPlausible();
 		VanillaSpoofOtf vanillaSpoofOtf = wurst.getOtfs().vanillaSpoofOtf;
-		CheckboxSetting forceEnglish =
-			wurst.getOtfs().translationsOtf.getForceEnglish();
 		
 		new WurstOptionsButton(-154, 24,
 			() -> "Click Friends: "
@@ -85,13 +83,6 @@ public class WurstOptionsScreen extends Screen
 				+ (vanillaSpoofOtf.isEnabled() ? "ON" : "OFF"),
 			vanillaSpoofOtf.getDescription(),
 			b -> vanillaSpoofOtf.doPrimaryAction());
-		
-		new WurstOptionsButton(-154, 96,
-			() -> "Translations: " + (!forceEnglish.isChecked() ? "ON" : "OFF"),
-			"Allows text in Wurst to be displayed in other languages than"
-				+ " English. It will use the same language that Minecraft is"
-				+ " set to.\n\n" + "This is an experimental feature!",
-			b -> forceEnglish.setChecked(!forceEnglish.isChecked()));
 	}
 	
 	private void addManagerButtons()

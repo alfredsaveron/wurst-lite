@@ -47,6 +47,10 @@ public final class HackListOtf extends OtherFeature
 		"When enabled, entries slide into and out of the HackList as hacks are enabled and disabled.",
 		true);
 	
+	private final EnumSetting<Position> position = new EnumSetting<>("Position",
+		"Where the HackList is displayed on screen.", Position.values(),
+		Position.TOP_RIGHT);
+	
 	private SortBy prevSortBy;
 	private Boolean prevRevSort;
 	
@@ -59,6 +63,7 @@ public final class HackListOtf extends OtherFeature
 		addSetting(sortBy);
 		addSetting(revSort);
 		addSetting(animations);
+		addSetting(position);
 	}
 	
 	public Mode getMode()
@@ -68,7 +73,7 @@ public final class HackListOtf extends OtherFeature
 	
 	public Position getPosition()
 	{
-		return Position.RIGHT;
+		return position.getSelected();
 	}
 	
 	public boolean isAnimations()
@@ -137,15 +142,29 @@ public final class HackListOtf extends OtherFeature
 	
 	public static enum Position
 	{
-		LEFT("Left"),
+		TOP_LEFT("Top Left"),
 		
-		RIGHT("Right");
+		TOP_RIGHT("Top Right"),
+		
+		BOTTOM_LEFT("Bottom Left"),
+		
+		BOTTOM_RIGHT("Bottom Right");
 		
 		private final String name;
 		
 		private Position(String name)
 		{
 			this.name = name;
+		}
+		
+		public boolean isLeft()
+		{
+			return this == TOP_LEFT || this == BOTTOM_LEFT;
+		}
+		
+		public boolean isBottom()
+		{
+			return this == BOTTOM_LEFT || this == BOTTOM_RIGHT;
 		}
 		
 		@Override

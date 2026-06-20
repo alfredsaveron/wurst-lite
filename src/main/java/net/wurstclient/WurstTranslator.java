@@ -143,7 +143,7 @@ public class WurstTranslator implements ResourceManagerReloadListener
 	
 	public boolean isForcedEnglish()
 	{
-		return wurst.getOtfs().translationsOtf.getForceEnglish().isChecked();
+		return true;
 	}
 	
 	/**
