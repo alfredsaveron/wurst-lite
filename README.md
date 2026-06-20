@@ -3,26 +3,18 @@
 <img src="images/wurstlite-banner.png" width="100%">
 
 > [!IMPORTANT]
-> Wurst Lite is an experimental, open-source project created solely for educational and research purposes, without any expectation of profit or financial income.
+> Wurst Lite is an experimental, open-source hobby project created for fun, with absolutely no expectation of profit or financial income.
 
-A clean, lightweight fork of the Wurst Client for Minecraft 1.21.1. Wurst Lite is optimized to provide essential cheat features with a streamlined interface, reduced bloat, and improved performance.
+A clean, lightweight fork of the Wurst Client for Minecraft 1.21.1. Wurst Lite is a project started to modernize the highly popular Wurst Client, optimized to provide essential cheat features with a streamlined interface, reduced bloat, and improved performance.
 
 ## Key Features
 
-### Modern & Streamlined ClickGUI
 Wurst Lite features a clean, organized, and responsive window-based ClickGUI. Overlapping issues have been eliminated, and window heights are tailored to display category hacks perfectly with scroll support.
 
 <img src="images/wurstlite-gui.png" width="100%">
-
-### Powerful Block Search
-Find specific blocks easily with the built-in search visualization tool, highlighting targets cleanly.
-
 <img src="images/wurstlite-searchhack.png" width="100%">
-
-### AltLook & Camera Perspectives
-Adjust your look and perspective smoothly while using movement and block-placing hacks like ScaffoldWalk, maintaining a completely legitimate look client-side and server-side.
-
 <img src="images/altlook.gif" width="100%">
+<img src="images/gui-demo-jesus.gif" width="100%">
 
 ## Installation
 
@@ -61,9 +53,9 @@ Ensure you have **Java Development Kit 21** installed.
      ./gradlew genSources eclipse
      ```
 
-<img src="images/wurst-wurstlite.png" width="100%">
+## Wurst Client
 
-## Sources & Resources
+<img src="images/wurst-wurstlite.png" width="100%">
 
 For documentation, community assistance, and upstream codebases, refer to these references:
 
