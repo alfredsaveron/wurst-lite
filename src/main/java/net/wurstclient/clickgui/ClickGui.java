@@ -196,6 +196,9 @@ public final class ClickGui
 				continue;
 			}
 			
+			window.setWidth(maxWindowWidth);
+			window.validate();
+			
 			int col = 0;
 			for(int i = 1; i < numCols; i++)
 			{
@@ -310,6 +313,9 @@ public final class ClickGui
 				window.setY(5);
 				continue;
 			}
+			
+			window.setWidth(maxWindowWidth);
+			window.validate();
 			
 			int col = 0;
 			for(int i = 1; i < numCols; i++)
