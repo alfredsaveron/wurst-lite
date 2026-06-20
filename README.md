@@ -2,10 +2,15 @@
 
 <img src="images/wurstlite-banner.png" width="100%">
 
+<p align="center">
+  <a href="https://fabricmc.net/"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/requires/fabric-api_46h.png" alt="Requires Fabric API"></a>
+  <a href="https://github.com/alfredsaveron/wurst-lite"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/available/github_46h.png" alt="Available on GitHub"></a>
+</p>
+
 > [!IMPORTANT]
 > Wurst Lite is an experimental, open-source hobby project created for fun, with absolutely no expectation of profit or financial income.
 
-A clean, lightweight fork of the Wurst Client for Minecraft 1.21.1. Wurst Lite is a project started to modernize the highly popular Wurst Client, optimized to provide essential cheat features with a streamlined interface, reduced bloat, and improved performance.
+A clean, lightweight fork of the Wurst Client for Minecraft 1.21.1. Wurst Lite is a project started to modernize the highly popular Wurst Client, optimized to provide essential cheat features with a sleek interface, reduced bloat, and improved performance.
 
 ## Key Features
 
@@ -13,6 +18,11 @@ Wurst Lite features a clean, organized, and responsive window-based ClickGUI. Ov
 
 <img src="images/wurstlite-gui.png" width="100%">
 <img src="images/wurstlite-searchhack.png" width="100%">
+
+## Why Wurst Lite?
+
+Having used the Wurst Client since childhood to troll friends with excitement, I have always admired its years of continuous development and evolution. Seeing it actively updated today inspired me to start this modernization project, keeping that classic legacy alive in a modern, refined way.
+
 <img src="images/playeresp-glow.gif" width="100%">
 <img src="images/altlook.gif" width="100%">
 <img src="images/gui-demo-jesus.gif" width="100%">
