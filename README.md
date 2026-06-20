@@ -91,6 +91,9 @@ Ensure you have **Java Development Kit 21** installed.
   <a href="https://www.paypal.com/biz/fund?id=FDQ7BMPSLHPBJ"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/donate/paypal-plural_46h.png" alt="PayPal"></a>
 </p>
 
+> [!IMPORTANT]
+> For the most up-to-date and stable Wurst experience, don't forget to download the official Wurst Client. Wurst Lite is an experimental project and may contain bugs.
+
 For documentation, community assistance, and upstream codebases, refer to these references:
 
 * **Official Website:** [wurstclient.net](https://www.wurstclient.net/)
@@ -103,4 +106,4 @@ For documentation, community assistance, and upstream codebases, refer to these 
 
 This project is licensed under the GNU General Public License v3.
 
-On a personal note, I want to thank Alexander01998 for maintaining the Wurst Client with so much passion and effort for all these years. Wurst has been a huge part of my childhood and Minecraft journey.
+On a personal note, I want to thank **Alexander01998** for maintaining the Wurst Client with so much passion and effort for all these years. Wurst has been a huge part of my childhood and Minecraft journey.
