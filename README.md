@@ -41,11 +41,27 @@ Having used the Wurst Client since childhood to troll friends with excitement, I
 
 ## Installation
 
-Wurst Lite can be installed like any standard Fabric mod:
+Wurst Lite is a standard Fabric mod. Follow these steps to install:
 
-1. Run the Fabric installer for Minecraft **1.21.1**.
-2. Download and place the **Wurst Lite** jar and **Fabric API** in your `.minecraft/mods` folder.
-3. Launch Minecraft using the Fabric profile.
+### 1. Download Fabric Loader
+Install the Fabric Loader for Minecraft **1.21.1**.
+<a href="https://fabricmc.net/use/installer/"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/supported/fabric_46h.png" alt="Fabric Loader" height="32"></a>
+
+### 2. Download Dependencies
+Make sure you have the **Fabric API** for 1.21.1.
+<a href="https://www.modrinth.com/mod/fabric-api/versions?l=fabric&g=1.21.1"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/requires/fabric-api_46h.png" alt="Fabric API" height="32"></a>
+
+### 3. Download Wurst Lite
+Grab the latest release jar from the repository.
+<a href="https://github.com/alfredsaveron/wurst-lite/releases"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/available/github_46h.png" alt="GitHub Releases" height="32"></a>
+
+### 4. Move Files & Play
+1. Place both the **Wurst Lite** `.jar` file and the **Fabric API** `.jar` file into your `.minecraft/mods` directory:
+   * **Windows**: Press `Win + R`, type `%appdata%\.minecraft\mods`, and press Enter.
+   * **macOS**: `~/Library/Application Support/minecraft/mods`
+   * **Linux**: `~/.minecraft/mods`
+2. Open the Minecraft Launcher and select the **Fabric Loader 1.21.1** profile.
+3. Launch the game and press **Right Control** to open the ClickGUI.
 
 *Note: A licensed copy of Minecraft Java Edition is required.*
 
