@@ -122,14 +122,12 @@ public final class ClickGui
 		int maxWindowWidth = 100;
 		for(Window window : windows)
 		{
-			if(window.isInvisible())
-				continue;
-			if(window.getTitle().equals("Settings"))
-				continue;
-			
-			window.pack();
-			if(window.getWidth() > maxWindowWidth)
+			if(window.getTitle().equalsIgnoreCase("Render"))
+			{
+				window.pack();
 				maxWindowWidth = window.getWidth();
+				break;
+			}
 		}
 		
 		int colWidth = maxWindowWidth + 5;
@@ -152,6 +150,8 @@ public final class ClickGui
 			}
 			
 			window.setWidth(maxWindowWidth);
+			window.setMaxHeight(window instanceof SettingsWindow
+				? maxSettingsHeight : maxHeight);
 			window.validate();
 			
 			int col = 0;
@@ -215,6 +215,17 @@ public final class ClickGui
 				window.setPinned(jsonPinned.getAsBoolean());
 		}
 		
+		for(Window window : windows)
+		{
+			if(window.isInvisible())
+				continue;
+			if(!window.getTitle().equals("Settings"))
+				window.setWidth(maxWindowWidth);
+			window.setMaxHeight(window instanceof SettingsWindow
+				? maxSettingsHeight : maxHeight);
+			window.validate();
+		}
+		
 		saveWindows();
 	}
 	
@@ -239,14 +250,12 @@ public final class ClickGui
 		int maxWindowWidth = 100;
 		for(Window window : windows)
 		{
-			if(window.isClosable() || window.isInvisible())
-				continue;
-			if(window.getTitle().equals("Settings"))
-				continue;
-			
-			window.pack();
-			if(window.getWidth() > maxWindowWidth)
+			if(window.getTitle().equalsIgnoreCase("Render"))
+			{
+				window.pack();
 				maxWindowWidth = window.getWidth();
+				break;
+			}
 		}
 		
 		int colWidth = maxWindowWidth + 5;
@@ -270,6 +279,8 @@ public final class ClickGui
 			}
 			
 			window.setWidth(maxWindowWidth);
+			window.setMaxHeight(window instanceof SettingsWindow
+				? maxSettingsHeight : maxHeight);
 			window.validate();
 			
 			int col = 0;
