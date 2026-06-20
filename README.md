@@ -2,7 +2,26 @@
 
 ![Wurst Lite Banner](images/wurstlite-banner.png)
 
-A clean, lightweight fork of the Wurst Client for Minecraft. Wurst Lite aims to provide essential cheat features with a streamlined interface and performance optimizations.
+A clean, lightweight fork of the Wurst Client for Minecraft 1.21.1. Wurst Lite is optimized to provide essential cheat features with a streamlined interface, reduced bloat, and improved performance.
+
+---
+
+## Key Features
+
+### Modern & Streamlined ClickGUI
+Wurst Lite features a clean, organized, and responsive window-based ClickGUI. Overlapping issues have been eliminated, and window heights are tailored to display category hacks perfectly with scroll support.
+
+![Wurst Lite GUI](images/wurstlite-gui.png)
+
+### Powerful Block Search
+Find specific blocks easily with the built-in search visualization tool, highlighting targets cleanly.
+
+![Wurst Lite Search Hack](images/wurstlite-searchhack.png)
+
+### AltLook & Camera Perspectives
+Adjust your look and perspective smoothly while using movement and block-placing hacks like ScaffoldWalk, maintaining a completely legitimate look client-side and server-side.
+
+![AltLook Perspective](images/altlook.gif)
 
 ---
 
@@ -44,12 +63,6 @@ Ensure you have **Java Development Kit 21** installed.
      ```pwsh
      ./gradlew genSources eclipse
      ```
-
----
-
-## Features & Configuration
-
-More details on Wurst Lite's custom features and optimization settings will be added here over time.
 
 ---
 
