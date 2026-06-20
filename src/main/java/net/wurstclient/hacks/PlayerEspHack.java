@@ -23,7 +23,6 @@ import net.wurstclient.events.CameraTransformViewBobbingListener;
 import net.wurstclient.events.RenderListener;
 import net.wurstclient.events.UpdateListener;
 import net.wurstclient.hack.Hack;
-import net.wurstclient.settings.EspBoxSizeSetting;
 import net.wurstclient.settings.EspStyleSetting;
 import net.wurstclient.settings.EspStyleSetting.EspStyle;
 import net.wurstclient.settings.filterlists.EntityFilterList;
@@ -41,10 +40,6 @@ public final class PlayerEspHack extends Hack implements UpdateListener,
 	private final EspStyleSetting style =
 		new EspStyleSetting(EspStyle.LINES_AND_BOXES);
 	
-	private final EspBoxSizeSetting boxSize = new EspBoxSizeSetting(
-		"\u00a7lAccurate\u00a7r mode shows the exact hitbox of each player.\n"
-			+ "\u00a7lFancy\u00a7r mode shows slightly larger boxes that look better.");
-	
 	private final EntityFilterList entityFilters = new EntityFilterList(
 		new FilterSleepingSetting("Won't show sleeping players.", false),
 		new FilterInvisibleSetting("Won't show invisible players.", false));
@@ -56,7 +51,6 @@ public final class PlayerEspHack extends Hack implements UpdateListener,
 		super("PlayerESP");
 		setCategory(Category.RENDER);
 		addSetting(style);
-		addSetting(boxSize);
 		entityFilters.forEach(this::addSetting);
 	}
 	
@@ -119,7 +113,12 @@ public final class PlayerEspHack extends Hack implements UpdateListener,
 	
 	public boolean contains(Player e)
 	{
-		return isEnabled() && players.contains(e);
+		return isEnabled() && style.hasBoxes() && players.contains(e);
+	}
+	
+	public int getGlowColor(Player e)
+	{
+		return getColor(e) & 0xffffff;
 	}
 	
 	private int getColor(Player e)

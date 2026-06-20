@@ -177,10 +177,24 @@ public final class ClickGui
 		windows.add(WurstClient.INSTANCE.getHax().radarHack.getWindow());
 		
 		int scaledWidth = MC.getWindow().getGuiScaledWidth();
-		int scaledHeight = MC.getWindow().getGuiScaledHeight();
-		int x = 5;
-		int y = 5;
-		int maxYInRow = 0;
+		int maxWindowWidth = 100;
+		for(Window window : windows)
+		{
+			if(window.isInvisible())
+				continue;
+			if(window.getTitle().equals("Settings"))
+				continue;
+			
+			window.pack();
+			if(window.getWidth() > maxWindowWidth)
+				maxWindowWidth = window.getWidth();
+		}
+		
+		int colWidth = maxWindowWidth + 5;
+		int numCols = Math.max(1, (scaledWidth - 5) / colWidth);
+		int[] colY = new int[numCols];
+		java.util.Arrays.fill(colY, 5);
+		
 		for(Window window : windows)
 		{
 			if(window.isInvisible())
@@ -195,18 +209,16 @@ public final class ClickGui
 				continue;
 			}
 			
-			if(x + window.getWidth() + 5 > scaledWidth)
+			int col = 0;
+			for(int i = 1; i < numCols; i++)
 			{
-				x = 5;
-				y += maxYInRow + 5;
-				maxYInRow = 0;
+				if(colY[i] < colY[col])
+					col = i;
 			}
 			
-			window.setX(x);
-			window.setY(y);
-			x += window.getWidth() + 5;
-			if(window.getHeight() > maxYInRow)
-				maxYInRow = window.getHeight();
+			window.setX(5 + col * colWidth);
+			window.setY(colY[col]);
+			colY[col] += window.getHeight() + 5;
 		}
 		
 		JsonObject json;
@@ -278,11 +290,25 @@ public final class ClickGui
 		windows.sort((w1, w2) -> Integer.compare(getWindowPriority(w2),
 			getWindowPriority(w1)));
 		
-		int x = 5;
-		int y = 5;
-		int maxYInRow = 0;
 		int scaledWidth = MC.getWindow().getGuiScaledWidth();
-		int scaledHeight = MC.getWindow().getGuiScaledHeight();
+		int maxWindowWidth = 100;
+		for(Window window : windows)
+		{
+			if(window.isClosable() || window.isInvisible())
+				continue;
+			if(window.getTitle().equals("Settings"))
+				continue;
+			
+			window.pack();
+			if(window.getWidth() > maxWindowWidth)
+				maxWindowWidth = window.getWidth();
+		}
+		
+		int colWidth = maxWindowWidth + 5;
+		int numCols = Math.max(1, (scaledWidth - 5) / colWidth);
+		int[] colY = new int[numCols];
+		java.util.Arrays.fill(colY, 5);
+		
 		for(Window window : windows)
 		{
 			if(window.isClosable() || window.isInvisible())
@@ -298,18 +324,16 @@ public final class ClickGui
 				continue;
 			}
 			
-			if(x + window.getWidth() + 5 > scaledWidth)
+			int col = 0;
+			for(int i = 1; i < numCols; i++)
 			{
-				x = 5;
-				y += maxYInRow + 5;
-				maxYInRow = 0;
+				if(colY[i] < colY[col])
+					col = i;
 			}
 			
-			window.setX(x);
-			window.setY(y);
-			x += window.getWidth() + 5;
-			if(window.getHeight() > maxYInRow)
-				maxYInRow = window.getHeight();
+			window.setX(5 + col * colWidth);
+			window.setY(colY[col]);
+			colY[col] += window.getHeight() + 5;
 		}
 		saveWindows();
 	}

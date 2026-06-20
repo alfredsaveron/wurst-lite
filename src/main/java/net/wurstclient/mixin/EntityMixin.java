@@ -100,4 +100,16 @@ public abstract class EntityMixin
 				.contains((Player)(Object)this))
 			cir.setReturnValue(true);
 	}
+	
+	@Inject(at = @At("HEAD"),
+		method = {"getTeamColorValue()I", "method_22861()I"},
+		cancellable = true)
+	private void onGetTeamColorValue(CallbackInfoReturnable<Integer> cir)
+	{
+		if((Object)this instanceof Player
+			&& WurstClient.INSTANCE.getHax().playerEspHack
+				.contains((Player)(Object)this))
+			cir.setReturnValue(WurstClient.INSTANCE.getHax().playerEspHack
+				.getGlowColor((Player)(Object)this));
+	}
 }
