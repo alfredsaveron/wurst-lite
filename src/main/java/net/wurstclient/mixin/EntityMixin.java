@@ -89,4 +89,13 @@ public abstract class EntityMixin
 				ci.cancel();
 		}
 	}
+	
+	@Inject(at = @At("HEAD"), method = "isGlowing()Z", cancellable = true)
+	private void onIsGlowing(CallbackInfoReturnable<Boolean> cir)
+	{
+		if((Object)this instanceof Player
+			&& WurstClient.INSTANCE.getHax().playerEspHack
+				.contains((Player)(Object)this))
+			cir.setReturnValue(true);
+	}
 }

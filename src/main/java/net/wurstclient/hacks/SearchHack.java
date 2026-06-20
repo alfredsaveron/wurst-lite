@@ -176,8 +176,8 @@ public final class SearchHack extends Hack
 		if(vertexBuffer == null || bufferRegion == null)
 			return;
 		
-		float[] rainbow = RenderUtils.getRainbowColor();
-		RenderUtils.setShaderColor(rainbow, 0.5F);
+		float[] color = WURST.getGui().getAcColor();
+		RenderUtils.setShaderColor(color, 0.5F);
 		
 		matrixStack.pushPose();
 		RenderUtils.applyRegionalRenderOffset(matrixStack, bufferRegion);

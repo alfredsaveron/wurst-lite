@@ -16,7 +16,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.wurstclient.Category;
 import net.wurstclient.SearchTags;
@@ -33,7 +32,6 @@ import net.wurstclient.settings.filters.FilterSleepingSetting;
 import net.wurstclient.util.EntityUtils;
 import net.wurstclient.util.FakePlayerEntity;
 import net.wurstclient.util.RenderUtils;
-import net.wurstclient.util.RenderUtils.ColoredBox;
 import net.wurstclient.util.RenderUtils.ColoredPoint;
 
 @SearchTags({"player esp", "PlayerTracers", "player tracers"})
@@ -105,21 +103,6 @@ public final class PlayerEspHack extends Hack implements UpdateListener,
 	@Override
 	public void onRender(PoseStack matrixStack, float partialTicks)
 	{
-		if(style.hasBoxes())
-		{
-			double extraSize = boxSize.getExtraSize() / 2;
-			
-			ArrayList<ColoredBox> boxes = new ArrayList<>(players.size());
-			for(Player e : players)
-			{
-				AABB box = EntityUtils.getLerpedBox(e, partialTicks)
-					.move(0, extraSize, 0).inflate(extraSize);
-				boxes.add(new ColoredBox(box, getColor(e)));
-			}
-			
-			RenderUtils.drawOutlinedBoxes(matrixStack, boxes, false);
-		}
-		
 		if(style.hasLines())
 		{
 			ArrayList<ColoredPoint> ends = new ArrayList<>(players.size());
@@ -132,6 +115,11 @@ public final class PlayerEspHack extends Hack implements UpdateListener,
 			
 			RenderUtils.drawTracers(matrixStack, partialTicks, ends, false);
 		}
+	}
+	
+	public boolean contains(Player e)
+	{
+		return isEnabled() && players.contains(e);
 	}
 	
 	private int getColor(Player e)
