@@ -66,12 +66,7 @@ public final class ClickGui
 			case "render":
 			index = 3;
 			break;
-			case "chat":
-			index = 4;
-			break;
-			case "fun":
-			index = 5;
-			break;
+			
 			case "other":
 			index = 7;
 			break;
@@ -79,15 +74,7 @@ public final class ClickGui
 			case "settings":
 			index = 8;
 			break;
-			case "world":
-			index = 9;
-			break;
-			case "minigames":
-			index = 10;
-			break;
-			case "inventory":
-			index = 11;
-			break;
+			
 		}
 		
 		int u = index * 16;

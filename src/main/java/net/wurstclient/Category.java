@@ -13,7 +13,6 @@ public enum Category
 	MOVEMENT("Movement"),
 	COMBAT("Combat"),
 	RENDER("Render"),
-	CHAT("Chat"),
 	FUN("Fun"),
 	OTHER("Other");
 	

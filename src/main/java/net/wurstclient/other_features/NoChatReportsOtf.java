@@ -154,7 +154,7 @@ public final class NoChatReportsOtf extends OtherFeature
 	@Override
 	public Category getCategory()
 	{
-		return Category.CHAT;
+		return Category.OTHER;
 	}
 	
 	// See ChatHudMixin, ClientPlayNetworkHandlerMixin.onOnServerMetadata(),

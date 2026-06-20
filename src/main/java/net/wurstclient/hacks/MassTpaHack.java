@@ -67,7 +67,7 @@ public final class MassTpaHack extends Hack
 	public MassTpaHack()
 	{
 		super("MassTPA");
-		setCategory(Category.CHAT);
+		setCategory(Category.OTHER);
 		addSetting(commandSetting);
 		addSetting(delay);
 		addSetting(ignoreErrors);

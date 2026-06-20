@@ -28,7 +28,7 @@ public final class AntiSpamHack extends Hack implements ChatInputListener
 	public AntiSpamHack()
 	{
 		super("AntiSpam");
-		setCategory(Category.CHAT);
+		setCategory(Category.OTHER);
 	}
 	
 	@Override
