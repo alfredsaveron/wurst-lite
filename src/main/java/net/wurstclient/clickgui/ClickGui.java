@@ -161,10 +161,7 @@ public final class ClickGui
 			}
 			
 			window.setX(5 + col * colWidth);
-			int targetY = colY[col];
-			int maxLimitY = Math.max(5,
-				MC.getWindow().getGuiScaledHeight() - window.getHeight() - 5);
-			window.setY(Math.min(targetY, maxLimitY));
+			window.setY(colY[col]);
 			colY[col] += window.getHeight() + 5;
 		}
 		
@@ -291,10 +288,7 @@ public final class ClickGui
 			}
 			
 			window.setX(5 + col * colWidth);
-			int targetY = colY[col];
-			int maxLimitY = Math.max(5,
-				MC.getWindow().getGuiScaledHeight() - window.getHeight() - 5);
-			window.setY(Math.min(targetY, maxLimitY));
+			window.setY(colY[col]);
 			colY[col] += window.getHeight() + 5;
 		}
 		saveWindows();
@@ -732,7 +726,7 @@ public final class ClickGui
 		switch(window.getTitle().toLowerCase())
 		{
 			case "render":
-			return 397;
+			return 445;
 			case "movement":
 			return 397;
 			case "blocks":
