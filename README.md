@@ -46,6 +46,12 @@ Wurst Lite can be installed like any standard Fabric mod:
 
 *Note: A licensed copy of Minecraft Java Edition is required.*
 
+<img src="images/future.png" width="100%">
+
+## Future Updates
+
+I am not entirely sure about the long-term continuity of this project; I plan to maintain it as long as I find it fun and enjoy working on it. I also hope to release updates for both older and newer Minecraft versions over time, so feel free to check back on this repository occasionally!
+
 ## Development Setup
 
 Ensure you have **Java Development Kit 21** installed.
