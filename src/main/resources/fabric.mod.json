@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "id": "wurst",
   "version": "${version}",
-  "name": "Wurst Client",
+  "name": "Wurst Lite",
   "description": "Wurst Wurst Wurst!",
   "authors": [
-    "Alexander01998"
+    "alfredsaveron"
   ],
   "contact": {
     "homepage": "https://www.wurstclient.net/modmenu-homepage/",
@@ -13,7 +13,7 @@
     "issues": "https://www.wurstclient.net/modmenu-issues/"
   },
   "license": "GPL-3.0-or-later",
-  "icon": "assets/wurst/icon.png",
+  "icon": "assets/wurst/wurstlite.png",
   "environment": "client",
   "entrypoints": {
     "main": [

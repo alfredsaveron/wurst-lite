@@ -83,8 +83,8 @@ public enum ChatUtils
 		if(!enabled)
 			return;
 		ChatComponent chatHud = MC.gui.getChat();
-		chatHud.addMessage(
-			Component.literal(ERROR_PREFIX + "\u00a77" + message));
+		chatHud
+			.addMessage(Component.literal(ERROR_PREFIX + "\u00a77" + message));
 	}
 	
 	public static void syntaxError(String message)

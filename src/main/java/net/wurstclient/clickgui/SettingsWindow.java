@@ -16,9 +16,12 @@ import net.wurstclient.settings.Setting;
 
 public final class SettingsWindow extends Window
 {
+	private final Window parent;
+	
 	public SettingsWindow(Feature feature, Window parent, int buttonY)
 	{
 		super(feature.getName() + " Settings");
+		this.parent = parent;
 		
 		Stream<Setting> settings = feature.getSettings().values().stream();
 		settings.map(Setting::getComponent).forEach(this::add);
@@ -53,5 +56,10 @@ public final class SettingsWindow extends Window
 		
 		setX(x);
 		setY(y);
+	}
+	
+	public Window getParentWindow()
+	{
+		return parent;
 	}
 }

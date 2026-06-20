@@ -69,8 +69,6 @@ public class Window
 	public final int getX()
 	{
 		int scaledWidth = WurstClient.MC.getWindow().getGuiScaledWidth();
-		if(title.equals("Search"))
-			return (scaledWidth - width) / 2;
 		if(title.equals("Settings"))
 			return scaledWidth - width - 5;
 		return Mth.clamp(x, 0, Math.max(0, scaledWidth - width));
@@ -97,8 +95,6 @@ public class Window
 	public final int getY()
 	{
 		int scaledHeight = WurstClient.MC.getWindow().getGuiScaledHeight();
-		if(title.equals("Search"))
-			return scaledHeight - height - 10;
 		if(title.equals("Settings"))
 			return 5;
 		return Mth.clamp(y, 0, Math.max(0, scaledHeight - height));

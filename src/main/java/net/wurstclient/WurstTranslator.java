@@ -33,7 +33,6 @@ import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 
 public class WurstTranslator implements ResourceManagerReloadListener
 {
-	private final WurstClient wurst = WurstClient.INSTANCE;
 	private ClientLanguage mcEnglish;
 	
 	private Map<String, String> currentLangStrings = Map.of();

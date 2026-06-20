@@ -7,18 +7,11 @@
  */
 package net.wurstclient.update;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.wurstclient.WurstClient;
 import net.wurstclient.events.UpdateListener;
 import net.wurstclient.util.ChatUtils;
-import net.wurstclient.util.json.JsonException;
-import net.wurstclient.util.json.JsonUtils;
-import net.wurstclient.util.json.WsonArray;
-import net.wurstclient.util.json.WsonObject;
 
 public final class WurstUpdater implements UpdateListener
 {
@@ -48,71 +41,10 @@ public final class WurstUpdater implements UpdateListener
 	
 	public void checkForUpdates()
 	{
-		Version currentVersion = new Version(WurstClient.VERSION);
-		Version latestVersion = null;
-		
-		try
-		{
-			WsonArray wson = JsonUtils.parseURLToArray(
-				"https://api.github.com/repos/Wurst-Imperium/Wurst-MCX2/releases");
-			
-			for(WsonObject release : wson.getAllObjects())
-			{
-				if(!currentVersion.isPreRelease()
-					&& release.getBoolean("prerelease"))
-					continue;
-				
-				if(!containsCompatibleAsset(release.getArray("assets")))
-					continue;
-				
-				String tagName = release.getString("tag_name");
-				latestVersion = new Version(tagName.substring(1));
-				break;
-			}
-			
-			if(latestVersion == null)
-				throw new NullPointerException("Latest version is missing!");
-			
-			System.out.println("[Updater] Current version: " + currentVersion);
-			System.out.println("[Updater] Latest version: " + latestVersion);
-			outdated = currentVersion.shouldUpdateTo(latestVersion);
-			
-		}catch(Exception e)
-		{
-			System.err.println("[Updater] An error occurred!");
-			e.printStackTrace();
-		}
-		
-		String currentVersionEncoded = URLEncoder.encode(
-			"Wurst " + currentVersion + " MC" + WurstClient.MC_VERSION,
-			StandardCharsets.UTF_8);
-		
-		String baseUrl = "https://www.wurstclient.net/download/";
-		String utmSource = "Wurst+Client";
-		String utmMedium = "WurstUpdater+chat+message";
-		
-		if(latestVersion == null || latestVersion.isInvalid())
-		{
-			String text = "An error occurred while checking for updates."
-				+ " Click \u00a7nhere\u00a7r to check manually.";
-			String url = baseUrl + "?utm_source=" + utmSource + "&utm_medium="
-				+ utmMedium + "&utm_content=" + currentVersionEncoded
-				+ "+error+checking+updates+chat+message";
-			showLink(text, url);
-			return;
-		}
-		
-		if(!outdated)
-			return;
-		
-		String text = "Wurst " + latestVersion
-			+ " is now available for Minecraft " + WurstClient.MC_VERSION
-			+ ". \u00a7nUpdate now\u00a7r to benefit from new features and/or bugfixes!";
-		String utmContent = currentVersionEncoded + "+update+chat+message";
-		
-		String url = baseUrl + "?utm_source=" + utmSource + "&utm_medium="
-			+ utmMedium + "&utm_content=" + utmContent;
-		
+		outdated = false;
+		String text =
+			"WurstLite is a simplified and improved version of Wurst Client. If you want to use the official Wurst, click \u00a7nhere\u00a7r.";
+		String url = "https://github.com/Wurst-Imperium/Wurst7";
 		showLink(text, url);
 	}
 	
@@ -121,23 +53,6 @@ public final class WurstUpdater implements UpdateListener
 		ClickEvent event = new ClickEvent(ClickEvent.Action.OPEN_URL, url);
 		component =
 			Component.literal(text).withStyle(s -> s.withClickEvent(event));
-	}
-	
-	private boolean containsCompatibleAsset(WsonArray wsonArray)
-		throws JsonException
-	{
-		String compatibleSuffix = "MC" + WurstClient.MC_VERSION + ".jar";
-		
-		for(WsonObject asset : wsonArray.getAllObjects())
-		{
-			String assetName = asset.getString("name");
-			if(!assetName.endsWith(compatibleSuffix))
-				continue;
-			
-			return true;
-		}
-		
-		return false;
 	}
 	
 	public boolean isOutdated()

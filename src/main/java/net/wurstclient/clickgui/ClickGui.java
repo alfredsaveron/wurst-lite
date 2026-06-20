@@ -33,7 +33,6 @@ import net.wurstclient.Category;
 import net.wurstclient.Feature;
 import net.wurstclient.WurstClient;
 import net.wurstclient.clickgui.components.FeatureButton;
-import net.wurstclient.clickgui.components.SearchQueryComponent;
 import net.wurstclient.hacks.ClickGuiHack;
 import net.wurstclient.settings.Setting;
 import net.wurstclient.util.RenderUtils;
@@ -162,6 +161,7 @@ public final class ClickGui
 		
 		Window uiSettings = new Window("Settings");
 		uiSettings.add(new FeatureButton(WURST.getOtfs().wurstLogoOtf));
+		uiSettings.add(new FeatureButton(WURST.getOtfs().searchOtf));
 		uiSettings.add(new FeatureButton(WURST.getOtfs().hackListOtf));
 		uiSettings.add(new FeatureButton(WURST.getHax().viewmodelHack));
 		uiSettings.add(new FeatureButton(WURST.getOtfs().resetGuiOtf));
@@ -171,33 +171,19 @@ public final class ClickGui
 		settings.map(Setting::getComponent).forEach(c -> uiSettings.add(c));
 		windows.add(uiSettings);
 		
-		Window searchWindow = new Window("Search");
-		searchWindow.add(new SearchQueryComponent());
-		int scaledWidth = MC.getWindow().getGuiScaledWidth();
-		int scaledHeight = MC.getWindow().getGuiScaledHeight();
-		searchWindow.pack();
-		searchWindow.setX((scaledWidth - searchWindow.getWidth()) / 2);
-		searchWindow.setY(scaledHeight - searchWindow.getHeight() - 10);
-		windows.add(searchWindow);
-		
 		for(Window window : windows)
 			window.setMinimized(false);
 		
 		windows.add(WurstClient.INSTANCE.getHax().radarHack.getWindow());
 		
+		int scaledWidth = MC.getWindow().getGuiScaledWidth();
+		int scaledHeight = MC.getWindow().getGuiScaledHeight();
 		int x = 5;
 		int y = 5;
 		int maxYInRow = 0;
 		for(Window window : windows)
 		{
 			window.pack();
-			
-			if(window.getTitle().equals("Search"))
-			{
-				window.setX((scaledWidth - window.getWidth()) / 2);
-				window.setY(scaledHeight - window.getHeight() - 10);
-				continue;
-			}
 			
 			if(window.getTitle().equals("Settings"))
 			{
@@ -241,9 +227,6 @@ public final class ClickGui
 		
 		for(Window window : windows)
 		{
-			if(window.getTitle().equals("Search"))
-				continue;
-			
 			JsonElement jsonWindow = json.get(window.getTitle());
 			if(jsonWindow == null || !jsonWindow.isJsonObject())
 				continue;
@@ -277,8 +260,6 @@ public final class ClickGui
 	
 	private int getWindowPriority(Window w)
 	{
-		if(w.getTitle().equals("Search"))
-			return 1;
 		for(Category c : Category.values())
 		{
 			if(c != Category.FUN && c.getName().equals(w.getTitle()))
@@ -306,13 +287,6 @@ public final class ClickGui
 			
 			window.setMinimized(false);
 			window.pack();
-			
-			if(window.getTitle().equals("Search"))
-			{
-				window.setX((scaledWidth - window.getWidth()) / 2);
-				window.setY(scaledHeight - window.getHeight() - 10);
-				continue;
-			}
 			
 			if(window.getTitle().equals("Settings"))
 			{
@@ -343,7 +317,7 @@ public final class ClickGui
 		
 		for(Window window : windows)
 		{
-			if(window.isClosable() || window.getTitle().equals("Search"))
+			if(window.isClosable())
 				continue;
 			
 			JsonObject jsonWindow = new JsonObject();
@@ -620,6 +594,15 @@ public final class ClickGui
 	{
 		updateColors();
 		
+		for(Window window : windows)
+			if(window instanceof SettingsWindow)
+			{
+				SettingsWindow sw = (SettingsWindow)window;
+				if(sw.getParentWindow().isMinimized())
+					sw.close();
+			}
+		windows.removeIf(Window::isClosing);
+		
 		PoseStack matrixStack = context.pose();
 		matrixStack.pushPose();
 		
@@ -888,10 +871,6 @@ public final class ClickGui
 		{
 			int bx1 = x2 - 12;
 			int by1 = y1 + 2;
-			int bx2 = x2 - 3;
-			int by2 = y1 + 11;
-			boolean hovering = mouseX >= bx1 && mouseX <= bx2 && mouseY >= by1
-				&& mouseY <= by2;
 			String buttonText = window.isMinimized() ? "+" : "-";
 			context.drawString(tr, buttonText,
 				bx1 + (9 - tr.width(buttonText)) / 2,

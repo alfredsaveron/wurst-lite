@@ -117,9 +117,4 @@ public final class KeybindList
 	{
 		return Collections.emptySet();
 	}
-	
-	private static void addKB(Set<Keybind> set, String key, String cmds)
-	{
-		set.add(new Keybind("key.keyboard." + key, cmds));
-	}
 }

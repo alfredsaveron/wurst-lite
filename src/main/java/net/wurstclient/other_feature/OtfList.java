@@ -29,6 +29,7 @@ public final class OtfList
 	public final ResetGuiOtf resetGuiOtf = new ResetGuiOtf();
 	public final ResetKeybindsOtf resetKeybindsOtf = new ResetKeybindsOtf();
 	public final ServerFinderOtf serverFinderOtf = new ServerFinderOtf();
+	public final SearchOtf searchOtf = new SearchOtf();
 	public final TabGuiOtf tabGuiOtf = new TabGuiOtf();
 	public final VanillaSpoofOtf vanillaSpoofOtf = new VanillaSpoofOtf();
 	public final WikiDataExportOtf wikiDataExportOtf = new WikiDataExportOtf();
