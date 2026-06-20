@@ -42,9 +42,9 @@ Having used the Wurst Client since childhood to troll friends with excitement, I
 ## Installation
 
 <p align="center">
-  <a href="https://fabricmc.net/use/installer/"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/supported/fabric_46h.png" alt="Fabric Loader" height="32"></a>
-  <a href="https://www.modrinth.com/mod/fabric-api/versions?l=fabric&g=1.21.1"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/requires/fabric-api_46h.png" alt="Fabric API" height="32"></a>
-  <a href="https://github.com/alfredsaveron/wurst-lite/releases"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/available/github_46h.png" alt="GitHub Releases" height="32"></a>
+  <a href="https://fabricmc.net/use/installer/"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/supported/fabric_46h.png" alt="Fabric Loader"></a>
+  <a href="https://www.modrinth.com/mod/fabric-api/versions?l=fabric&g=1.21.1"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/requires/fabric-api_46h.png" alt="Fabric API"></a>
+  <a href="https://github.com/alfredsaveron/wurst-lite/releases"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/available/github_46h.png" alt="GitHub Releases"></a>
 </p>
 
 Wurst Lite is a standard Fabric mod. Follow these steps to install:
@@ -66,21 +66,25 @@ Wurst Lite is a standard Fabric mod. Follow these steps to install:
 
 I am not entirely sure about the long-term continuity of this project; I plan to maintain it as long as I find it fun and enjoy working on it. I also hope to release updates for both older and newer Minecraft versions over time, so feel free to check back on this repository occasionally!
 
-## Development Setup
+## Development
 
-Ensure you have **Java Development Kit 21** installed.
+Follow these steps to set up the development environment and build the project from source:
+
+### Prerequisites
+
+* **Java Development Kit (JDK) 21**
+* **Git**
 
 ### Workspace Setup
 
-1. Clone the repository:
+1. **Clone the repository:**
    ```pwsh
    git clone https://github.com/alfredsaveron/wurst-lite.git
    cd wurst-lite
    ```
 
-2. Generate the resources for your preferred IDE:
+2. **Generate resources for your IDE:**
 
-   * **VSCode / Cursor:**
      ```pwsh
      ./gradlew genSources vscode
      ```
@@ -92,6 +96,14 @@ Ensure you have **Java Development Kit 21** installed.
      ```pwsh
      ./gradlew genSources eclipse
      ```
+
+### Compilation
+
+To build the mod jar file, execute:
+```pwsh
+./gradlew build
+```
+The output jar will be located under `build/libs/`.
 
 ## Wurst Client
 
