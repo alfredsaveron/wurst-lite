@@ -12,7 +12,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.wurstclient.WurstClient;
 import net.wurstclient.other_features.WurstLogoOtf;
-import net.wurstclient.util.RenderUtils;
 
 public final class WurstLogo
 {
@@ -30,11 +29,7 @@ public final class WurstLogo
 		Font tr = WurstClient.MC.font;
 		
 		// background
-		int bgColor;
-		if(WURST.getHax().rainbowUiHack.isEnabled())
-			bgColor = RenderUtils.toIntColor(WURST.getGui().getAcColor(), 0.5F);
-		else
-			bgColor = otf.getBackgroundColor();
+		int bgColor = otf.getBackgroundColor();
 		context.fill(0, 6, tr.width(version) + 76, 17, bgColor);
 		
 		// version string

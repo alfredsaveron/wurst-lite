@@ -48,14 +48,7 @@ public final class HackListHUD implements UpdateListener
 		else
 			posY = 2;
 		
-		if(WurstClient.INSTANCE.getHax().rainbowUiHack.isEnabled())
-		{
-			float[] acColor = WurstClient.INSTANCE.getGui().getAcColor();
-			textColor = 0x04 << 24 | (int)(acColor[0] * 0xFF) << 16
-				| (int)(acColor[1] * 0xFF) << 8 | (int)(acColor[2] * 0xFF);
-			
-		}else
-			textColor = otf.getColor(0x04);
+		textColor = otf.getColor(0x04);
 		
 		int height = posY + activeHax.size() * 9;
 		

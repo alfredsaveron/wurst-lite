@@ -8,7 +8,6 @@
 package net.wurstclient.clickgui;
 
 import net.minecraft.client.gui.GuiGraphics;
-import net.wurstclient.WurstClient;
 import net.wurstclient.util.RenderUtils;
 
 public enum ClickGuiIcons

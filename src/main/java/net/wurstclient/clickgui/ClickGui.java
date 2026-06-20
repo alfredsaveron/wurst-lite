@@ -56,8 +56,7 @@ public final class ClickGui
 	private int txtColor;
 	private float opacity;
 	private float ttOpacity;
-	private int maxHeight;
-	private int maxSettingsHeight;
+
 	
 	private String tooltip = "";
 	
@@ -86,15 +85,14 @@ public final class ClickGui
 		
 		LinkedHashMap<Category, Window> windowMap = new LinkedHashMap<>();
 		for(Category category : Category.values())
-			if(category != Category.FUN)
-				windowMap.put(category, new Window(category.getName()));
+			windowMap.put(category, new Window(category.getName()));
 			
 		ArrayList<Feature> features = new ArrayList<>();
 		features.addAll(WURST.getHax().getAllHax());
 		features.addAll(WURST.getCmds().getAllCmds());
 		features.addAll(WURST.getOtfs().getAllOtfs());
 		for(Feature f : features)
-			if(f.getCategory() != null && f.getCategory() != Category.FUN)
+			if(f.getCategory() != null)
 				windowMap.get(f.getCategory()).add(new FeatureButton(f));
 			
 		ArrayList<Window> sortedWindows = new ArrayList<>(windowMap.values());
@@ -228,7 +226,7 @@ public final class ClickGui
 	{
 		for(Category c : Category.values())
 		{
-			if(c != Category.FUN && c.getName().equals(w.getTitle()))
+			if(c.getName().equals(w.getTitle()))
 				return 100 + w.countChildren();
 		}
 		if(w.getTitle().equals("Settings"))
@@ -720,8 +718,7 @@ public final class ClickGui
 		ttOpacity = clickGui.getTooltipOpacity();
 		bgColor = clickGui.getBackgroundColor();
 		txtColor = clickGui.getTextColor();
-		maxHeight = clickGui.getMaxHeight();
-		maxSettingsHeight = clickGui.getMaxSettingsHeight();
+
 		acColor = new float[]{0.635F, 0.451F, 0.651F};
 	}
 	

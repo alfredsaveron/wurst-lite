@@ -47,8 +47,7 @@ public final class TabGui implements KeyPressListener
 		
 		LinkedHashMap<Category, Tab> tabMap = new LinkedHashMap<>();
 		for(Category category : Category.values())
-			if(category != Category.FUN)
-				tabMap.put(category, new Tab(category.getName()));
+			tabMap.put(category, new Tab(category.getName()));
 			
 		ArrayList<Feature> features = new ArrayList<>();
 		features.addAll(WURST.getHax().getAllHax());
@@ -56,8 +55,7 @@ public final class TabGui implements KeyPressListener
 		features.addAll(WURST.getOtfs().getAllOtfs());
 		
 		for(Feature feature : features)
-			if(feature.getCategory() != null
-				&& feature.getCategory() != Category.FUN)
+			if(feature.getCategory() != null)
 				tabMap.get(feature.getCategory()).add(feature);
 			
 		tabs.addAll(tabMap.values());

@@ -13,7 +13,6 @@ public enum Category
 	MOVEMENT("Movement"),
 	COMBAT("Combat"),
 	RENDER("Render"),
-	FUN("Fun"),
 	OTHER("Other");
 	
 	private final String name;
