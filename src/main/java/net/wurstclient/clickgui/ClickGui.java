@@ -125,7 +125,8 @@ public final class ClickGui
 		}
 		
 		int colWidth = maxWindowWidth + 5;
-		int numCols = Math.max(1, (scaledWidth - 5) / colWidth);
+		int numCols =
+			Math.max(1, (scaledWidth - maxWindowWidth - 10) / colWidth);
 		int[] colY = new int[numCols];
 		java.util.Arrays.fill(colY, 5);
 		
