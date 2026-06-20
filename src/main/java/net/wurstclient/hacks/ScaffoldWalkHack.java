@@ -23,6 +23,8 @@ import net.wurstclient.Category;
 import net.wurstclient.SearchTags;
 import net.wurstclient.events.UpdateListener;
 import net.wurstclient.hack.Hack;
+import net.wurstclient.mixinterface.IKeyBinding;
+import net.wurstclient.settings.CheckboxSetting;
 import net.wurstclient.util.BlockUtils;
 import net.wurstclient.util.RotationUtils;
 
@@ -30,22 +32,41 @@ import net.wurstclient.util.RotationUtils;
 	"auto bridge", "tower"})
 public final class ScaffoldWalkHack extends Hack implements UpdateListener
 {
+	private final CheckboxSetting legitMode = new CheckboxSetting("Legit mode",
+		"Sneaks at edges to look like a legit fast-bridger.", true);
+	
+	private boolean sneaking;
+	
 	public ScaffoldWalkHack()
 	{
 		super("ScaffoldWalk");
 		setCategory(Category.BLOCKS);
+		addSetting(legitMode);
 	}
 	
 	@Override
 	protected void onEnable()
 	{
 		EVENTS.add(UpdateListener.class, this);
+		sneaking = false;
 	}
 	
 	@Override
 	protected void onDisable()
 	{
 		EVENTS.remove(UpdateListener.class, this);
+		if(sneaking)
+			setSneaking(false);
+	}
+	
+	private void setSneaking(boolean sneaking)
+	{
+		IKeyBinding sneakKey = IKeyBinding.get(MC.options.keyShift);
+		if(sneaking)
+			sneakKey.setDown(true);
+		else
+			sneakKey.resetPressedState();
+		this.sneaking = sneaking;
 	}
 	
 	@Override
@@ -54,27 +75,26 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 		BlockPos belowPlayer =
 			BlockPos.containing(MC.player.position()).below();
 		
-		// check if block is already placed
 		if(!BlockUtils.getState(belowPlayer).canBeReplaced())
+		{
+			if(sneaking)
+				setSneaking(false);
 			return;
+		}
 		
-		// search blocks in hotbar
 		int newSlot = -1;
 		for(int i = 0; i < 9; i++)
 		{
-			// filter out non-block items
 			ItemStack stack = MC.player.getInventory().getItem(i);
 			if(stack.isEmpty() || !(stack.getItem() instanceof BlockItem))
 				continue;
 			
-			// filter out non-solid blocks
 			Block block = Block.byItem(stack.getItem());
 			BlockState state = block.defaultBlockState();
 			if(!state.isCollisionShapeFullBlock(EmptyBlockGetter.INSTANCE,
 				BlockPos.ZERO))
 				continue;
 			
-			// filter out blocks that would fall
 			if(block instanceof FallingBlock && FallingBlock
 				.isFree(BlockUtils.getState(belowPlayer.below())))
 				continue;
@@ -83,28 +103,32 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 			break;
 		}
 		
-		// check if any blocks were found
 		if(newSlot == -1)
+		{
+			if(sneaking)
+				setSneaking(false);
 			return;
+		}
 		
-		// set slot
+		boolean shouldSneak = legitMode.isChecked() && MC.player.onGround();
+		if(shouldSneak)
+			setSneaking(true);
+		else if(sneaking)
+			setSneaking(false);
+		
 		int oldSlot = MC.player.getInventory().selected;
 		MC.player.getInventory().selected = newSlot;
 		
 		scaffoldTo(belowPlayer);
 		
-		// reset slot
 		MC.player.getInventory().selected = oldSlot;
 	}
 	
 	private void scaffoldTo(BlockPos belowPlayer)
 	{
-		// tries to place a block directly under the player
 		if(placeBlock(belowPlayer))
 			return;
-			
-		// if that doesn't work, tries to place a block next to the block that's
-		// under the player
+		
 		Direction[] sides = Direction.values();
 		for(Direction side : sides)
 		{
@@ -113,8 +137,6 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 				return;
 		}
 		
-		// if that doesn't work, tries to place a block next to a block that's
-		// next to the block that's under the player
 		for(Direction side : sides)
 			for(Direction side2 : Arrays.copyOfRange(sides, side.ordinal(), 6))
 			{
@@ -136,23 +158,19 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 			BlockPos neighbor = pos.relative(side);
 			Direction side2 = side.getOpposite();
 			
-			// check if side is visible (facing away from player)
 			if(eyesPos.distanceToSqr(Vec3.atCenterOf(pos)) >= eyesPos
 				.distanceToSqr(Vec3.atCenterOf(neighbor)))
 				continue;
 			
-			// check if neighbor can be right clicked
 			if(!BlockUtils.canBeClicked(neighbor))
 				continue;
 			
 			Vec3 hitVec = Vec3.atCenterOf(neighbor)
 				.add(Vec3.atLowerCornerOf(side2.getNormal()).scale(0.5));
 			
-			// check if hitVec is within range (4.25 blocks)
 			if(eyesPos.distanceToSqr(hitVec) > 18.0625)
 				continue;
 			
-			// place block
 			RotationUtils.getNeededRotations(hitVec).sendPlayerLookPacket();
 			IMC.getInteractionManager().rightClickBlock(neighbor, side2,
 				hitVec);

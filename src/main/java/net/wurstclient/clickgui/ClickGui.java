@@ -56,7 +56,6 @@ public final class ClickGui
 	private int txtColor;
 	private float opacity;
 	private float ttOpacity;
-
 	
 	private String tooltip = "";
 	
@@ -86,7 +85,7 @@ public final class ClickGui
 		LinkedHashMap<Category, Window> windowMap = new LinkedHashMap<>();
 		for(Category category : Category.values())
 			windowMap.put(category, new Window(category.getName()));
-			
+		
 		ArrayList<Feature> features = new ArrayList<>();
 		features.addAll(WURST.getHax().getAllHax());
 		features.addAll(WURST.getCmds().getAllCmds());
@@ -718,7 +717,7 @@ public final class ClickGui
 		ttOpacity = clickGui.getTooltipOpacity();
 		bgColor = clickGui.getBackgroundColor();
 		txtColor = clickGui.getTextColor();
-
+		
 		acColor = new float[]{0.635F, 0.451F, 0.651F};
 	}
 	
