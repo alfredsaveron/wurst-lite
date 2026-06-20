@@ -57,6 +57,9 @@ Ensure you have **Java Development Kit 21** installed.
 
 <img src="images/wurst-wurstlite.png" width="100%">
 
+[![Ko-Fi](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/donate/kofi-plural-alt_46h.png)](https://ko-fi.com/wurst)
+[![PayPal](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/donate/paypal-plural_46h.png)](https://www.paypal.com/biz/fund?id=FDQ7BMPSLHPBJ)
+
 For documentation, community assistance, and upstream codebases, refer to these references:
 
 * **Official Website:** [wurstclient.net](https://www.wurstclient.net/)
