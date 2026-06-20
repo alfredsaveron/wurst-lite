@@ -25,16 +25,17 @@ public enum ChatUtils
 	
 	private static final Minecraft MC = WurstClient.MC;
 	
-	private static final String GRAY_FORMAT = "\u00a77";
+	private static final String WURST_NAME =
+		"\u00a7dW\u00a7du\u00a7dr\u00a7ds\u00a7dt \u00a7dL\u00a7di\u00a7dt\u00a7de";
 	
 	public static final String WURST_PREFIX =
-		GRAY_FORMAT + "WurstLite\u00a7r \u00a7u\u00bb\u00a7r ";
+		WURST_NAME + "\u00a7r \u00a7u\u00bb\u00a7r ";
 	private static final String WARNING_PREFIX =
-		GRAY_FORMAT + "WurstLite\u00a7r \u00a7u\u00bb\u00a7r ";
+		WURST_NAME + "\u00a7r \u00a7u\u00bb\u00a7r ";
 	private static final String ERROR_PREFIX =
-		GRAY_FORMAT + "WurstLite\u00a7r \u00a7u\u00bb\u00a7r ";
+		WURST_NAME + "\u00a7r \u00a7u\u00bb\u00a7r ";
 	private static final String SYNTAX_ERROR_PREFIX =
-		GRAY_FORMAT + "WurstLite\u00a7r \u00a7u\u00bb\u00a7r ";
+		WURST_NAME + "\u00a7r \u00a7u\u00bb\u00a7r ";
 	
 	private static boolean enabled = true;
 	
@@ -63,7 +64,7 @@ public enum ChatUtils
 		{
 			String formatted = line;
 			if(!formatted.startsWith("\u00a7"))
-				formatted = GRAY_FORMAT + formatted;
+				formatted = "\u00a77" + formatted;
 			chatHud.addMessage(Component.literal(WURST_PREFIX + formatted));
 		}
 	}
@@ -74,7 +75,7 @@ public enum ChatUtils
 			return;
 		ChatComponent chatHud = MC.gui.getChat();
 		chatHud.addMessage(
-			Component.literal(WARNING_PREFIX + GRAY_FORMAT + message));
+			Component.literal(WARNING_PREFIX + "\u00a77" + message));
 	}
 	
 	public static void error(String message)
@@ -83,7 +84,7 @@ public enum ChatUtils
 			return;
 		ChatComponent chatHud = MC.gui.getChat();
 		chatHud.addMessage(
-			Component.literal(ERROR_PREFIX + GRAY_FORMAT + message));
+			Component.literal(ERROR_PREFIX + "\u00a77" + message));
 	}
 	
 	public static void syntaxError(String message)
@@ -92,7 +93,7 @@ public enum ChatUtils
 			return;
 		ChatComponent chatHud = MC.gui.getChat();
 		chatHud.addMessage(
-			Component.literal(SYNTAX_ERROR_PREFIX + GRAY_FORMAT + message));
+			Component.literal(SYNTAX_ERROR_PREFIX + "\u00a77" + message));
 	}
 	
 	public static String getAsString(GuiMessage.Line visible)
