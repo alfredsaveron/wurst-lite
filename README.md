@@ -31,7 +31,7 @@ A clean, lightweight fork of the Wurst Client for Minecraft 1.21.1. Wurst Lite i
 ## Why Wurst Lite?
 
 > [!CAUTION]
-> Do not trust Wurst Lite downloads from other sources or third-party `.jar` files. This repository is the only official and safe source for Wurst Lite. We are not responsible for any security issues or damage caused by builds obtained elsewhere.
+> Do not trust Wurst Lite downloads from other sources or third-party `.jar` files. This repository is the only official and safe source for Wurst Lite. I am not responsible for any security issues or damage caused by builds obtained elsewhere.
 
 Having used the Wurst Client since childhood to troll friends with excitement, I have always admired its years of continuous development and evolution. Seeing it actively updated today inspired me to start this modernization project, keeping that classic legacy alive in a modern, refined way.
 
