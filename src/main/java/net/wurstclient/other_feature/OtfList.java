@@ -26,7 +26,6 @@ public final class OtfList
 	public final NoChatReportsOtf noChatReportsOtf = new NoChatReportsOtf();
 	public final NoTelemetryOtf noTelemetryOtf = new NoTelemetryOtf();
 	public final ReconnectOtf reconnectOtf = new ReconnectOtf();
-	public final ResetGuiOtf resetGuiOtf = new ResetGuiOtf();
 	public final ResetKeybindsOtf resetKeybindsOtf = new ResetKeybindsOtf();
 	public final ServerFinderOtf serverFinderOtf = new ServerFinderOtf();
 	public final SearchOtf searchOtf = new SearchOtf();

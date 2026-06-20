@@ -106,7 +106,6 @@ public final class ClickGui
 		uiSettings.add(new FeatureButton(WURST.getOtfs().searchOtf));
 		uiSettings.add(new FeatureButton(WURST.getOtfs().hackListOtf));
 		uiSettings.add(new FeatureButton(WURST.getHax().viewmodelHack));
-		uiSettings.add(new FeatureButton(WURST.getOtfs().resetGuiOtf));
 		uiSettings.add(new FeatureButton(WURST.getOtfs().resetKeybindsOtf));
 		ClickGuiHack clickGuiHack = WURST.getHax().clickGuiHack;
 		Stream<Setting> settings = clickGuiHack.getSettings().values().stream();
@@ -115,8 +114,6 @@ public final class ClickGui
 		
 		for(Window window : windows)
 			window.setMinimized(false);
-		
-		windows.add(WurstClient.INSTANCE.getHax().radarHack.getWindow());
 		
 		int scaledWidth = MC.getWindow().getGuiScaledWidth();
 		int maxWindowWidth = 100;
