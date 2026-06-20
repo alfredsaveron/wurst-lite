@@ -13,6 +13,7 @@ Wurst Lite features a clean, organized, and responsive window-based ClickGUI. Ov
 
 <img src="images/wurstlite-gui.png" width="100%">
 <img src="images/wurstlite-searchhack.png" width="100%">
+<img src="images/playeresp-glow.gif" width="100%">
 <img src="images/altlook.gif" width="100%">
 <img src="images/gui-demo-jesus.gif" width="100%">
 
@@ -57,8 +58,10 @@ Ensure you have **Java Development Kit 21** installed.
 
 <img src="images/wurst-wurstlite.png" width="100%">
 
-[![Ko-Fi](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/donate/kofi-plural-alt_46h.png)](https://ko-fi.com/wurst)
-[![PayPal](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/donate/paypal-plural_46h.png)](https://www.paypal.com/biz/fund?id=FDQ7BMPSLHPBJ)
+<p align="center">
+  <a href="https://ko-fi.com/wurst"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/donate/kofi-plural-alt_46h.png" alt="Ko-Fi"></a>
+  <a href="https://www.paypal.com/biz/fund?id=FDQ7BMPSLHPBJ"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/donate/paypal-plural_46h.png" alt="PayPal"></a>
+</p>
 
 For documentation, community assistance, and upstream codebases, refer to these references:
 
