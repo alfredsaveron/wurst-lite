@@ -94,10 +94,10 @@ Ensure you have **Java Development Kit 21** installed.
 For documentation, community assistance, and upstream codebases, refer to these references:
 
 * **Official Website:** [wurstclient.net](https://www.wurstclient.net/)
-* **Official Wiki & Docs:** [wurst.wiki](https://wurst.wiki/)
-* **Upstream Wurst7 Repository:** [github.com/Wurst-Imperium/Wurst7](https://github.com/Wurst-Imperium/Wurst7)
-* **Official Wurst Forum:** [wurstforum.net](https://wurstforum.net/)
-* **Fabric Modding Toolchain:** [fabricmc.net](https://fabricmc.net/)
+* **Wiki & Docs:** [wurst.wiki](https://wurst.wiki/)
+* **Wurst7 Repository:** [github.com/Wurst-Imperium/Wurst7](https://github.com/Wurst-Imperium/Wurst7)
+* **Wurst Forum:** [wurstforum.net](https://wurstforum.net/)
+* **Fabric:** [fabricmc.net](https://fabricmc.net/)
 
 ## License
 

@@ -99,28 +99,6 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 		else if(sneaking)
 			setSneaking(false);
 		
-		Vec3 velocity = MC.player.getDeltaMovement();
-		double dx = velocity.x;
-		double dz = velocity.z;
-		if(Math.abs(dx) < 0.01 && Math.abs(dz) < 0.01)
-		{
-			Direction facing = MC.player.getDirection();
-			dx = -facing.getStepX();
-			dz = -facing.getStepZ();
-		}
-		Direction moveDir = Direction.getNearest(dx, 0.0, dz);
-		
-		BlockPos targetPos = BlockUtils.getState(belowPlayer).canBeReplaced()
-			? belowPlayer : belowPlayer.relative(moveDir);
-		Vec3 targetHitVec = getHitVec(targetPos);
-		
-		if(targetHitVec != null)
-		{
-			Rotation rotation = RotationUtils.getNeededRotations(targetHitVec);
-			rotation.sendPlayerLookPacket();
-			rotation.applyToClientPlayer();
-		}
-		
 		if(!BlockUtils.getState(belowPlayer).canBeReplaced())
 			return;
 		
@@ -161,53 +139,24 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 		if(placeBlock(belowPlayer))
 			return;
 		
-		Vec3 velocity = MC.player.getDeltaMovement();
-		double dx = velocity.x;
-		double dz = velocity.z;
-		if(Math.abs(dx) < 0.01 && Math.abs(dz) < 0.01)
-		{
-			Direction facing = MC.player.getDirection();
-			dx = -facing.getStepX();
-			dz = -facing.getStepZ();
-		}
-		
-		Direction[] horizontalSides =
-			{Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
-		final double finalDx = dx;
-		final double finalDz = dz;
-		Arrays.sort(horizontalSides, (d1, d2) -> {
-			double dot1 = d1.getStepX() * finalDx + d1.getStepZ() * finalDz;
-			double dot2 = d2.getStepX() * finalDx + d2.getStepZ() * finalDz;
-			return Double.compare(dot2, dot1);
-		});
-		
-		for(Direction side : horizontalSides)
+		Direction[] sides = Direction.values();
+		for(Direction side : sides)
 		{
 			BlockPos neighbor = belowPlayer.relative(side);
 			if(placeBlock(neighbor))
 				return;
 		}
 		
-		for(int i = 0; i < horizontalSides.length; i++)
-			for(int j = i + 1; j < horizontalSides.length; j++)
+		for(Direction side : sides)
+			for(Direction side2 : Arrays.copyOfRange(sides, side.ordinal(), 6))
 			{
-				Direction d1 = horizontalSides[i];
-				Direction d2 = horizontalSides[j];
-				if(d1.getOpposite().equals(d2))
+				if(side.getOpposite().equals(side2))
 					continue;
 				
-				BlockPos neighbor = belowPlayer.relative(d1).relative(d2);
+				BlockPos neighbor = belowPlayer.relative(side).relative(side2);
 				if(placeBlock(neighbor))
 					return;
 			}
-		
-		Direction[] verticalSides = {Direction.DOWN, Direction.UP};
-		for(Direction side : verticalSides)
-		{
-			BlockPos neighbor = belowPlayer.relative(side);
-			if(placeBlock(neighbor))
-				return;
-		}
 	}
 	
 	private boolean placeBlock(BlockPos pos)
@@ -245,33 +194,5 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 		}
 		
 		return false;
-	}
-	
-	private Vec3 getHitVec(BlockPos pos)
-	{
-		Vec3 eyesPos = RotationUtils.getEyesPos();
-		
-		for(Direction side : Direction.values())
-		{
-			BlockPos neighbor = pos.relative(side);
-			Direction side2 = side.getOpposite();
-			
-			if(eyesPos.distanceToSqr(Vec3.atCenterOf(pos)) >= eyesPos
-				.distanceToSqr(Vec3.atCenterOf(neighbor)))
-				continue;
-			
-			if(!BlockUtils.canBeClicked(neighbor))
-				continue;
-			
-			Vec3 hitVec = Vec3.atCenterOf(neighbor)
-				.add(Vec3.atLowerCornerOf(side2.getNormal()).scale(0.5));
-			
-			if(eyesPos.distanceToSqr(hitVec) > 18.0625)
-				continue;
-			
-			return hitVec;
-		}
-		
-		return null;
 	}
 }
