@@ -90,7 +90,9 @@ public abstract class EntityMixin
 		}
 	}
 	
-	@Inject(at = @At("HEAD"), method = "isGlowing()Z", cancellable = true)
+	@Inject(at = @At("HEAD"),
+		method = {"isGlowing()Z", "method_5851()Z"},
+		cancellable = true)
 	private void onIsGlowing(CallbackInfoReturnable<Boolean> cir)
 	{
 		if((Object)this instanceof Player
