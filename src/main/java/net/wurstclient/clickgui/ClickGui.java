@@ -183,6 +183,9 @@ public final class ClickGui
 		int maxYInRow = 0;
 		for(Window window : windows)
 		{
+			if(window.isInvisible())
+				continue;
+			
 			window.pack();
 			
 			if(window.getTitle().equals("Settings"))
@@ -282,7 +285,7 @@ public final class ClickGui
 		int scaledHeight = MC.getWindow().getGuiScaledHeight();
 		for(Window window : windows)
 		{
-			if(window.isClosable())
+			if(window.isClosable() || window.isInvisible())
 				continue;
 			
 			window.setMinimized(false);
