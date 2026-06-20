@@ -19,7 +19,11 @@ A clean, lightweight fork of the Wurst Client for Minecraft 1.21.1. Wurst Lite i
 
 ## Key Features
 
-Wurst Lite features a clean, organized, and responsive window-based ClickGUI. Overlapping issues have been eliminated, and window heights are tailored to display category hacks perfectly with scroll support.
+* **ClickGUI**: Features equalized category window widths, scroll support, minimize buttons, and fixed overlap layouts.
+* **Search**: Inline search bar integrated directly into the GUI to find and toggle hacks quickly.
+* **PlayerESP**: Glow and outline rendering with dynamic color adjustments.
+* **FreeLook**: Added free look camera with smooth interpolation and adjustable distance modifiers.
+* **Bloat Removed**: Cleaned up bloated legacy utilities (e.g., fancy chat, autocompletes, default keybinds) and added a clean `WurstLite` chat prefix.
 
 <img src="images/wurstlite-gui.png" width="100%">
 <img src="images/wurstlite-searchhack.png" width="100%">
