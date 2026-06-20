@@ -36,7 +36,7 @@ public abstract class GameMenuScreenMixin extends Screen
 {
 	@Unique
 	private static final ResourceLocation WURST_TEXTURE =
-		ResourceLocation.fromNamespaceAndPath("wurst", "wurst_128.png");
+		ResourceLocation.fromNamespaceAndPath("wurst", "wurstlite.png");
 	
 	@Unique
 	private Button wurstOptionsButton;
@@ -67,12 +67,8 @@ public abstract class GameMenuScreenMixin extends Screen
 		int y = wurstOptionsButton.getY() + 2;
 		int w = 63;
 		int h = 16;
-		int fw = 63;
-		int fh = 16;
-		float u = 0;
-		float v = 0;
 		RenderSystem.enableBlend();
-		context.blit(WURST_TEXTURE, x, y, u, v, w, h, fw, fh);
+		context.blit(WURST_TEXTURE, x, y, w, h, 0.0F, 0.0F, 574, 356, 574, 356);
 	}
 	
 	@Unique

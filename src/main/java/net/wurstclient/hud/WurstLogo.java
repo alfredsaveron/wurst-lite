@@ -20,7 +20,7 @@ public final class WurstLogo
 {
 	private static final WurstClient WURST = WurstClient.INSTANCE;
 	private static final ResourceLocation LOGO_TEXTURE =
-		ResourceLocation.fromNamespaceAndPath("wurst", "wurst_128.png");
+		ResourceLocation.fromNamespaceAndPath("wurst", "wurstlite.png");
 	
 	public void render(GuiGraphics context)
 	{
@@ -44,7 +44,8 @@ public final class WurstLogo
 		
 		// Wurst logo
 		RenderSystem.enableBlend();
-		context.blit(LOGO_TEXTURE, 0, 3, 0, 0, 72, 18, 72, 18);
+		context.blit(LOGO_TEXTURE, 0, 3, 72, 18, 0.0F, 0.0F, 574, 356, 574,
+			356);
 	}
 	
 	private String getVersionString()

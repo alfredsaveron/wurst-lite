@@ -10,7 +10,7 @@ Under `Clean Up`:
 3. Select the `Wurst-Imperium` profile
 4. Click `Apply`
 
-![screenshot of Eclipse Clean Up settings](https://img.wimods.net/github.com/Wurst-Imperium/Wurst7/codestyle?to=https://i.imgur.com/mHKDHvV.png)
+![screenshot of Eclipse Clean Up settings](https://img.wimods.net/github.com/alfredsaveron/wurst-lite/codestyle?to=https://i.imgur.com/mHKDHvV.png)
 
 Under `Code Templates`:
 1. Enable project specific settings
@@ -32,7 +32,7 @@ Under `Formatter`:
 In the VSCode settings, set `java.format.settings.url` to:
 
 ```
-https://raw.githubusercontent.com/Wurst-Imperium/Wurst7/master/codestyle/formatter.xml
+https://raw.githubusercontent.com/alfredsaveron/wurst-lite/master/codestyle/formatter.xml
 ```
 
 and set `java.format.settings.profile` to:

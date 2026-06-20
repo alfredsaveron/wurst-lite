@@ -38,7 +38,7 @@ public abstract class DownloaderMixin implements AutoCloseable
 	 * This mixin targets the <code>entries.forEach()</code> lambda in
 	 * <code>download(Config, Map)</code>.
 	 *
-	 * @see https://github.com/Wurst-Imperium/Wurst7/issues/1226
+	 * @see https://github.com/alfredsaveron/wurst-lite/issues/1226
 	 */
 	@WrapOperation(at = @At(value = "INVOKE",
 		target = "Ljava/nio/file/Path;resolve(Ljava/lang/String;)Ljava/nio/file/Path;",

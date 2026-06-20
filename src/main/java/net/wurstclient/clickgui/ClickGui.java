@@ -25,7 +25,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -43,50 +42,6 @@ public final class ClickGui
 	public static net.minecraft.network.chat.Component modern(String text)
 	{
 		return net.minecraft.network.chat.Component.literal(text);
-	}
-	
-	public static final ResourceLocation ICONS_TEXTURE =
-		ResourceLocation.fromNamespaceAndPath("wurst", "icons.png");
-	
-	public static void drawCategoryIcon(GuiGraphics context, String category,
-		int x, int y, int color)
-	{
-		int index = 7;
-		switch(category.toLowerCase())
-		{
-			case "blocks":
-			index = 0;
-			break;
-			case "movement":
-			index = 1;
-			break;
-			case "combat":
-			index = 2;
-			break;
-			case "render":
-			index = 3;
-			break;
-			
-			case "other":
-			index = 7;
-			break;
-			case "ui settings":
-			case "settings":
-			index = 8;
-			break;
-			
-		}
-		
-		int u = index * 16;
-		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
-		float r = (color >> 16 & 255) / 255F;
-		float g = (color >> 8 & 255) / 255F;
-		float b = (color & 255) / 255F;
-		float a = (color >> 24 & 255) / 255F;
-		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(r, g, b, a);
-		context.blit(ICONS_TEXTURE, x, y, u, 0, 16, 16, 192, 16);
-		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F,
-			1.0F);
 	}
 	
 	private static final WurstClient WURST = WurstClient.INSTANCE;

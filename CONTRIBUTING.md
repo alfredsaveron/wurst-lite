@@ -1,5 +1,5 @@
 # Contributing Guidelines
-Thank you for considering to contribute! Here are some guidelines to help you get started. ![](https://img.wimods.net/github.com/Wurst-Imperium/Wurst7/CONTRIBUTING.md)
+Thank you for considering to contribute! Here are some guidelines to help you get started. ![](https://img.wimods.net/github.com/alfredsaveron/wurst-lite/CONTRIBUTING.md)
 
 ## Pull Requests
 
@@ -30,7 +30,7 @@ Thank you for considering to contribute! Here are some guidelines to help you ge
 - improving an existing bug report
   - figuring out which Minecraft versions are affected by the bug
   - Can you figure out how to make the bug happen every time? If so, please let me know.
-    - The ["could not reproduce"](https://github.com/Wurst-Imperium/Wurst7/labels/could%20not%20reproduce) label lists bug reports where I haven't been able to figure this out.
+    - The ["could not reproduce"](https://github.com/alfredsaveron/wurst-lite/labels/could%20not%20reproduce) label lists bug reports where I haven't been able to figure this out.
 - reporting a new dupe/exploit in Minecraft that could be added to Wurst
 - helping with a feature request
   - Can you explain how the feature works?
@@ -46,7 +46,7 @@ Thank you for considering to contribute! Here are some guidelines to help you ge
   - how to make [AutoBuild templates](https://wurst.wiki/autobuild#creating_templates)
   - how to use the [profile system](https://www.wurstclient.net/updates/wurst-7-1/)
 - creating more backups/archives of Wurst
-  - [creating a fork](https://github.com/Wurst-Imperium/Wurst7/fork) / mirror of this repository
+  - [creating a fork](https://github.com/alfredsaveron/wurst-lite/fork) / mirror of this repository
   - adding [WurstClient.net](https://www.wurstclient.net/) pages to the Internet Archive
   - adding [Wurst Wiki](https://wurst.wiki/) articles to the Internet Archive
   - archiving old [Wurst releases](https://www.wurstclient.net/download/) & source code in case they are ever taken down
