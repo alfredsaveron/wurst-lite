@@ -150,8 +150,7 @@ public final class ClickGui
 			}
 			
 			window.setWidth(maxWindowWidth);
-			window.setMaxHeight(window instanceof SettingsWindow
-				? maxSettingsHeight : maxHeight);
+			window.setMaxHeight(getWindowMaxHeight(window));
 			window.validate();
 			
 			int col = 0;
@@ -162,7 +161,10 @@ public final class ClickGui
 			}
 			
 			window.setX(5 + col * colWidth);
-			window.setY(colY[col]);
+			int targetY = colY[col];
+			int maxLimitY = Math.max(5,
+				MC.getWindow().getGuiScaledHeight() - window.getHeight() - 5);
+			window.setY(Math.min(targetY, maxLimitY));
 			colY[col] += window.getHeight() + 5;
 		}
 		
@@ -221,8 +223,7 @@ public final class ClickGui
 				continue;
 			if(!window.getTitle().equals("Settings"))
 				window.setWidth(maxWindowWidth);
-			window.setMaxHeight(window instanceof SettingsWindow
-				? maxSettingsHeight : maxHeight);
+			window.setMaxHeight(getWindowMaxHeight(window));
 			window.validate();
 		}
 		
@@ -279,8 +280,7 @@ public final class ClickGui
 			}
 			
 			window.setWidth(maxWindowWidth);
-			window.setMaxHeight(window instanceof SettingsWindow
-				? maxSettingsHeight : maxHeight);
+			window.setMaxHeight(getWindowMaxHeight(window));
 			window.validate();
 			
 			int col = 0;
@@ -291,7 +291,10 @@ public final class ClickGui
 			}
 			
 			window.setX(5 + col * colWidth);
-			window.setY(colY[col]);
+			int targetY = colY[col];
+			int maxLimitY = Math.max(5,
+				MC.getWindow().getGuiScaledHeight() - window.getHeight() - 5);
+			window.setY(Math.min(targetY, maxLimitY));
 			colY[col] += window.getHeight() + 5;
 		}
 		saveWindows();
@@ -721,6 +724,28 @@ public final class ClickGui
 		acColor = new float[]{0.635F, 0.451F, 0.651F};
 	}
 	
+	private int getWindowMaxHeight(Window window)
+	{
+		if(window instanceof SettingsWindow)
+			return 200;
+		
+		switch(window.getTitle().toLowerCase())
+		{
+			case "render":
+			return 397;
+			case "movement":
+			return 397;
+			case "blocks":
+			return 317;
+			case "combat":
+			return 301;
+			case "other":
+			return 269;
+			default:
+			return 397;
+		}
+	}
+	
 	private void renderWindow(GuiGraphics context, Window window, int mouseX,
 		int mouseY, float partialTicks)
 	{
@@ -743,8 +768,7 @@ public final class ClickGui
 		
 		if(!window.isMinimized())
 		{
-			window.setMaxHeight(window instanceof SettingsWindow
-				? maxSettingsHeight : maxHeight);
+			window.setMaxHeight(getWindowMaxHeight(window));
 			window.validate();
 			context.fill(x1, y3, x2, y2, 0xFF0A0A0A);
 			

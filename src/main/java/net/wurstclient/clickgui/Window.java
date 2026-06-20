@@ -89,15 +89,13 @@ public class Window
 		this.x = x;
 	}
 	
-	/**
-	 * Returns the Y position of the window, adjusted to fit inside the screen.
-	 */
 	public final int getY()
 	{
 		int scaledHeight = WurstClient.MC.getWindow().getGuiScaledHeight();
 		if(title.equals("Settings"))
 			return 5;
-		return Mth.clamp(y, 0, Math.max(0, scaledHeight - height));
+		int h = minimized ? 13 : height;
+		return Mth.clamp(y, 0, Math.max(0, scaledHeight - h));
 	}
 	
 	/**

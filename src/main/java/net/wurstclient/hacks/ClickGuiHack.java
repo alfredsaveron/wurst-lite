@@ -58,11 +58,11 @@ public final class ClickGuiHack extends Hack
 	
 	public int getMaxHeight()
 	{
-		return 0;
+		return 270;
 	}
 	
 	public int getMaxSettingsHeight()
 	{
-		return 0;
+		return 200;
 	}
 }
