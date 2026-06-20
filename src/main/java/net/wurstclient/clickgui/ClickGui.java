@@ -261,6 +261,11 @@ public final class ClickGui
 		int[] colY = new int[numCols];
 		java.util.Arrays.fill(colY, 5);
 		
+		net.wurstclient.util.ChatUtils.message("--- Reset GUI ---");
+		net.wurstclient.util.ChatUtils
+			.message("numCols=" + numCols + ", scaledWidth=" + scaledWidth
+				+ ", maxWindowWidth=" + maxWindowWidth);
+		
 		for(Window window : windows)
 		{
 			if(window.isClosable() || window.isInvisible())
@@ -273,6 +278,8 @@ public final class ClickGui
 			{
 				window.setX(scaledWidth - window.getWidth() - 5);
 				window.setY(5);
+				net.wurstclient.util.ChatUtils.message("Settings Window -> X="
+					+ window.getX() + ", Y=" + window.getY());
 				continue;
 			}
 			
@@ -290,6 +297,9 @@ public final class ClickGui
 			window.setX(5 + col * colWidth);
 			window.setY(colY[col]);
 			colY[col] += window.getHeight() + 5;
+			net.wurstclient.util.ChatUtils
+				.message(window.getTitle() + " -> X=" + window.getX() + ", Y="
+					+ window.getY() + ", H=" + window.getHeight());
 		}
 		saveWindows();
 	}
