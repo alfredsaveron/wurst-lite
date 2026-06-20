@@ -8,7 +8,6 @@
 package net.wurstclient.hacks;
 
 import java.util.Arrays;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -18,6 +17,7 @@ import net.minecraft.world.level.EmptyBlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.wurstclient.Category;
 import net.wurstclient.SearchTags;
@@ -25,7 +25,10 @@ import net.wurstclient.events.UpdateListener;
 import net.wurstclient.hack.Hack;
 import net.wurstclient.mixinterface.IKeyBinding;
 import net.wurstclient.settings.CheckboxSetting;
+import net.wurstclient.settings.SliderSetting;
+import net.wurstclient.settings.SliderSetting.ValueDisplay;
 import net.wurstclient.util.BlockUtils;
+import net.wurstclient.util.Rotation;
 import net.wurstclient.util.RotationUtils;
 
 @SearchTags({"scaffold walk", "BridgeWalk", "bridge walk", "AutoBridge",
@@ -35,6 +38,11 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 	private final CheckboxSetting legitMode = new CheckboxSetting("Legit mode",
 		"Sneaks at edges to look like a legit fast-bridger.", true);
 	
+	private final SliderSetting edgeDistance = new SliderSetting(
+		"Sneak edge distance",
+		"How close ScaffoldWalk will let you get to the edge before sneaking.",
+		0.05, 0.05, 0.25, 0.001, ValueDisplay.DECIMAL.withSuffix("m"));
+	
 	private boolean sneaking;
 	
 	public ScaffoldWalkHack()
@@ -42,6 +50,7 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 		super("ScaffoldWalk");
 		setCategory(Category.BLOCKS);
 		addSetting(legitMode);
+		addSetting(edgeDistance);
 	}
 	
 	@Override
@@ -75,12 +84,23 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 		BlockPos belowPlayer =
 			BlockPos.containing(MC.player.position()).below();
 		
-		if(!BlockUtils.getState(belowPlayer).canBeReplaced())
+		boolean nearEdge = false;
+		if(legitMode.isChecked() && MC.player.onGround())
 		{
-			if(sneaking)
-				setSneaking(false);
-			return;
+			AABB box = MC.player.getBoundingBox();
+			AABB adjustedBox = box.expandTowards(0, -MC.player.maxUpStep(), 0)
+				.inflate(-edgeDistance.getValue(), 0, -edgeDistance.getValue());
+			if(MC.level.noCollision(MC.player, adjustedBox))
+				nearEdge = true;
 		}
+		
+		if(nearEdge)
+			setSneaking(true);
+		else if(sneaking)
+			setSneaking(false);
+		
+		if(!BlockUtils.getState(belowPlayer).canBeReplaced())
+			return;
 		
 		int newSlot = -1;
 		for(int i = 0; i < 9; i++)
@@ -104,17 +124,7 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 		}
 		
 		if(newSlot == -1)
-		{
-			if(sneaking)
-				setSneaking(false);
 			return;
-		}
-		
-		boolean shouldSneak = legitMode.isChecked() && MC.player.onGround();
-		if(shouldSneak)
-			setSneaking(true);
-		else if(sneaking)
-			setSneaking(false);
 		
 		int oldSlot = MC.player.getInventory().selected;
 		MC.player.getInventory().selected = newSlot;
@@ -171,7 +181,10 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 			if(eyesPos.distanceToSqr(hitVec) > 18.0625)
 				continue;
 			
-			RotationUtils.getNeededRotations(hitVec).sendPlayerLookPacket();
+			Rotation rotation = RotationUtils.getNeededRotations(hitVec);
+			rotation.sendPlayerLookPacket();
+			rotation.applyToClientPlayer();
+			
 			IMC.getInteractionManager().rightClickBlock(neighbor, side2,
 				hitVec);
 			MC.player.swing(InteractionHand.MAIN_HAND);
