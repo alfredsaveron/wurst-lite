@@ -76,7 +76,6 @@ public final class FollowHack extends Hack
 	@Override
 	protected void onEnable()
 	{
-		WURST.getHax().fightBotHack.setEnabled(false);
 		WURST.getHax().protectHack.setEnabled(false);
 		WURST.getHax().tunnellerHack.setEnabled(false);
 		

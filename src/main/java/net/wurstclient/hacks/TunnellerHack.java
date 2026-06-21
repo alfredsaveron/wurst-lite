@@ -107,7 +107,6 @@ public final class TunnellerHack extends Hack
 	{
 		WURST.getHax().autoMineHack.setEnabled(false);
 		WURST.getHax().excavatorHack.setEnabled(false);
-		WURST.getHax().fightBotHack.setEnabled(false);
 		WURST.getHax().followHack.setEnabled(false);
 		WURST.getHax().instantBunkerHack.setEnabled(false);
 		WURST.getHax().nukerHack.setEnabled(false);

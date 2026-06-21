@@ -114,7 +114,6 @@ public final class AimAssistHack extends Hack
 		WURST.getHax().autoFishHack.setEnabled(false);
 		WURST.getHax().clickAuraHack.setEnabled(false);
 		WURST.getHax().crystalAuraHack.setEnabled(false);
-		WURST.getHax().fightBotHack.setEnabled(false);
 		WURST.getHax().killauraHack.setEnabled(false);
 		WURST.getHax().killauraLegitHack.setEnabled(false);
 		WURST.getHax().multiAuraHack.setEnabled(false);

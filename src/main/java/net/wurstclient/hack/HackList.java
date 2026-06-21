@@ -89,7 +89,6 @@ public final class HackList implements UpdateListener
 	public final FastLadderHack fastLadderHack = new FastLadderHack();
 	public final FastPlaceHack fastPlaceHack = new FastPlaceHack();
 	public final FeedAuraHack feedAuraHack = new FeedAuraHack();
-	public final FightBotHack fightBotHack = new FightBotHack();
 	public final FishHack fishHack = new FishHack();
 	public final FlightHack flightHack = new FlightHack();
 	public final FollowHack followHack = new FollowHack();
@@ -147,7 +146,6 @@ public final class HackList implements UpdateListener
 	public final PortalEspHack portalEspHack = new PortalEspHack();
 	public final PortalGuiHack portalGuiHack = new PortalGuiHack();
 	public final PotionSaverHack potionSaverHack = new PotionSaverHack();
-	public final ProphuntEspHack prophuntEspHack = new ProphuntEspHack();
 	public final ProtectHack protectHack = new ProtectHack();
 	
 	public final ReachHack reachHack = new ReachHack();

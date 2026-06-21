@@ -97,7 +97,6 @@ public final class CrystalAuraHack extends Hack implements UpdateListener
 		// disable other killauras
 		WURST.getHax().aimAssistHack.setEnabled(false);
 		WURST.getHax().clickAuraHack.setEnabled(false);
-		WURST.getHax().fightBotHack.setEnabled(false);
 		WURST.getHax().killauraHack.setEnabled(false);
 		WURST.getHax().killauraLegitHack.setEnabled(false);
 		WURST.getHax().multiAuraHack.setEnabled(false);
