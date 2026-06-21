@@ -58,7 +58,8 @@ Wurst Lite is a standard Fabric mod. Follow these steps to install:
 4. **Open the Minecraft Launcher** and select the **Fabric Loader 1.21.1** profile.
 5. **Launch the game** and press **Right Control** to open the ClickGUI.
 
-*Note: A licensed copy of Minecraft Java Edition is required.*
+> [!TIP]
+> While a licensed copy of Minecraft Java Edition is recommended, players using alternative launchers can also run Wurst Lite without any issues.
 
 ## Future Updates
 
