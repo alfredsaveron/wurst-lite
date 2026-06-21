@@ -30,9 +30,6 @@ A clean, lightweight fork of the Wurst Client for Minecraft 1.21.1. Wurst Lite i
 
 ## Why Wurst Lite?
 
-> [!CAUTION]
-> Do not trust Wurst Lite downloads from other sources or third-party `.jar` files. This repository is the only official and safe source for Wurst Lite. I am not responsible for any security issues or damage caused by builds obtained elsewhere.
-
 Having used the Wurst Client since childhood to troll friends with excitement, I have always admired its years of continuous development and evolution. Seeing it actively updated today inspired me to start this modernization project, keeping that classic legacy alive in a modern, refined way.
 
 <img src="images/playeresp-glow.gif" width="100%">
@@ -46,6 +43,9 @@ Having used the Wurst Client since childhood to troll friends with excitement, I
   <a href="https://www.modrinth.com/mod/fabric-api/versions?l=fabric&g=1.21.1"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/requires/fabric-api_46h.png" alt="Fabric API"></a>
   <a href="https://github.com/alfredsaveron/wurst-lite/releases"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/available/github_46h.png" alt="GitHub Releases"></a>
 </p>
+
+> [!CAUTION]
+> Do not trust Wurst Lite downloads from other sources or third-party `.jar` files. This repository is the only official and safe source for Wurst Lite. I am not responsible for any security issues or damage caused by builds obtained elsewhere.
 
 Wurst Lite is a standard Fabric mod. Follow these steps to install:
 
