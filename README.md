@@ -11,7 +11,7 @@
 > Wurst Lite is an experimental, open-source hobby project created for fun, with absolutely no expectation of profit or financial income.
 
 > [!WARNING]
-> Using hacked clients on public Minecraft servers ruins the fun for other players and creates an unfair playing field. We strongly advise against using **Wurst Lite** on public multiplayer servers. If you wish to use it in multiplayer, it is best done on private servers with consent from your friends.
+> Using hacked clients on public Minecraft servers ruins the fun for other players and creates an unfair playing field. I strongly advise against using **Wurst Lite** on public multiplayer servers. If you wish to use it in multiplayer, it is best done on private servers with consent from your friends.
 > 
 > Furthermore, most popular modern public servers (such as **Hypixel**) utilize highly sophisticated anti-cheat systems. Attempting to play on these networks with Wurst Lite will likely result in an immediate and permanent ban.
 
