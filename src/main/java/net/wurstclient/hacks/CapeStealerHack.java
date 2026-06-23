@@ -10,6 +10,7 @@ package net.wurstclient.hacks;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.yggdrasil.ProfileResult;
 import net.minecraft.resources.ResourceLocation;
 import net.wurstclient.Category;
 import net.wurstclient.SearchTags;
@@ -69,7 +70,12 @@ public final class CapeStealerHack extends Hack implements UpdateListener
 			if(uuid == null)
 				return;
 			
-			GameProfile profile = new GameProfile(uuid, name);
+			ProfileResult result =
+				MC.getMinecraftSessionService().fetchProfile(uuid, true);
+			if(result == null)
+				return;
+			
+			GameProfile profile = result.profile();
 			MC.getSkinManager().getOrLoad(profile).thenAccept(skin -> {
 				if(name.equalsIgnoreCase(lastFetched))
 					stolenCape = skin.capeTexture();

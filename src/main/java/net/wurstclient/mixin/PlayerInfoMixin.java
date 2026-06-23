@@ -31,14 +31,11 @@ public abstract class PlayerInfoMixin
 	private void onGetSkin(CallbackInfoReturnable<PlayerSkin> cir)
 	{
 		Minecraft mc = Minecraft.getInstance();
-		if(mc.player == null)
-			return;
-		
 		GameProfile profile = getProfile();
 		if(profile == null)
 			return;
 		
-		if(profile.getId().equals(mc.player.getUUID()))
+		if(profile.getId().equals(mc.getUser().getProfileId()))
 		{
 			if(WurstClient.INSTANCE.isEnabled()
 				&& WurstClient.INSTANCE.getHax() != null)
