@@ -18,7 +18,6 @@ import net.wurstclient.other_features.*;
 public final class OtfList
 {
 	public final ChangelogOtf changelogOtf = new ChangelogOtf();
-	public final CleanUpOtf cleanUpOtf = new CleanUpOtf();
 	public final DisableOtf disableOtf = new DisableOtf();
 	public final HackListOtf hackListOtf = new HackListOtf();
 	public final KeybindManagerOtf keybindManagerOtf = new KeybindManagerOtf();
@@ -27,7 +26,6 @@ public final class OtfList
 	public final NoTelemetryOtf noTelemetryOtf = new NoTelemetryOtf();
 	public final ReconnectOtf reconnectOtf = new ReconnectOtf();
 	public final ResetKeybindsOtf resetKeybindsOtf = new ResetKeybindsOtf();
-	public final ServerFinderOtf serverFinderOtf = new ServerFinderOtf();
 	public final SearchOtf searchOtf = new SearchOtf();
 	public final TabGuiOtf tabGuiOtf = new TabGuiOtf();
 	public final VanillaSpoofOtf vanillaSpoofOtf = new VanillaSpoofOtf();
