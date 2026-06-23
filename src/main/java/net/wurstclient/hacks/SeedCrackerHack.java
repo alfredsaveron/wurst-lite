@@ -11,48 +11,63 @@ import net.wurstclient.Category;
 import net.wurstclient.hack.Hack;
 import net.wurstclient.util.ChatUtils;
 
-public final class SeedCrackerHack extends Hack {
-
-	public SeedCrackerHack() {
+public final class SeedCrackerHack extends Hack
+{
+	
+	public SeedCrackerHack()
+	{
 		super("SeedCracker");
 		setCategory(Category.OTHER);
 	}
-
+	
 	@Override
-	public void onEnable() {
-		if (isModInstalled()) {
+	public void onEnable()
+	{
+		if(isModInstalled())
+		{
 			setModActive(true);
-			ChatUtils.message("SeedCracker is active. Explore to gather structures.");
-		} else {
+			ChatUtils.message(
+				"SeedCracker is active. Explore to gather structures.");
+		}else
+		{
 			ChatUtils.error("SeedCrackerX mod is not installed!");
-			ChatUtils.message("Please place the SeedCrackerX mod jar in your mods folder to use this feature.");
+			ChatUtils.message(
+				"Please place the SeedCrackerX mod jar in your mods folder to use this feature.");
 			setEnabled(false);
 		}
 	}
-
+	
 	@Override
-	public void onDisable() {
-		if (isModInstalled()) {
+	public void onDisable()
+	{
+		if(isModInstalled())
+		{
 			setModActive(false);
 			ChatUtils.message("SeedCracker is inactive.");
 		}
 	}
-
-	private boolean isModInstalled() {
-		try {
+	
+	private boolean isModInstalled()
+	{
+		try
+		{
 			Class.forName("kaptainwutax.seedcrackerX.config.Config");
 			return true;
-		} catch (ClassNotFoundException e) {
+		}catch(ClassNotFoundException e)
+		{
 			return false;
 		}
 	}
-
-	private void setModActive(boolean active) {
-		try {
-			Class<?> configClass = Class.forName("kaptainwutax.seedcrackerX.config.Config");
+	
+	private void setModActive(boolean active)
+	{
+		try
+		{
+			Class<?> configClass =
+				Class.forName("kaptainwutax.seedcrackerX.config.Config");
 			Object configInstance = configClass.getMethod("get").invoke(null);
 			configClass.getField("active").set(configInstance, active);
-		} catch (Exception e) {
-		}
+		}catch(Exception e)
+		{}
 	}
 }
