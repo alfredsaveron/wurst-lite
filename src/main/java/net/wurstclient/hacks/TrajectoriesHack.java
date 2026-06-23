@@ -47,9 +47,9 @@ public final class TrajectoriesHack extends Hack implements RenderListener
 		new ColorSetting("Entity Hit Color",
 			"Color of the trajectory when it hits an entity.", Color.RED);
 	
-	private final ColorSetting blockHitColor =
-		new ColorSetting("Block Hit Color",
-			"Color of the trajectory when it hits a block.", new Color(0xA273A6));
+	private final ColorSetting blockHitColor = new ColorSetting(
+		"Block Hit Color", "Color of the trajectory when it hits a block.",
+		new Color(0xA273A6));
 	
 	public TrajectoriesHack()
 	{
