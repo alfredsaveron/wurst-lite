@@ -1,0 +1,56 @@
+/*
+ * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ *
+ * This source code is subject to the terms of the GNU General Public
+ * License, version 3. If a copy of the GPL was not distributed with this
+ * file, You can obtain one at: https://www.gnu.org/licenses/gpl-3.0.txt
+ */
+package kaptainwutax.seedcrackerX.command;
+
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import kaptainwutax.seedcrackerX.config.Config;
+import kaptainwutax.seedcrackerX.util.Log;
+import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
+import net.minecraft.ChatFormatting;
+
+import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.*;
+
+public class RenderCommand extends ClientCommand
+{
+	
+	@Override
+	public String getName()
+	{
+		return "render";
+	}
+	
+	@Override
+	public void build(LiteralArgumentBuilder<FabricClientCommandSource> builder)
+	{
+		builder.then(
+			literal("outlines").executes(context -> this.printRenderMode()));
+		
+		for(Config.RenderType renderType : Config.RenderType.values())
+		{
+			builder.then(literal("outlines").then(literal(renderType.toString())
+				.executes(context -> this.setRenderMode(renderType))));
+		}
+	}
+	
+	private int printRenderMode()
+	{
+		sendFeedback(Log.translate("render.getRenderMode") + " ["
+			+ Config.get().render + "].", ChatFormatting.AQUA, false);
+		return 0;
+	}
+	
+	private int setRenderMode(Config.RenderType renderType)
+	{
+		Config.get().render = renderType;
+		Config.save();
+		sendFeedback(Log.translate("render.setRenderMode") + " ["
+			+ Config.get().render + "].", ChatFormatting.AQUA, false);
+		return 0;
+	}
+	
+}
