@@ -277,7 +277,8 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayer
 	protected boolean isStayingOnGroundSurface()
 	{
 		return super.isStayingOnGroundSurface()
-			|| WurstClient.INSTANCE.getHax().safeWalkHack.isEnabled();
+			|| WurstClient.INSTANCE.getHax().safeWalkHack.isEnabled()
+			|| WurstClient.INSTANCE.getHax().scaffoldWalkHack.isLegitEnabled();
 	}
 	
 	/**
@@ -290,8 +291,12 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayer
 		Vec3 result = super.maybeBackOffFromEdge(movement, type);
 		
 		if(movement != null)
-			WurstClient.INSTANCE.getHax().safeWalkHack
-				.onClipAtLedge(!movement.equals(result));
+		{
+			boolean clipping = !movement.equals(result);
+			WurstClient.INSTANCE.getHax().safeWalkHack.onClipAtLedge(clipping);
+			WurstClient.INSTANCE.getHax().scaffoldWalkHack
+				.onClipAtLedge(clipping);
+		}
 		
 		return result;
 	}

@@ -67,6 +67,30 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 			setSneaking(false);
 	}
 	
+	public boolean isLegitEnabled()
+	{
+		return isEnabled() && legitMode.isChecked();
+	}
+	
+	public void onClipAtLedge(boolean clipping)
+	{
+		if(!isEnabled() || !legitMode.isChecked() || !MC.player.onGround())
+		{
+			if(sneaking)
+				setSneaking(false);
+			return;
+		}
+		
+		AABB box = MC.player.getBoundingBox();
+		AABB adjustedBox = box.expandTowards(0, -MC.player.maxUpStep(), 0)
+			.inflate(-edgeDistance.getValue(), 0, -edgeDistance.getValue());
+		
+		if(MC.level.noCollision(MC.player, adjustedBox))
+			clipping = true;
+		
+		setSneaking(clipping);
+	}
+	
 	private void setSneaking(boolean sneaking)
 	{
 		IKeyBinding sneakKey = IKeyBinding.get(MC.options.keyShift);
@@ -83,19 +107,7 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 		BlockPos belowPlayer =
 			BlockPos.containing(MC.player.position()).below();
 		
-		boolean nearEdge = false;
-		if(legitMode.isChecked() && MC.player.onGround())
-		{
-			AABB box = MC.player.getBoundingBox();
-			AABB adjustedBox = box.expandTowards(0, -MC.player.maxUpStep(), 0)
-				.inflate(-edgeDistance.getValue(), 0, -edgeDistance.getValue());
-			if(MC.level.noCollision(MC.player, adjustedBox))
-				nearEdge = true;
-		}
-		
-		if(nearEdge)
-			setSneaking(true);
-		else if(sneaking)
+		if(!legitMode.isChecked() && sneaking)
 			setSneaking(false);
 		
 		if(!BlockUtils.getState(belowPlayer).canBeReplaced())
