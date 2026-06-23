@@ -57,6 +57,10 @@ public final class BowAimbotHack extends Hack
 		"Controls the strength of BowAimbot's movement prediction algorithm.",
 		0.2, 0, 2, 0.01, ValueDisplay.PERCENTAGE);
 	
+	private final SliderSetting rotationSpeed = new SliderSetting(
+		"Rotation speed", "The speed at which BowAimbot turns.", 600, 10, 3600,
+		10, ValueDisplay.DEGREES.withSuffix("/s"));
+	
 	private final EntityFilterList entityFilters =
 		EntityFilterList.genericCombat();
 	
@@ -73,6 +77,7 @@ public final class BowAimbotHack extends Hack
 		setCategory(Category.COMBAT);
 		addSetting(priority);
 		addSetting(predictMovement);
+		addSetting(rotationSpeed);
 		
 		entityFilters.forEach(this::addSetting);
 		
@@ -154,10 +159,12 @@ public final class BowAimbotHack extends Hack
 		double posZ =
 			target.getZ() + (target.getZ() - target.zOld) * d - player.getZ();
 		
+		float speed = rotationSpeed.getValueI() / 20F;
+		
 		// set yaw
 		float neededYaw = (float)Math.toDegrees(Math.atan2(posZ, posX)) - 90;
-		MC.player.setYRot(
-			RotationUtils.limitAngleChange(MC.player.getYRot(), neededYaw));
+		MC.player.setYRot(RotationUtils.limitAngleChange(MC.player.getYRot(),
+			neededYaw, speed));
 		
 		// calculate needed pitch
 		double hDistance = Math.sqrt(posX * posX + posZ * posZ);
@@ -170,11 +177,12 @@ public final class BowAimbotHack extends Hack
 			/ (g * hDistance)));
 		
 		// set pitch
-		if(Float.isNaN(neededPitch))
-			WURST.getRotationFaker()
-				.faceVectorClient(target.getBoundingBox().getCenter());
-		else
-			MC.player.setXRot(neededPitch);
+		float actualPitch = Float.isNaN(neededPitch)
+			? RotationUtils
+				.getNeededRotations(target.getBoundingBox().getCenter()).pitch()
+			: neededPitch;
+		MC.player.setXRot(RotationUtils.limitAngleChange(MC.player.getXRot(),
+			actualPitch, speed));
 	}
 	
 	private Entity filterEntities(Stream<Entity> s)
