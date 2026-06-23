@@ -79,9 +79,7 @@ public class IngameHudMixin
 		ci.cancel();
 	}
 	
-	@Inject(at = @At("HEAD"),
-		method = "renderScoreboardSidebar(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/world/scores/Objective;)V",
-		cancellable = true)
+	@Inject(at = @At("HEAD"), method = "method_1757", cancellable = true)
 	private void onRenderScoreboardSidebar(GuiGraphics context,
 		Objective objective, CallbackInfo ci)
 	{
