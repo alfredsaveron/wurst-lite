@@ -37,10 +37,10 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 	private final CheckboxSetting legitMode = new CheckboxSetting("Legit mode",
 		"Sneaks at edges to look like a legit fast-bridger.", true);
 	
-	private final SliderSetting edgeDistance = new SliderSetting(
-		"Sneak edge distance",
-		"How close ScaffoldWalk will let you get to the edge before sneaking.",
-		0.05, 0.05, 0.25, 0.001, ValueDisplay.DECIMAL.withSuffix("m"));
+	private final SliderSetting unsneakDelay =
+		new SliderSetting("Unsneak delay",
+			"The number of ticks to stay unsneaked after placing a block.", 3,
+			1, 10, 1, ValueDisplay.INTEGER.withSuffix(" ticks"));
 	
 	private boolean sneaking;
 	private int unsneakTicks;
@@ -50,7 +50,7 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 		super("ScaffoldWalk");
 		setCategory(Category.BLOCKS);
 		addSetting(legitMode);
-		addSetting(edgeDistance);
+		addSetting(unsneakDelay);
 	}
 	
 	@Override
@@ -110,7 +110,7 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 		{
 			AABB box = MC.player.getBoundingBox();
 			AABB adjustedBox = box.expandTowards(0, -MC.player.maxUpStep(), 0)
-				.inflate(-edgeDistance.getValue(), 0, -edgeDistance.getValue());
+				.inflate(-0.05, 0, -0.05);
 			if(MC.level.noCollision(MC.player, adjustedBox))
 				nearEdge = true;
 		}
@@ -189,7 +189,7 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 		
 		if(placed && legitMode.isChecked())
 		{
-			unsneakTicks = 3;
+			unsneakTicks = unsneakDelay.getValueI();
 			setSneaking(false);
 		}
 	}
