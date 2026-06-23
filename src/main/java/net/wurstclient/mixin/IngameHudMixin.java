@@ -20,7 +20,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.DebugScreenOverlay;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.scores.Objective;
 import net.wurstclient.WurstClient;
 import net.wurstclient.event.EventManager;
 import net.wurstclient.events.GUIRenderListener.GUIRenderEvent;
@@ -77,14 +76,5 @@ public class IngameHudMixin
 			return;
 		
 		ci.cancel();
-	}
-	
-	@Inject(at = @At("HEAD"), method = "method_1757", cancellable = true)
-	private void onRenderScoreboardSidebar(GuiGraphics context,
-		Objective objective, CallbackInfo ci)
-	{
-		HackList hax = WurstClient.INSTANCE.getHax();
-		if(hax != null && hax.hideSidebarHack.isEnabled())
-			ci.cancel();
 	}
 }

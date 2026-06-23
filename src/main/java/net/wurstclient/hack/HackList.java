@@ -99,7 +99,6 @@ public final class HackList implements UpdateListener
 	public final HandNoClipHack handNoClipHack = new HandNoClipHack();
 	
 	public final HealthTagsHack healthTagsHack = new HealthTagsHack();
-	public final HideSidebarHack hideSidebarHack = new HideSidebarHack();
 	public final HighJumpHack highJumpHack = new HighJumpHack();
 	public final InfiniChatHack infiniChatHack = new InfiniChatHack();
 	public final InstaBuildHack instaBuildHack = new InstaBuildHack();
