@@ -43,6 +43,7 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 		0.05, 0.05, 0.25, 0.001, ValueDisplay.DECIMAL.withSuffix("m"));
 	
 	private boolean sneaking;
+	private int unsneakTicks;
 	
 	public ScaffoldWalkHack()
 	{
@@ -57,6 +58,7 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 	{
 		EVENTS.add(UpdateListener.class, this);
 		sneaking = false;
+		unsneakTicks = 0;
 	}
 	
 	@Override
@@ -65,30 +67,12 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 		EVENTS.remove(UpdateListener.class, this);
 		if(sneaking)
 			setSneaking(false);
+		unsneakTicks = 0;
 	}
 	
 	public boolean isLegitEnabled()
 	{
 		return isEnabled() && legitMode.isChecked();
-	}
-	
-	public void onClipAtLedge(boolean clipping)
-	{
-		if(!isEnabled() || !legitMode.isChecked() || !MC.player.onGround())
-		{
-			if(sneaking)
-				setSneaking(false);
-			return;
-		}
-		
-		AABB box = MC.player.getBoundingBox();
-		AABB adjustedBox = box.expandTowards(0, -MC.player.maxUpStep(), 0)
-			.inflate(-edgeDistance.getValue(), 0, -edgeDistance.getValue());
-		
-		if(MC.level.noCollision(MC.player, adjustedBox))
-			clipping = true;
-		
-		setSneaking(clipping);
 	}
 	
 	private void setSneaking(boolean sneaking)
@@ -104,10 +88,36 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 	@Override
 	public void onUpdate()
 	{
+		if(!legitMode.isChecked())
+		{
+			if(sneaking)
+				setSneaking(false);
+			unsneakTicks = 0;
+		}
+		
+		if(unsneakTicks > 0)
+		{
+			unsneakTicks--;
+			setSneaking(false);
+			return;
+		}
+		
 		BlockPos belowPlayer =
 			BlockPos.containing(MC.player.position()).below();
 		
-		if(!legitMode.isChecked() && sneaking)
+		boolean nearEdge = false;
+		if(legitMode.isChecked() && MC.player.onGround())
+		{
+			AABB box = MC.player.getBoundingBox();
+			AABB adjustedBox = box.expandTowards(0, -MC.player.maxUpStep(), 0)
+				.inflate(-edgeDistance.getValue(), 0, -edgeDistance.getValue());
+			if(MC.level.noCollision(MC.player, adjustedBox))
+				nearEdge = true;
+		}
+		
+		if(nearEdge)
+			setSneaking(true);
+		else if(sneaking)
 			setSneaking(false);
 		
 		if(!BlockUtils.getState(belowPlayer).canBeReplaced())
@@ -140,34 +150,48 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 		int oldSlot = MC.player.getInventory().selected;
 		MC.player.getInventory().selected = newSlot;
 		
-		scaffoldTo(belowPlayer);
-		
-		MC.player.getInventory().selected = oldSlot;
-	}
-	
-	private void scaffoldTo(BlockPos belowPlayer)
-	{
+		boolean placed = false;
 		if(placeBlock(belowPlayer))
-			return;
-		
-		Direction[] sides = Direction.values();
-		for(Direction side : sides)
+			placed = true;
+		else
 		{
-			BlockPos neighbor = belowPlayer.relative(side);
-			if(placeBlock(neighbor))
-				return;
+			Direction[] sides = Direction.values();
+			for(Direction side : sides)
+			{
+				BlockPos neighbor = belowPlayer.relative(side);
+				if(placeBlock(neighbor))
+				{
+					placed = true;
+					break;
+				}
+			}
+			if(!placed)
+			{
+				for(Direction side : sides)
+					for(Direction side2 : Arrays.copyOfRange(sides,
+						side.ordinal(), 6))
+					{
+						if(side.getOpposite().equals(side2))
+							continue;
+						
+						BlockPos neighbor =
+							belowPlayer.relative(side).relative(side2);
+						if(placeBlock(neighbor))
+						{
+							placed = true;
+							break;
+						}
+					}
+			}
 		}
 		
-		for(Direction side : sides)
-			for(Direction side2 : Arrays.copyOfRange(sides, side.ordinal(), 6))
-			{
-				if(side.getOpposite().equals(side2))
-					continue;
-				
-				BlockPos neighbor = belowPlayer.relative(side).relative(side2);
-				if(placeBlock(neighbor))
-					return;
-			}
+		MC.player.getInventory().selected = oldSlot;
+		
+		if(placed && legitMode.isChecked())
+		{
+			unsneakTicks = 3;
+			setSneaking(false);
+		}
 	}
 	
 	private boolean placeBlock(BlockPos pos)

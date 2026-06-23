@@ -291,12 +291,8 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayer
 		Vec3 result = super.maybeBackOffFromEdge(movement, type);
 		
 		if(movement != null)
-		{
-			boolean clipping = !movement.equals(result);
-			WurstClient.INSTANCE.getHax().safeWalkHack.onClipAtLedge(clipping);
-			WurstClient.INSTANCE.getHax().scaffoldWalkHack
-				.onClipAtLedge(clipping);
-		}
+			WurstClient.INSTANCE.getHax().safeWalkHack
+				.onClipAtLedge(!movement.equals(result));
 		
 		return result;
 	}
