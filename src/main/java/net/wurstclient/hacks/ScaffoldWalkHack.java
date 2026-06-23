@@ -28,7 +28,6 @@ import net.wurstclient.settings.CheckboxSetting;
 import net.wurstclient.settings.SliderSetting;
 import net.wurstclient.settings.SliderSetting.ValueDisplay;
 import net.wurstclient.util.BlockUtils;
-import net.wurstclient.util.Rotation;
 import net.wurstclient.util.RotationUtils;
 
 @SearchTags({"scaffold walk", "BridgeWalk", "bridge walk", "AutoBridge",
@@ -181,9 +180,7 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 			if(eyesPos.distanceToSqr(hitVec) > 18.0625)
 				continue;
 			
-			Rotation rotation = RotationUtils.getNeededRotations(hitVec);
-			rotation.sendPlayerLookPacket();
-			rotation.applyToClientPlayer();
+			RotationUtils.getNeededRotations(hitVec).sendPlayerLookPacket();
 			
 			IMC.getInteractionManager().rightClickBlock(neighbor, side2,
 				hitVec);
