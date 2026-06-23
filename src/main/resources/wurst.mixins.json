@@ -53,6 +53,7 @@
     "MouseMixin",
     "MultiplayerScreenMixin",
     "PackScreenMixin",
+    "PlayerInfoMixin",
     "PlayerInventoryMixin",
     "PlayerSkinProviderMixin",
     "PowderSnowBlockMixin",

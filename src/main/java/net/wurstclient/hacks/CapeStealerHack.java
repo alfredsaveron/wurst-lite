@@ -1,0 +1,77 @@
+package net.wurstclient.hacks;
+
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import com.mojang.authlib.GameProfile;
+import net.minecraft.resources.ResourceLocation;
+import net.wurstclient.Category;
+import net.wurstclient.SearchTags;
+import net.wurstclient.hack.Hack;
+import net.wurstclient.settings.TextFieldSetting;
+import net.wurstclient.altmanager.SkinStealer;
+import net.wurstclient.events.UpdateListener;
+
+@SearchTags({"cape stealer", "copy cape", "cape"})
+public final class CapeStealerHack extends Hack implements UpdateListener
+{
+	private final TextFieldSetting username =
+		new TextFieldSetting("Username", "The username to copy the cape from", "notch");
+	
+	private ResourceLocation stolenCape = null;
+	private String lastFetched = "";
+	
+	public CapeStealerHack()
+	{
+		super("CapeStealer");
+		setCategory(Category.RENDER);
+		addSetting(username);
+	}
+	
+	@Override
+	protected void onEnable()
+	{
+		EVENTS.add(UpdateListener.class, this);
+		updateCape();
+	}
+	
+	@Override
+	protected void onDisable()
+	{
+		EVENTS.remove(UpdateListener.class, this);
+	}
+	
+	@Override
+	public void onUpdate()
+	{
+		String current = username.getValue();
+		if(!current.equalsIgnoreCase(lastFetched))
+			updateCape();
+	}
+	
+	private void updateCape()
+	{
+		String name = username.getValue();
+		lastFetched = name;
+		stolenCape = null;
+		
+		if(name.isEmpty())
+			return;
+		
+		CompletableFuture.runAsync(() -> {
+			UUID uuid = SkinStealer.getUUIDOrNull(name);
+			if(uuid == null)
+				return;
+			
+			GameProfile profile = new GameProfile(uuid, name);
+			MC.getSkinManager().getOrLoad(profile).thenAccept(skin -> {
+				if(name.equalsIgnoreCase(lastFetched))
+					stolenCape = skin.capeTexture();
+			});
+		});
+	}
+	
+	public ResourceLocation getStolenCape()
+	{
+		return isEnabled() ? stolenCape : null;
+	}
+}

@@ -73,6 +73,7 @@ public final class HackList implements UpdateListener
 	public final CameraDistanceHack cameraDistanceHack =
 		new CameraDistanceHack();
 	public final CameraNoClipHack cameraNoClipHack = new CameraNoClipHack();
+	public final CapeStealerHack capeStealerHack = new CapeStealerHack();
 	public final CaveFinderHack caveFinderHack = new CaveFinderHack();
 	public final ChestEspHack chestEspHack = new ChestEspHack();
 	public final ClickAuraHack clickAuraHack = new ClickAuraHack();
