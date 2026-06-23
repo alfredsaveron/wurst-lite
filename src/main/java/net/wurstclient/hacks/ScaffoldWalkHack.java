@@ -44,6 +44,7 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 	
 	private boolean sneaking;
 	private int unsneakTicks;
+	private int sneakTicks;
 	
 	public ScaffoldWalkHack()
 	{
@@ -59,6 +60,7 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 		EVENTS.add(UpdateListener.class, this);
 		sneaking = false;
 		unsneakTicks = 0;
+		sneakTicks = 0;
 	}
 	
 	@Override
@@ -68,6 +70,7 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 		if(sneaking)
 			setSneaking(false);
 		unsneakTicks = 0;
+		sneakTicks = 0;
 	}
 	
 	public boolean isLegitEnabled()
@@ -93,6 +96,7 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 			if(sneaking)
 				setSneaking(false);
 			unsneakTicks = 0;
+			sneakTicks = 0;
 		}
 		
 		if(unsneakTicks > 0)
@@ -116,11 +120,20 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 		}
 		
 		if(nearEdge)
+		{
 			setSneaking(true);
-		else if(sneaking)
-			setSneaking(false);
+			sneakTicks++;
+		}else
+		{
+			if(sneaking)
+				setSneaking(false);
+			sneakTicks = 0;
+		}
 		
 		if(!BlockUtils.getState(belowPlayer).canBeReplaced())
+			return;
+		
+		if(legitMode.isChecked() && sneakTicks < 2)
 			return;
 		
 		int newSlot = -1;
@@ -190,6 +203,7 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 		if(placed && legitMode.isChecked())
 		{
 			unsneakTicks = unsneakDelay.getValueI();
+			sneakTicks = 0;
 			setSneaking(false);
 		}
 	}
