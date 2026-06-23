@@ -18,13 +18,11 @@
   "entrypoints": {
     "main": [
       "net.wurstclient.WurstInitializer",
-      "net.wurstclient.test.WurstE2ETestClient",
-      "kaptainwutax.seedcrackerX.SeedCracker"
+      "net.wurstclient.test.WurstE2ETestClient"
     ]
   },
   "mixins": [
-    "wurst.mixins.json",
-    "seedcracker.mixins.json"
+    "wurst.mixins.json"
   ],
   "accessWidener": "wurst.accesswidener",
   "depends": {
