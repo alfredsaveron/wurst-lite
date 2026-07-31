@@ -8,14 +8,14 @@
 </p>
 
 > [!IMPORTANT]
-> [Wurst Lite](https://www.youtube.com/watch?v=nDYOYB33de8) is an experimental, open-source hobby project created for fun, with absolutely no expectation of profit or financial income.
+> Wurst Lite is an experimental, open-source hobby project created for fun, with absolutely no expectation of profit or financial income.
 
 > [!WARNING]
 > Using hacked clients on public Minecraft servers ruins the fun for other players and creates an unfair playing field. I strongly advise against using **Wurst Lite** on public multiplayer servers. If you wish to use it in multiplayer, it is best done on private servers with consent from your friends.
 > 
 > Furthermore, most popular modern public servers (such as **Hypixel**) utilize highly sophisticated anti-cheat systems. Attempting to play on these networks with Wurst Lite will likely result in an immediate and permanent ban.
 
-A clean, lightweight fork of the Wurst Client for Minecraft 1.21.1. Wurst Lite is a project started to modernize the highly popular Wurst Client, optimized to provide essential cheat features with a sleek interface, reduced bloat, and improved performance.
+A clean, lightweight fork of the Wurst Client for Minecraft 1.21.1. [Wurst Lite](https://www.youtube.com/watch?v=nDYOYB33de8) is a project started to modernize the highly popular Wurst Client, optimized to provide essential cheat features with a sleek interface, reduced bloat, and improved performance.
 
 ## Key Features
 
