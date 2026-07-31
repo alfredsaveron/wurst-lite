@@ -17,6 +17,10 @@
 
 A clean, lightweight fork of the Wurst Client for Minecraft 1.21.1. Wurst Lite is a project started to modernize the highly popular Wurst Client, optimized to provide essential cheat features with a sleek interface, reduced bloat, and improved performance.
 
+## Showcase Video
+
+[![Wurst Lite Showcase](https://img.youtube.com/vi/nDYOYB33de8/maxresdefault.jpg)](https://www.youtube.com/watch?v=nDYOYB33de8)
+
 ## Key Features
 
 * **ClickGUI**: Features equalized category window widths, scroll support, minimize buttons, and fixed overlap layouts.
