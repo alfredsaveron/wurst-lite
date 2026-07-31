@@ -5,7 +5,7 @@
 <p align="center">
   <a href="https://fabricmc.net/"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/requires/fabric-api_46h.png" alt="Fabric API"></a>
   <a href="https://github.com/alfredsaveron/wurst-lite"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/available/github_46h.png" alt="GitHub"></a>
-  <a href="https://www.youtube.com/watch?v=nDYOYB33de8"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/social/youtube_46h.png" alt="YouTube"></a>
+  <a href="https://www.youtube.com/watch?v=nDYOYB33de8"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/social/youtube-plural_46h.png" alt="YouTube"></a>
 </p>
 
 > [!IMPORTANT]
