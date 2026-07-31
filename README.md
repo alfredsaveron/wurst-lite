@@ -5,6 +5,7 @@
 <p align="center">
   <a href="https://fabricmc.net/"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/requires/fabric-api_46h.png" alt="Fabric API"></a>
   <a href="https://github.com/alfredsaveron/wurst-lite"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/available/github_46h.png" alt="GitHub"></a>
+  <a href="https://www.youtube.com/watch?v=nDYOYB33de8"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/social/youtube_46h.png" alt="YouTube"></a>
 </p>
 
 > [!IMPORTANT]
@@ -15,7 +16,7 @@
 > 
 > Furthermore, most popular modern public servers (such as **Hypixel**) utilize highly sophisticated anti-cheat systems. Attempting to play on these networks with Wurst Lite will likely result in an immediate and permanent ban.
 
-A clean, lightweight fork of the Wurst Client for Minecraft 1.21.1. [Wurst Lite](https://www.youtube.com/watch?v=nDYOYB33de8) is a project started to modernize the highly popular Wurst Client, optimized to provide essential cheat features with a sleek interface, reduced bloat, and improved performance.
+A clean, lightweight fork of the Wurst Client for Minecraft 1.21.1. Wurst Lite is a project started to modernize the highly popular Wurst Client, optimized to provide essential cheat features with a sleek interface, reduced bloat, and improved performance.
 
 ## Key Features
 
