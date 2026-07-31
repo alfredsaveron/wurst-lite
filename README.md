@@ -19,11 +19,7 @@ A clean, lightweight fork of the Wurst Client for Minecraft 1.21.1. Wurst Lite i
 
 ## Showcase Video
 
-<p align="center">
-  <a href="https://www.youtube.com/watch?v=nDYOYB33de8">
-    <img src="https://img.youtube.com/vi/nDYOYB33de8/hqdefault.jpg" width="100%">
-  </a>
-</p>
+<iframe width="100%" height="450" src="https://www.youtube.com/embed/nDYOYB33de8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Key Features
 
