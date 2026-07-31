@@ -108,15 +108,13 @@ public class WurstOptionsScreen extends Screen
 	{
 		OS os = Util.getPlatform();
 		
-		new WurstOptionsButton(54, 24, () -> "Official Website",
-			"§n§lWurstClient.net",
+		new WurstOptionsButton(54, 24, () -> "Official Website", "",
 			b -> os.openUri("https://www.wurstclient.net/options-website/"));
 		
-		new WurstOptionsButton(54, 48, () -> "Wurst Lite",
-			"§n§lgithub.com/alfredsaveron/wurst-lite",
+		new WurstOptionsButton(54, 48, () -> "Wurst Lite", "",
 			b -> os.openUri("https://github.com/alfredsaveron/wurst-lite"));
 		
-		new WurstOptionsButton(54, 72, () -> "X", "@Wurst_Imperium",
+		new WurstOptionsButton(54, 72, () -> "X", "",
 			b -> os.openUri("https://www.wurstclient.net/options-twitter/"));
 		
 		new WurstOptionsButton(54, 96, () -> "Donate",
