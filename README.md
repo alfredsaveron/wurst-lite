@@ -8,7 +8,7 @@
 </p>
 
 > [!IMPORTANT]
-> Wurst Lite is an experimental, open-source hobby project created for fun, with absolutely no expectation of profit or financial income.
+> [Wurst Lite](https://www.youtube.com/watch?v=nDYOYB33de8) is an experimental, open-source hobby project created for fun, with absolutely no expectation of profit or financial income.
 
 > [!WARNING]
 > Using hacked clients on public Minecraft servers ruins the fun for other players and creates an unfair playing field. I strongly advise against using **Wurst Lite** on public multiplayer servers. If you wish to use it in multiplayer, it is best done on private servers with consent from your friends.
