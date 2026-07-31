@@ -63,7 +63,7 @@ public abstract class GameMenuScreenMixin extends Screen
 		if(!WurstClient.INSTANCE.isEnabled() || wurstOptionsButton == null)
 			return;
 		
-		int x = wurstOptionsButton.getX() + 34;
+		int x = wurstOptionsButton.getX() + 70;
 		int y = wurstOptionsButton.getY() + 2;
 		int w = 63;
 		int h = 16;
@@ -105,7 +105,7 @@ public abstract class GameMenuScreenMixin extends Screen
 		ensureSpaceAvailable(buttonX, buttonY, buttonWidth, buttonHeight);
 		
 		// Create Wurst Options button
-		MutableComponent buttonText = Component.literal("            Options");
+		MutableComponent buttonText = Component.literal("");
 		wurstOptionsButton = Button.builder(buttonText, b -> openWurstOptions())
 			.bounds(buttonX, buttonY, buttonWidth, buttonHeight).build();
 		buttons.add(wurstOptionsButton);
