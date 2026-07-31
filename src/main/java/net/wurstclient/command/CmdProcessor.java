@@ -111,22 +111,6 @@ public final class CmdProcessor implements ChatOutputListener
 		{
 			String cmdName = input.split(" ")[0];
 			ChatUtils.error("Unknown command: ." + cmdName);
-			
-			StringBuilder helpMsg = new StringBuilder();
-			
-			if(input.startsWith("/"))
-			{
-				helpMsg.append("Use \".say " + input + "\"");
-				helpMsg.append(" to send it as a chat command.");
-				
-			}else
-			{
-				helpMsg.append("Type \".help\" for a list of commands or ");
-				helpMsg.append("\".say ." + input + "\"");
-				helpMsg.append(" to send it as a chat message.");
-			}
-			
-			ChatUtils.message(helpMsg.toString());
 		}
 	}
 }
