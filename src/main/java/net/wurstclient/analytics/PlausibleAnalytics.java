@@ -303,17 +303,19 @@ public final class PlausibleAnalytics
 		for(Map.Entry<String, String> entry : props.entrySet())
 		{
 			String key = entry.getKey();
+			String value = entry.getValue();
+			if(key == null || value == null)
+				continue;
+			
 			if(isDebugMode() && key.length() > 300)
 				LOGGER.warn("Property key is too long ({} characters): {}",
 					key.length(), key);
 			
-			String value = entry.getValue();
 			if(isDebugMode() && value.length() > 2000)
 				LOGGER.warn("Property value is too long ({} characters): {}",
 					value.length(), value);
 			
-			if(key != null && value != null)
-				jsonProps.addProperty(key, value);
+			jsonProps.addProperty(key, value);
 		}
 		
 		if(isDebugMode() && jsonProps.size() > 30)
