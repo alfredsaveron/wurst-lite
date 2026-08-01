@@ -230,7 +230,8 @@ public enum WurstClient
 		if(hack != null)
 			return hack;
 		
-		Command cmd = getCmds().getCmdByName(name.substring(1));
+		Command cmd = getCmds()
+			.getCmdByName(name.startsWith(".") ? name.substring(1) : name);
 		if(cmd != null)
 			return cmd;
 		
