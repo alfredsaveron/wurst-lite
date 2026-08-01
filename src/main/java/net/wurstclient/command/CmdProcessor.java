@@ -33,8 +33,7 @@ public final class CmdProcessor implements ChatOutputListener
 			return;
 		
 		String message = event.getOriginalMessage().trim();
-		String lowerMsg = message.toLowerCase();
-		if(lowerMsg.equals(".goto") || lowerMsg.startsWith(".goto "))
+		if(message.startsWith("."))
 		{
 			event.cancel();
 			process(message.substring(1));
