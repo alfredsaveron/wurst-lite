@@ -30,8 +30,7 @@ public final class NameGenerator
 			{
 				while(nextLetter.equals(lastLetter))
 				{
-					int letterIndex =
-						(int)(Math.random() * vowels.length() - 1);
+					int letterIndex = random.nextInt(vowels.length());
 					nextLetter = vowels.substring(letterIndex, letterIndex + 1);
 				}
 				usedConsonants = 0;
@@ -40,8 +39,7 @@ public final class NameGenerator
 			{
 				while(nextLetter.equals(lastLetter))
 				{
-					int letterIndex =
-						(int)(Math.random() * consonants.length() - 1);
+					int letterIndex = random.nextInt(consonants.length());
 					nextLetter =
 						consonants.substring(letterIndex, letterIndex + 1);
 				}
