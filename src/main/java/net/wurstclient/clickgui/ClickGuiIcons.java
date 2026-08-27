@@ -7,7 +7,13 @@
  */
 package net.wurstclient.clickgui;
 
+import org.joml.Matrix4f;
+
+import com.mojang.blaze3d.vertex.VertexConsumer;
+
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderType;
+import net.wurstclient.WurstRenderLayers;
 import net.wurstclient.util.RenderUtils;
 
 public enum ClickGuiIcons
@@ -57,7 +63,6 @@ public enum ClickGuiIcons
 			float yk2 = y2 - 2;
 			float yk3 = y2 - 0.5F;
 			
-			// knob
 			int knobColor = hovering ? 0xFFFF0000 : 0xFFD90000;
 			RenderUtils.fill2D(context, xk1, yk1, xk2, yk2, knobColor);
 			RenderUtils.fill2D(context, xk3, yk2, xk4, yk3, knobColor);
@@ -67,10 +72,8 @@ public enum ClickGuiIcons
 			float yn1 = y2 - 0.5F;
 			float yn2 = y2;
 			
-			// needle
 			RenderUtils.fill2D(context, xn1, yn1, xn2, yn2, needleColor);
 			
-			// outlines
 			RenderUtils.drawBorder2D(context, xk1, yk1, xk2, yk2, outlineColor);
 			RenderUtils.drawBorder2D(context, xk3, yk2, xk4, yk3, outlineColor);
 			RenderUtils.drawBorder2D(context, xn1, yn1, xn2, yn2, outlineColor);
@@ -92,11 +95,19 @@ public enum ClickGuiIcons
 			float yk6 = y2 - 2;
 			float yk7 = y2 - 1;
 			
-			// knob
 			int knobColor = hovering ? 0xFF00FF00 : 0xFF00D900;
-			float[][] knobVertices = {{xk4, yk4}, {xk3, yk3}, {xk2, yk2},
-				{xk1, yk1}, {xk5, yk5}, {xk7, yk4}, {xk3, yk7}, {xk6, yk6}};
-			RenderUtils.fillQuads2D(context, knobVertices, knobColor);
+			Matrix4f matrix = context.pose().last().pose();
+			
+			VertexConsumer guiBuffer =
+				RenderUtils.getVCP().getBuffer(RenderType.gui());
+			guiBuffer.addVertex(matrix, xk4, yk4, 0).setColor(knobColor);
+			guiBuffer.addVertex(matrix, xk3, yk3, 0).setColor(knobColor);
+			guiBuffer.addVertex(matrix, xk2, yk2, 0).setColor(knobColor);
+			guiBuffer.addVertex(matrix, xk1, yk1, 0).setColor(knobColor);
+			guiBuffer.addVertex(matrix, xk5, yk5, 0).setColor(knobColor);
+			guiBuffer.addVertex(matrix, xk7, yk4, 0).setColor(knobColor);
+			guiBuffer.addVertex(matrix, xk3, yk7, 0).setColor(knobColor);
+			guiBuffer.addVertex(matrix, xk6, yk6, 0).setColor(knobColor);
 			
 			float xn1 = x1 + 3;
 			float xn2 = x1 + 4;
@@ -105,18 +116,30 @@ public enum ClickGuiIcons
 			float yn2 = y2 - 3;
 			float yn3 = y2 - 1;
 			
-			// needle
-			float[][] needleVertices = {{xn3, yn3}, {xn2, yn2}, {xn1, yn1}};
-			RenderUtils.fillTriangle2D(context, needleVertices, needleColor);
+			VertexConsumer debugBuffer = RenderUtils.getVCP()
+				.getBuffer(RenderType.debugFilledBox());
+			debugBuffer.addVertex(matrix, xn3, yn3, 1).setColor(needleColor);
+			debugBuffer.addVertex(matrix, xn2, yn2, 1).setColor(needleColor);
+			debugBuffer.addVertex(matrix, xn1, yn1, 1).setColor(needleColor);
 			
-			// outlines
-			float[][] knobPart1 = new float[4][2];
-			System.arraycopy(knobVertices, 0, knobPart1, 0, 4);
-			RenderUtils.drawLineStrip2D(context, knobPart1, outlineColor);
-			float[][] knobPart2 = new float[4][2];
-			System.arraycopy(knobVertices, 4, knobPart2, 0, 4);
-			RenderUtils.drawLineStrip2D(context, knobPart2, outlineColor);
-			RenderUtils.drawLineStrip2D(context, needleVertices, outlineColor);
+			VertexConsumer lineStripBuffer = RenderUtils.getVCP()
+				.getBuffer(WurstRenderLayers.ONE_PIXEL_LINE_STRIP);
+			lineStripBuffer.addVertex(matrix, xk4, yk4, 1).setColor(outlineColor);
+			lineStripBuffer.addVertex(matrix, xk3, yk3, 1).setColor(outlineColor);
+			lineStripBuffer.addVertex(matrix, xk2, yk2, 1).setColor(outlineColor);
+			lineStripBuffer.addVertex(matrix, xk1, yk1, 1).setColor(outlineColor);
+			lineStripBuffer.addVertex(matrix, xk4, yk4, 1).setColor(outlineColor);
+			
+			lineStripBuffer.addVertex(matrix, xk5, yk5, 1).setColor(outlineColor);
+			lineStripBuffer.addVertex(matrix, xk7, yk4, 1).setColor(outlineColor);
+			lineStripBuffer.addVertex(matrix, xk3, yk7, 1).setColor(outlineColor);
+			lineStripBuffer.addVertex(matrix, xk6, yk6, 1).setColor(outlineColor);
+			lineStripBuffer.addVertex(matrix, xk5, yk5, 1).setColor(outlineColor);
+			
+			lineStripBuffer.addVertex(matrix, xn3, yn3, 1).setColor(outlineColor);
+			lineStripBuffer.addVertex(matrix, xn2, yn2, 1).setColor(outlineColor);
+			lineStripBuffer.addVertex(matrix, xn1, yn1, 1).setColor(outlineColor);
+			lineStripBuffer.addVertex(matrix, xn3, yn3, 1).setColor(outlineColor);
 		}
 	}
 	
@@ -135,18 +158,32 @@ public enum ClickGuiIcons
 		float yc5 = y2 - 4.5F;
 		float yc6 = y2 - 2.5F;
 		
-		// check
 		int checkColor =
 			grayedOut ? 0xC0808080 : hovering ? 0xFFF2D5F7 : 0xFFD8A8DC;
-		float[][] checkVertices = {{xc2, yc3}, {xc1, yc4}, {xc3, yc6},
-			{xc3, yc5}, {xc3, yc5}, {xc3, yc6}, {xc5, yc2}, {xc4, yc1}};
-		RenderUtils.fillQuads2D(context, checkVertices, checkColor);
+		Matrix4f matrix = context.pose().last().pose();
 		
-		// outline
+		VertexConsumer guiBuffer =
+			RenderUtils.getVCP().getBuffer(RenderType.gui());
+		guiBuffer.addVertex(matrix, xc2, yc3, 0).setColor(checkColor);
+		guiBuffer.addVertex(matrix, xc1, yc4, 0).setColor(checkColor);
+		guiBuffer.addVertex(matrix, xc3, yc6, 0).setColor(checkColor);
+		guiBuffer.addVertex(matrix, xc3, yc5, 0).setColor(checkColor);
+		guiBuffer.addVertex(matrix, xc3, yc5, 0).setColor(checkColor);
+		guiBuffer.addVertex(matrix, xc3, yc6, 0).setColor(checkColor);
+		guiBuffer.addVertex(matrix, xc5, yc2, 0).setColor(checkColor);
+		guiBuffer.addVertex(matrix, xc4, yc1, 0).setColor(checkColor);
+		
 		int outlineColor = 0x80101010;
-		float[][] outlineVertices = {{xc2, yc3}, {xc3, yc5}, {xc4, yc1},
-			{xc5, yc2}, {xc3, yc6}, {xc1, yc4}, {xc2, yc3}};
-		RenderUtils.drawLineStrip2D(context, outlineVertices, outlineColor);
+		VertexConsumer lineStripBuffer = RenderUtils.getVCP()
+			.getBuffer(WurstRenderLayers.ONE_PIXEL_LINE_STRIP);
+		lineStripBuffer.addVertex(matrix, xc2, yc3, 1).setColor(outlineColor);
+		lineStripBuffer.addVertex(matrix, xc3, yc5, 1).setColor(outlineColor);
+		lineStripBuffer.addVertex(matrix, xc4, yc1, 1).setColor(outlineColor);
+		lineStripBuffer.addVertex(matrix, xc5, yc2, 1).setColor(outlineColor);
+		lineStripBuffer.addVertex(matrix, xc3, yc6, 1).setColor(outlineColor);
+		lineStripBuffer.addVertex(matrix, xc1, yc4, 1).setColor(outlineColor);
+		lineStripBuffer.addVertex(matrix, xc2, yc3, 1).setColor(outlineColor);
+		lineStripBuffer.addVertex(matrix, xc2, yc3, 1).setColor(outlineColor);
 	}
 	
 	public static void drawIndeterminateCheck(GuiGraphics context, float x1,
@@ -157,12 +194,10 @@ public enum ClickGuiIcons
 		float yc1 = y1 + 2.5F;
 		float yc2 = y2 - 2.5F;
 		
-		// fill
 		int checkColor =
 			grayedOut ? 0xC0808080 : hovering ? 0xFF00FF00 : 0xFF00D900;
 		RenderUtils.fill2D(context, xc1, yc1, xc2, yc2, checkColor);
 		
-		// outline
 		int outlineColor = 0x80101010;
 		RenderUtils.drawBorder2D(context, xc1, yc1, xc2, yc2, outlineColor);
 	}
@@ -185,18 +220,39 @@ public enum ClickGuiIcons
 		float yc6 = (y1 + y2) / 2;
 		float yc7 = y2 - 3.5F;
 		
-		// cross
 		int crossColor = hovering ? 0xFFFF0000 : 0xFFD90000;
-		float[][] crossVertices = {{xc2, yc2}, {xc1, yc1}, {xc4, yc4},
-			{xc3, yc3}, {xc3, yc1}, {xc4, yc2}, {xc6, yc5}, {xc7, yc6},
-			{xc6, yc7}, {xc5, yc6}, {xc1, yc3}, {xc2, yc4}};
-		RenderUtils.fillQuads2D(context, crossVertices, crossColor);
+		Matrix4f matrix = context.pose().last().pose();
 		
-		// outline
+		VertexConsumer guiBuffer =
+			RenderUtils.getVCP().getBuffer(RenderType.gui());
+		guiBuffer.addVertex(matrix, xc2, yc2, 0).setColor(crossColor);
+		guiBuffer.addVertex(matrix, xc1, yc1, 0).setColor(crossColor);
+		guiBuffer.addVertex(matrix, xc4, yc4, 0).setColor(crossColor);
+		guiBuffer.addVertex(matrix, xc3, yc3, 0).setColor(crossColor);
+		guiBuffer.addVertex(matrix, xc3, yc1, 0).setColor(crossColor);
+		guiBuffer.addVertex(matrix, xc4, yc2, 0).setColor(crossColor);
+		guiBuffer.addVertex(matrix, xc6, yc5, 0).setColor(crossColor);
+		guiBuffer.addVertex(matrix, xc7, yc6, 0).setColor(crossColor);
+		guiBuffer.addVertex(matrix, xc6, yc7, 0).setColor(crossColor);
+		guiBuffer.addVertex(matrix, xc5, yc6, 0).setColor(crossColor);
+		guiBuffer.addVertex(matrix, xc1, yc3, 0).setColor(crossColor);
+		guiBuffer.addVertex(matrix, xc2, yc4, 0).setColor(crossColor);
+		
 		int outlineColor = 0x80101010;
-		float[][] outlineVertices = {{xc1, yc1}, {xc2, yc2}, {xc6, yc5},
-			{xc4, yc2}, {xc3, yc1}, {xc7, yc6}, {xc3, yc3}, {xc4, yc4},
-			{xc6, yc7}, {xc2, yc4}, {xc1, yc3}, {xc5, yc6}};
-		RenderUtils.drawLineStrip2D(context, outlineVertices, outlineColor);
+		VertexConsumer lineStripBuffer = RenderUtils.getVCP()
+			.getBuffer(WurstRenderLayers.ONE_PIXEL_LINE_STRIP);
+		lineStripBuffer.addVertex(matrix, xc1, yc1, 1).setColor(outlineColor);
+		lineStripBuffer.addVertex(matrix, xc2, yc2, 1).setColor(outlineColor);
+		lineStripBuffer.addVertex(matrix, xc6, yc5, 1).setColor(outlineColor);
+		lineStripBuffer.addVertex(matrix, xc4, yc2, 1).setColor(outlineColor);
+		lineStripBuffer.addVertex(matrix, xc3, yc1, 1).setColor(outlineColor);
+		lineStripBuffer.addVertex(matrix, xc7, yc6, 1).setColor(outlineColor);
+		lineStripBuffer.addVertex(matrix, xc3, yc3, 1).setColor(outlineColor);
+		lineStripBuffer.addVertex(matrix, xc4, yc4, 1).setColor(outlineColor);
+		lineStripBuffer.addVertex(matrix, xc6, yc7, 1).setColor(outlineColor);
+		lineStripBuffer.addVertex(matrix, xc2, yc4, 1).setColor(outlineColor);
+		lineStripBuffer.addVertex(matrix, xc1, yc3, 1).setColor(outlineColor);
+		lineStripBuffer.addVertex(matrix, xc5, yc6, 1).setColor(outlineColor);
+		lineStripBuffer.addVertex(matrix, xc1, yc1, 1).setColor(outlineColor);
 	}
 }
