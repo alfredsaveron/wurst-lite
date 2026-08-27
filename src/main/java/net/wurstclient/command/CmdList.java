@@ -78,8 +78,7 @@ public final class CmdList
 					continue;
 				
 				Command cmd = (Command)field.get(this);
-				if(field.getName().equals("goToCmd"))
-					cmds.put(cmd.getName(), cmd);
+				cmds.put(cmd.getName(), cmd);
 			}
 			
 		}catch(Exception e)
