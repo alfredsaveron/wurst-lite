@@ -116,30 +116,44 @@ public enum ClickGuiIcons
 			float yn2 = y2 - 3;
 			float yn3 = y2 - 1;
 			
-			VertexConsumer debugBuffer = RenderUtils.getVCP()
-				.getBuffer(RenderType.debugFilledBox());
+			VertexConsumer debugBuffer =
+				RenderUtils.getVCP().getBuffer(RenderType.debugFilledBox());
 			debugBuffer.addVertex(matrix, xn3, yn3, 1).setColor(needleColor);
 			debugBuffer.addVertex(matrix, xn2, yn2, 1).setColor(needleColor);
 			debugBuffer.addVertex(matrix, xn1, yn1, 1).setColor(needleColor);
 			
 			VertexConsumer lineStripBuffer = RenderUtils.getVCP()
 				.getBuffer(WurstRenderLayers.ONE_PIXEL_LINE_STRIP);
-			lineStripBuffer.addVertex(matrix, xk4, yk4, 1).setColor(outlineColor);
-			lineStripBuffer.addVertex(matrix, xk3, yk3, 1).setColor(outlineColor);
-			lineStripBuffer.addVertex(matrix, xk2, yk2, 1).setColor(outlineColor);
-			lineStripBuffer.addVertex(matrix, xk1, yk1, 1).setColor(outlineColor);
-			lineStripBuffer.addVertex(matrix, xk4, yk4, 1).setColor(outlineColor);
+			lineStripBuffer.addVertex(matrix, xk4, yk4, 1)
+				.setColor(outlineColor);
+			lineStripBuffer.addVertex(matrix, xk3, yk3, 1)
+				.setColor(outlineColor);
+			lineStripBuffer.addVertex(matrix, xk2, yk2, 1)
+				.setColor(outlineColor);
+			lineStripBuffer.addVertex(matrix, xk1, yk1, 1)
+				.setColor(outlineColor);
+			lineStripBuffer.addVertex(matrix, xk4, yk4, 1)
+				.setColor(outlineColor);
 			
-			lineStripBuffer.addVertex(matrix, xk5, yk5, 1).setColor(outlineColor);
-			lineStripBuffer.addVertex(matrix, xk7, yk4, 1).setColor(outlineColor);
-			lineStripBuffer.addVertex(matrix, xk3, yk7, 1).setColor(outlineColor);
-			lineStripBuffer.addVertex(matrix, xk6, yk6, 1).setColor(outlineColor);
-			lineStripBuffer.addVertex(matrix, xk5, yk5, 1).setColor(outlineColor);
+			lineStripBuffer.addVertex(matrix, xk5, yk5, 1)
+				.setColor(outlineColor);
+			lineStripBuffer.addVertex(matrix, xk7, yk4, 1)
+				.setColor(outlineColor);
+			lineStripBuffer.addVertex(matrix, xk3, yk7, 1)
+				.setColor(outlineColor);
+			lineStripBuffer.addVertex(matrix, xk6, yk6, 1)
+				.setColor(outlineColor);
+			lineStripBuffer.addVertex(matrix, xk5, yk5, 1)
+				.setColor(outlineColor);
 			
-			lineStripBuffer.addVertex(matrix, xn3, yn3, 1).setColor(outlineColor);
-			lineStripBuffer.addVertex(matrix, xn2, yn2, 1).setColor(outlineColor);
-			lineStripBuffer.addVertex(matrix, xn1, yn1, 1).setColor(outlineColor);
-			lineStripBuffer.addVertex(matrix, xn3, yn3, 1).setColor(outlineColor);
+			lineStripBuffer.addVertex(matrix, xn3, yn3, 1)
+				.setColor(outlineColor);
+			lineStripBuffer.addVertex(matrix, xn2, yn2, 1)
+				.setColor(outlineColor);
+			lineStripBuffer.addVertex(matrix, xn1, yn1, 1)
+				.setColor(outlineColor);
+			lineStripBuffer.addVertex(matrix, xn3, yn3, 1)
+				.setColor(outlineColor);
 		}
 	}
 	

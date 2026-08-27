@@ -30,8 +30,8 @@ public class WalkPathProcessor extends PathProcessor
 	public void process()
 	{
 		var player = WurstClient.MC.player;
-		BlockPos pos = player.onGround()
-			? BlockPos.containing(player.getX(), player.getY() + 0.5, player.getZ())
+		BlockPos pos = player.onGround() ? BlockPos.containing(player.getX(),
+			player.getY() + 0.5, player.getZ())
 			: BlockPos.containing(player.position());
 		PathPos nextPos = path.get(index);
 		int posIndex = path.indexOf(pos);
@@ -63,17 +63,21 @@ public class WalkPathProcessor extends PathProcessor
 		
 		if(WURST.getHax().jesusHack.isEnabled())
 		{
-			if(player.getY() < nextPos.getY() && (player.isInWater() || player.isInLava()))
+			if(player.getY() < nextPos.getY()
+				&& (player.isInWater() || player.isInLava()))
 				return;
 			
-			if(player.getY() - nextPos.getY() > 0.5 && (player.isInWater() || player.isInLava() || WURST.getHax().jesusHack.isOverLiquid()))
+			if(player.getY() - nextPos.getY() > 0.5
+				&& (player.isInWater() || player.isInLava()
+					|| WURST.getHax().jesusHack.isOverLiquid()))
 				MC.options.keyShift.setDown(true);
 		}
 		
 		if(pos.getX() != nextPos.getX() || pos.getZ() != nextPos.getZ())
 		{
 			MC.options.keyUp.setDown(true);
-			if(index > 0 && path.get(index - 1).isJumping() || pos.getY() < nextPos.getY())
+			if(index > 0 && path.get(index - 1).isJumping()
+				|| pos.getY() < nextPos.getY())
 				MC.options.keyJump.setDown(true);
 		}else if(pos.getY() != nextPos.getY())
 		{
@@ -87,13 +91,15 @@ public class WalkPathProcessor extends PathProcessor
 					MC.options.keyUp.setDown(true);
 				}else
 				{
-					if(index < path.size() - 1 && !nextPos.above().equals(path.get(index + 1)))
+					if(index < path.size() - 1
+						&& !nextPos.above().equals(path.get(index + 1)))
 						index++;
 					MC.options.keyJump.setDown(true);
 				}
 			}else
 			{
-				while(index < path.size() - 1 && path.get(index).below().equals(path.get(index + 1)))
+				while(index < path.size() - 1
+					&& path.get(index).below().equals(path.get(index + 1)))
 					index++;
 				if(player.onGround())
 					MC.options.keyUp.setDown(true);
