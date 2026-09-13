@@ -31,6 +31,7 @@ public final class OtfList
 	public final VanillaSpoofOtf vanillaSpoofOtf = new VanillaSpoofOtf();
 	public final WikiDataExportOtf wikiDataExportOtf = new WikiDataExportOtf();
 	public final WurstCapesOtf wurstCapesOtf = new WurstCapesOtf();
+	public final WurstLitePackOtf wurstLitePackOtf = new WurstLitePackOtf();
 	public final WurstLogoOtf wurstLogoOtf = new WurstLogoOtf();
 	public final ZoomOtf zoomOtf = new ZoomOtf();
 	

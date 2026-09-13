@@ -26,6 +26,7 @@ import net.wurstclient.analytics.PlausibleAnalytics;
 import net.wurstclient.commands.FriendsCmd;
 import net.wurstclient.hacks.XRayHack;
 import net.wurstclient.other_features.VanillaSpoofOtf;
+import net.wurstclient.other_features.WurstLitePackOtf;
 import net.wurstclient.settings.CheckboxSetting;
 import net.wurstclient.util.ChatUtils;
 
@@ -46,12 +47,12 @@ public class WurstOptionsScreen extends Screen
 			.builder(Component.literal("Donate"),
 				b -> Util.getPlatform()
 					.openUri("https://www.wurstclient.net/options-donate/"))
-			.bounds(width / 2 - 100, height / 4 + 144 - 40, 200, 20).build());
+			.bounds(width / 2 - 100, height / 4 + 144 - 24, 200, 20).build());
 		
 		addRenderableWidget(Button
 			.builder(Component.literal("Back"),
 				b -> minecraft.setScreen(prevScreen))
-			.bounds(width / 2 - 100, height / 4 + 144 - 16, 200, 20).build());
+			.bounds(width / 2 - 100, height / 4 + 144, 200, 20).build());
 		
 		addSettingButtons();
 		addManagerButtons();
@@ -89,6 +90,13 @@ public class WurstOptionsScreen extends Screen
 				+ (vanillaSpoofOtf.isEnabled() ? "ON" : "OFF"),
 			vanillaSpoofOtf.getDescription(),
 			b -> vanillaSpoofOtf.doPrimaryAction());
+		
+		WurstLitePackOtf wurstLitePackOtf = wurst.getOtfs().wurstLitePackOtf;
+		new WurstOptionsButton(-154, 96,
+			() -> "Wurst Lite Pack via Vanilla Tweaks: "
+				+ (wurstLitePackOtf.isPackActive() ? "ON" : "OFF"),
+			wurstLitePackOtf.getDescription(),
+			b -> wurstLitePackOtf.togglePack());
 	}
 	
 	private void addManagerButtons()

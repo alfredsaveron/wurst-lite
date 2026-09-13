@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/template_hanging_lantern",
+  "textures": {
+    "chain": "minecraft:block/chain",
+    "lantern": "minecraft:block/soul_lantern",
+    "particle": "minecraft:item/soul_lantern"
+  }
+}

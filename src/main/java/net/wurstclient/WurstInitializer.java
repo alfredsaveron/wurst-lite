@@ -8,6 +8,10 @@
 package net.wurstclient;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.resources.ResourceLocation;
 
 public final class WurstInitializer implements ModInitializer
 {
@@ -23,6 +27,11 @@ public final class WurstInitializer implements ModInitializer
 		if(initialized)
 			throw new RuntimeException(
 				"WurstInitializer.onInitialize() ran twice!");
+		
+		FabricLoader.getInstance().getModContainer("wurst").ifPresent(
+			container -> ResourceManagerHelper.registerBuiltinResourcePack(
+				ResourceLocation.fromNamespaceAndPath("wurst", "default_pack"),
+				container, ResourcePackActivationType.NORMAL));
 		
 		WurstClient.INSTANCE.initialize();
 		initialized = true;
