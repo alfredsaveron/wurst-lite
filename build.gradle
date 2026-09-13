@@ -146,6 +146,7 @@ spotless {
 	}
 	json {
 		target("src/**/*.json", "src/**/*.mcmeta")
+		targetExclude("src/main/resources/resourcepacks/**")
 		gson().indentWithSpaces(2).version("2.11.0")
 	}
 }
