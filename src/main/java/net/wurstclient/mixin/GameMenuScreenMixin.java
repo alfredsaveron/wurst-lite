@@ -63,10 +63,10 @@ public abstract class GameMenuScreenMixin extends Screen
 		if(!WurstClient.INSTANCE.isEnabled() || wurstOptionsButton == null)
 			return;
 		
-		int x = wurstOptionsButton.getX() + 70;
-		int y = wurstOptionsButton.getY() + 2;
-		int w = 63;
-		int h = 16;
+		int w = 38;
+		int h = 24;
+		int x = wurstOptionsButton.getX() + (wurstOptionsButton.getWidth() - w) / 2;
+		int y = wurstOptionsButton.getY() + (wurstOptionsButton.getHeight() - h) / 2;
 		RenderSystem.enableBlend();
 		context.blit(WURST_TEXTURE, x, y, w, h, 0.0F, 0.0F, 574, 356, 574, 356);
 	}
@@ -80,7 +80,7 @@ public abstract class GameMenuScreenMixin extends Screen
 		int buttonX = width / 2 - 102;
 		int buttonY = 60;
 		int buttonWidth = 204;
-		int buttonHeight = 20;
+		int buttonHeight = 28;
 		
 		for(AbstractWidget button : buttons)
 		{
@@ -92,10 +92,10 @@ public abstract class GameMenuScreenMixin extends Screen
 				break;
 			}
 			
-			// If options button exists, go 24px above it
+			// If options button exists, go 32px above it
 			if(isTrKey(button, "menu.options"))
 			{
-				buttonY = button.getY() - 24;
+				buttonY = button.getY() - 32;
 				break;
 			}
 		}
@@ -144,9 +144,9 @@ public abstract class GameMenuScreenMixin extends Screen
 			return;
 		
 		// If yes, clear space below and move the buttons there
-		ensureSpaceAvailable(x, y + 24, width, height);
+		ensureSpaceAvailable(x, y + 32, width, height);
 		for(AbstractWidget button : buttonsInTheWay)
-			button.setY(button.getY() + 24);
+			button.setY(button.getY() + 32);
 	}
 	
 	@Unique
