@@ -64,8 +64,8 @@ public enum FreeLook
 		if(!active)
 			return false;
 		
-		targetYaw += y * 0.15F;
-		targetPitch += x * 0.15F;
+		targetYaw += y * 0.10F;
+		targetPitch += x * 0.10F;
 		targetPitch = Mth.clamp(targetPitch, -90.0F, 90.0F);
 		return true;
 	}
@@ -74,9 +74,9 @@ public enum FreeLook
 	{
 		if(active)
 		{
-			yaw = Mth.lerp(0.12F, yaw, targetYaw);
-			pitch = Mth.lerp(0.12F, pitch, targetPitch);
-			currentDistance = Mth.lerp(0.08F, currentDistance, 4.0F);
+			yaw = Mth.lerp(0.08F, yaw, targetYaw);
+			pitch = Mth.lerp(0.08F, pitch, targetPitch);
+			currentDistance = Mth.lerp(0.06F, currentDistance, 4.0F);
 		}
 	}
 }
