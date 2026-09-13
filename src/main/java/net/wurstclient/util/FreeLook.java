@@ -76,7 +76,7 @@ public enum FreeLook
 		{
 			yaw = Mth.lerp(0.08F, yaw, targetYaw);
 			pitch = Mth.lerp(0.08F, pitch, targetPitch);
-			currentDistance = Mth.lerp(0.06F, currentDistance, 4.0F);
+			currentDistance = Mth.lerp(0.025F, currentDistance, 4.0F);
 		}
 	}
 }
