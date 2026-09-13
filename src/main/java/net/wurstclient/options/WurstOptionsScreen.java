@@ -43,6 +43,11 @@ public class WurstOptionsScreen extends Screen
 	public void init()
 	{
 		addRenderableWidget(Button
+			.builder(Component.literal("Donate"),
+				b -> Util.getPlatform().openUri("https://www.wurstclient.net/options-donate/"))
+			.bounds(width / 2 - 100, height / 4 + 144 - 40, 200, 20).build());
+		
+		addRenderableWidget(Button
 			.builder(Component.literal("Back"),
 				b -> minecraft.setScreen(prevScreen))
 			.bounds(width / 2 - 100, height / 4 + 144 - 16, 200, 20).build());
@@ -116,14 +121,6 @@ public class WurstOptionsScreen extends Screen
 		
 		new WurstOptionsButton(54, 72, () -> "X", "",
 			b -> os.openUri("https://www.wurstclient.net/options-twitter/"));
-		
-		new WurstOptionsButton(54, 96, () -> "Donate",
-			"§n§lWurstClient.net/donate\n"
-				+ "Donate now to help keep the Wurst Client alive and free"
-				+ " to use for everyone.\n\n"
-				+ "Every bit helps and is much appreciated! Cool perks"
-				+ " are also available in return.",
-			b -> os.openUri("https://www.wurstclient.net/options-donate/"));
 	}
 	
 	@Override
