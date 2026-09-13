@@ -64,7 +64,8 @@ public abstract class CameraMixin
 	private float changeClipToSpaceDistance(float desiredCameraDistance)
 	{
 		if(WurstClient.INSTANCE.getHax().freeLookHack.isActive())
-			return WurstClient.INSTANCE.getHax().freeLookHack.getCurrentDistance();
+			return WurstClient.INSTANCE.getHax().freeLookHack
+				.getCurrentDistance();
 		
 		CameraDistanceHack cameraDistance =
 			WurstClient.INSTANCE.getHax().cameraDistanceHack;
