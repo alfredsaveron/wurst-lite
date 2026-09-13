@@ -7,7 +7,6 @@
  */
 package net.wurstclient.mixin;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -102,15 +101,17 @@ public abstract class GameMenuScreenMixin extends Screen
 			}
 		}
 		
-		// Clear required space for Wurst Options
+		// Hide unused feedback buttons
 		hideFeedbackReportAndServerLinksButtons();
-		ensureSpaceAvailable(buttonX, buttonY, buttonWidth, buttonHeight);
 		
 		// Create Wurst Options button
 		MutableComponent buttonText = Component.literal("");
 		wurstOptionsButton = Button.builder(buttonText, b -> openWurstOptions())
 			.bounds(buttonX, buttonY, buttonWidth, buttonHeight).build();
 		buttons.add(wurstOptionsButton);
+		
+		// Position remaining buttons directly under Wurst button
+		repositionRemainingButtons(buttonY + buttonHeight + 4);
 	}
 	
 	@Unique
@@ -125,31 +126,37 @@ public abstract class GameMenuScreenMixin extends Screen
 	}
 	
 	@Unique
-	private void ensureSpaceAvailable(int x, int y, int width, int height)
+	private void repositionRemainingButtons(int startY)
 	{
-		// Check if there are any buttons in the way
-		ArrayList<AbstractWidget> buttonsInTheWay = new ArrayList<>();
+		int currentY = startY;
+		int rowHeight = 20;
+		int spacing = 4;
+		
+		AbstractWidget optionsButton = null;
+		AbstractWidget lanButton = null;
+		AbstractWidget quitButton = null;
+		
 		for(AbstractWidget button : Screens.getButtons(this))
 		{
-			if(button.getRight() < x || button.getX() > x + width
-				|| button.getBottom() < y || button.getY() > y + height)
-				continue;
-			
-			if(!button.visible)
-				continue;
-			
-			buttonsInTheWay.add(button);
+			if(isTrKey(button, "menu.options"))
+				optionsButton = button;
+			else if(isTrKey(button, "menu.shareToLan"))
+				lanButton = button;
+			else if(isTrKey(button, "menu.returnToMenu")
+				|| isTrKey(button, "menu.disconnect"))
+				quitButton = button;
 		}
 		
-		// If not, we're done
-		if(buttonsInTheWay.isEmpty())
-			return;
+		if(optionsButton != null)
+		{
+			optionsButton.setY(currentY);
+			if(lanButton != null)
+				lanButton.setY(currentY);
+			currentY += rowHeight + spacing;
+		}
 		
-		// If yes, clear space below and move the buttons there
-		int shift = height + 4;
-		ensureSpaceAvailable(x, y + shift, width, height);
-		for(AbstractWidget button : buttonsInTheWay)
-			button.setY(button.getY() + shift);
+		if(quitButton != null)
+			quitButton.setY(currentY);
 	}
 	
 	@Unique
