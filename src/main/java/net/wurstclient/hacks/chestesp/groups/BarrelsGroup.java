@@ -28,7 +28,7 @@ public final class BarrelsGroup extends ChestEspBlockGroup
 	protected ColorSetting createColorSetting()
 	{
 		return new ColorSetting("Barrel color",
-			"Barrels will be highlighted in this color.", Color.GREEN);
+			"Barrels will be highlighted in this color.", new Color(0xC68B59));
 	}
 	
 	@Override

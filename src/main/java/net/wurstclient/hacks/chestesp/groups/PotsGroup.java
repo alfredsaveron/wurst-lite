@@ -27,7 +27,8 @@ public final class PotsGroup extends ChestEspBlockGroup
 	protected ColorSetting createColorSetting()
 	{
 		return new ColorSetting("Pots color",
-			"Decorated pots will be highlighted in this color.", Color.GREEN);
+			"Decorated pots will be highlighted in this color.",
+			new Color(0xDE9B72));
 	}
 	
 	@Override

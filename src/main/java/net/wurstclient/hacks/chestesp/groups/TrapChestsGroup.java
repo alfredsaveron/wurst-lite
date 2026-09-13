@@ -29,7 +29,7 @@ public final class TrapChestsGroup extends ChestEspBlockGroup
 	{
 		return new ColorSetting("Trap chest color",
 			"Trapped chests will be highlighted in this color.",
-			new Color(0xFF8000));
+			new Color(0xFF6B6B));
 	}
 	
 	@Override

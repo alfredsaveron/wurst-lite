@@ -27,7 +27,8 @@ public final class EnderChestsGroup extends ChestEspBlockGroup
 	protected ColorSetting createColorSetting()
 	{
 		return new ColorSetting("Ender color",
-			"Ender chests will be highlighted in this color.", Color.CYAN);
+			"Ender chests will be highlighted in this color.",
+			new Color(0x4ECDC4));
 	}
 	
 	@Override
