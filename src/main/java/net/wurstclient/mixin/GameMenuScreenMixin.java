@@ -63,8 +63,8 @@ public abstract class GameMenuScreenMixin extends Screen
 		if(!WurstClient.INSTANCE.isEnabled() || wurstOptionsButton == null)
 			return;
 		
-		int w = 32;
-		int h = 20;
+		int w = 35;
+		int h = 22;
 		int x =
 			wurstOptionsButton.getX() + (wurstOptionsButton.getWidth() - w) / 2;
 		int y = wurstOptionsButton.getY()
@@ -82,7 +82,7 @@ public abstract class GameMenuScreenMixin extends Screen
 		int buttonX = width / 2 - 102;
 		int buttonY = 60;
 		int buttonWidth = 204;
-		int buttonHeight = 20;
+		int buttonHeight = 28;
 		
 		for(AbstractWidget button : buttons)
 		{
@@ -94,7 +94,7 @@ public abstract class GameMenuScreenMixin extends Screen
 				break;
 			}
 			
-			// If options button exists, go 24px above it
+			// If options button exists, go above it
 			if(isTrKey(button, "menu.options"))
 			{
 				buttonY = button.getY() - 24;
@@ -146,9 +146,10 @@ public abstract class GameMenuScreenMixin extends Screen
 			return;
 		
 		// If yes, clear space below and move the buttons there
-		ensureSpaceAvailable(x, y + 24, width, height);
+		int shift = height + 4;
+		ensureSpaceAvailable(x, y + shift, width, height);
 		for(AbstractWidget button : buttonsInTheWay)
-			button.setY(button.getY() + 24);
+			button.setY(button.getY() + shift);
 	}
 	
 	@Unique
