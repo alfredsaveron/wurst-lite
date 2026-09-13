@@ -44,7 +44,8 @@ public class WurstOptionsScreen extends Screen
 	{
 		addRenderableWidget(Button
 			.builder(Component.literal("Donate"),
-				b -> Util.getPlatform().openUri("https://www.wurstclient.net/options-donate/"))
+				b -> Util.getPlatform()
+					.openUri("https://www.wurstclient.net/options-donate/"))
 			.bounds(width / 2 - 100, height / 4 + 144 - 40, 200, 20).build());
 		
 		addRenderableWidget(Button

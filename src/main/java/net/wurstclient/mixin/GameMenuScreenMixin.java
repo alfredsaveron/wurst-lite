@@ -65,8 +65,10 @@ public abstract class GameMenuScreenMixin extends Screen
 		
 		int w = 38;
 		int h = 24;
-		int x = wurstOptionsButton.getX() + (wurstOptionsButton.getWidth() - w) / 2;
-		int y = wurstOptionsButton.getY() + (wurstOptionsButton.getHeight() - h) / 2;
+		int x =
+			wurstOptionsButton.getX() + (wurstOptionsButton.getWidth() - w) / 2;
+		int y = wurstOptionsButton.getY()
+			+ (wurstOptionsButton.getHeight() - h) / 2;
 		RenderSystem.enableBlend();
 		context.blit(WURST_TEXTURE, x, y, w, h, 0.0F, 0.0F, 574, 356, 574, 356);
 	}
