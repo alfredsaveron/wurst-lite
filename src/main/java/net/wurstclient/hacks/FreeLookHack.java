@@ -24,18 +24,14 @@ import net.wurstclient.settings.SliderSetting.ValueDisplay;
 @SearchTags({"free look", "freelook", "perspective", "360 view"})
 public final class FreeLookHack extends Hack implements UpdateListener
 {
-	private final SliderSetting sensitivity =
-		new SliderSetting("Sensitivity", 1.0, 0.1, 3.0, 0.05,
-			ValueDisplay.DECIMAL);
-	private final SliderSetting smoothing =
-		new SliderSetting("Smoothing", 0.08, 0.01, 0.5, 0.01,
-			ValueDisplay.DECIMAL);
-	private final SliderSetting zoomSpeed =
-		new SliderSetting("Zoom Speed", 0.025, 0.005, 0.2, 0.005,
-			ValueDisplay.DECIMAL);
-	private final SliderSetting distance =
-		new SliderSetting("Distance", 4.0, 1.0, 20.0, 0.5,
-			ValueDisplay.DECIMAL);
+	private final SliderSetting sensitivity = new SliderSetting("Sensitivity",
+		1.0, 0.1, 3.0, 0.05, ValueDisplay.DECIMAL);
+	private final SliderSetting smoothing = new SliderSetting("Smoothing", 0.08,
+		0.01, 0.5, 0.01, ValueDisplay.DECIMAL);
+	private final SliderSetting zoomSpeed = new SliderSetting("Zoom Speed",
+		0.025, 0.005, 0.2, 0.005, ValueDisplay.DECIMAL);
+	private final SliderSetting distance = new SliderSetting("Distance", 4.0,
+		1.0, 20.0, 0.5, ValueDisplay.DECIMAL);
 	
 	private boolean active = false;
 	private float yaw = 0.0F;
@@ -129,9 +125,8 @@ public final class FreeLookHack extends Hack implements UpdateListener
 			float smoothFactor = smoothing.getValueF();
 			yaw = Mth.lerp(smoothFactor, yaw, targetYaw);
 			pitch = Mth.lerp(smoothFactor, pitch, targetPitch);
-			currentDistance =
-				Mth.lerp(zoomSpeed.getValueF(), currentDistance,
-					distance.getValueF());
+			currentDistance = Mth.lerp(zoomSpeed.getValueF(), currentDistance,
+				distance.getValueF());
 		}
 	}
 	
