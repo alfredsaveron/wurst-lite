@@ -1,250 +1,169 @@
 {
-  "pack": {
-    "pack_format": 34,
+    "pack": {
+        "pack_format": 34,
     "min_format": 34,
     "max_format": 75,
-    "supported_formats": {
-      "min_inclusive": 34,
-      "max_inclusive": 75
+		"supported_formats": {"min_inclusive": 34, "max_inclusive": 75},
+        "description": "\u00a76Vanilla Tweaks 1.21\n\u00a7evanillatweaks.net"
     },
-    "description": "Wurst Lite via Vanilla Tweaks (vanillatweaks.net)"
-  },
-  "overlays": {
-    "entries": [
-      {
-        "formats": {
-          "min_inclusive": 34,
-          "max_inclusive": 34
-        },
-        "min_format": 34,
-        "max_format": 34,
-        "directory": "overlay_34_34"
-      },
-      {
-        "formats": {
-          "min_inclusive": 34,
-          "max_inclusive": 66
-        },
-        "min_format": 34,
-        "max_format": 66,
-        "directory": "overlay_34_66"
-      },
-      {
-        "formats": {
-          "min_inclusive": 34,
-          "max_inclusive": 69
-        },
-        "min_format": 34,
-        "max_format": 69,
-        "directory": "overlay_34_69"
-      },
-      {
-        "formats": {
-          "min_inclusive": 34,
-          "max_inclusive": 41
-        },
-        "min_format": 34,
-        "max_format": 41,
-        "directory": "overlay_34_41"
-      },
-      {
-        "formats": {
-          "min_inclusive": 34,
-          "max_inclusive": 41
-        },
-        "min_format": 34,
-        "max_format": 41,
-        "directory": "overlay_34_41"
-      },
-      {
-        "formats": {
-          "min_inclusive": 34,
-          "max_inclusive": 51
-        },
-        "min_format": 34,
-        "max_format": 51,
-        "directory": "overlay_34_51"
-      },
-      {
-        "formats": {
-          "min_inclusive": 34,
-          "max_inclusive": 55
-        },
-        "min_format": 34,
-        "max_format": 55,
-        "directory": "overlay_34_55"
-      },
-      {
-        "formats": {
-          "min_inclusive": 42,
-          "max_inclusive": 75
-        },
-        "min_format": 42,
-        "max_format": 75,
-        "directory": "overlay_42"
-      },
-      {
-        "formats": {
-          "min_inclusive": 42,
-          "max_inclusive": 46
-        },
-        "min_format": 42,
-        "max_format": 46,
-        "directory": "overlay_42_46"
-      },
-      {
-        "formats": {
-          "min_inclusive": 42,
-          "max_inclusive": 51
-        },
-        "min_format": 42,
-        "max_format": 51,
-        "directory": "overlay_42_51"
-      },
-      {
-        "formats": {
-          "min_inclusive": 42,
-          "max_inclusive": 69
-        },
-        "min_format": 42,
-        "max_format": 69,
-        "directory": "overlay_42_69"
-      },
-      {
-        "formats": {
-          "min_inclusive": 42,
-          "max_inclusive": 56
-        },
-        "min_format": 42,
-        "max_format": 56,
-        "directory": "overlay_42_56"
-      },
-      {
-        "formats": {
-          "min_inclusive": 42,
-          "max_inclusive": 57
-        },
-        "min_format": 42,
-        "max_format": 57,
-        "directory": "overlay_42_57"
-      },
-      {
-        "formats": {
-          "min_inclusive": 46,
-          "max_inclusive": 75
-        },
-        "min_format": 46,
-        "max_format": 75,
-        "directory": "overlay_46"
-      },
-      {
-        "formats": {
-          "min_inclusive": 53,
-          "max_inclusive": 75
-        },
-        "min_format": 53,
-        "max_format": 75,
-        "directory": "overlay_53"
-      },
-      {
-        "formats": {
-          "min_inclusive": 52,
-          "max_inclusive": 56
-        },
-        "min_format": 52,
-        "max_format": 56,
-        "directory": "overlay_52_56"
-      },
-      {
-        "formats": {
-          "min_inclusive": 55,
-          "max_inclusive": 56
-        },
-        "min_format": 55,
-        "max_format": 56,
-        "directory": "overlay_55_56"
-      },
-      {
-        "formats": {
-          "min_inclusive": 57,
-          "max_inclusive": 75
-        },
-        "min_format": 57,
-        "max_format": 75,
-        "directory": "overlay_57"
-      },
-      {
-        "formats": {
-          "min_inclusive": 58,
-          "max_inclusive": 75
-        },
-        "min_format": 58,
-        "max_format": 75,
-        "directory": "overlay_58"
-      },
-      {
-        "formats": {
-          "min_inclusive": 58,
-          "max_inclusive": 69
-        },
-        "min_format": 58,
-        "max_format": 69,
-        "directory": "overlay_58_69"
-      },
-      {
-        "formats": {
-          "min_inclusive": 63,
-          "max_inclusive": 75
-        },
-        "min_format": 63,
-        "max_format": 75,
-        "directory": "overlay_63"
-      },
-      {
-        "formats": {
-          "min_inclusive": 63,
-          "max_inclusive": 69
-        },
-        "min_format": 63,
-        "max_format": 69,
-        "directory": "overlay_63_69"
-      },
-      {
-        "formats": {
-          "min_inclusive": 69,
-          "max_inclusive": 75
-        },
-        "min_format": 69,
-        "max_format": 75,
-        "directory": "overlay_69"
-      },
-      {
-        "formats": {
-          "min_inclusive": 69,
-          "max_inclusive": 69
-        },
-        "min_format": 69,
-        "max_format": 69,
-        "directory": "overlay_69_69"
-      },
-      {
-        "formats": {
-          "min_inclusive": 34,
-          "max_inclusive": 74
-        },
-        "min_format": 34,
-        "max_format": 74,
-        "directory": "overlay_34_74"
-      },
-      {
-        "formats": {
-          "min_inclusive": 70,
-          "max_inclusive": 75
-        },
-        "min_format": 70,
-        "max_format": 75,
-        "directory": "overlay_70"
-      }
-    ]
-  }
+	"overlays": {
+		"entries": [
+			{
+				"formats": {"min_inclusive": 34, "max_inclusive": 34},
+				"min_format": 34,
+				"max_format": 34,
+				"directory": "overlay_34_34"
+			},
+			{
+				"formats": {"min_inclusive": 34, "max_inclusive": 66},
+				"min_format": 34,
+				"max_format": 66,
+				"directory": "overlay_34_66"
+			},
+			{
+				"formats": {"min_inclusive": 34, "max_inclusive": 69},
+				"min_format": 34,
+				"max_format": 69,
+				"directory": "overlay_34_69"
+			},
+			{
+				"formats": {"min_inclusive": 34, "max_inclusive": 41},
+				"min_format": 34,
+				"max_format": 41,
+				"directory": "overlay_34_41"
+			},
+			{
+				"formats": {"min_inclusive": 34, "max_inclusive": 41},
+				"min_format": 34,
+				"max_format": 41,
+				"directory": "overlay_34_41"
+			},
+			{
+				"formats": { "min_inclusive": 34, "max_inclusive": 51 },
+				"min_format": 34,
+				"max_format": 51,
+				"directory": "overlay_34_51"
+			},
+			{
+				"formats": { "min_inclusive": 34, "max_inclusive": 55 },
+				"min_format": 34,
+				"max_format": 55,
+				"directory": "overlay_34_55"
+			},
+			{
+				"formats": {"min_inclusive": 42, "max_inclusive": 75},
+				"min_format": 42,
+				"max_format": 75,
+				"directory": "overlay_42"
+			},
+			{
+				"formats": {"min_inclusive": 42, "max_inclusive": 46},
+				"min_format": 42,
+				"max_format": 46,
+				"directory": "overlay_42_46"
+			},
+			{
+				"formats": { "min_inclusive": 42, "max_inclusive": 51 },
+				"min_format": 42,
+				"max_format": 51,
+				"directory": "overlay_42_51"
+			},
+			{
+				"formats": { "min_inclusive": 42, "max_inclusive": 69 },
+				"min_format": 42,
+				"max_format": 69,
+				"directory": "overlay_42_69"
+			},
+			{
+				"formats": { "min_inclusive": 42, "max_inclusive": 56 },
+				"min_format": 42,
+				"max_format": 56,
+				"directory": "overlay_42_56"
+			},
+			{
+				"formats": { "min_inclusive": 42, "max_inclusive": 57 },
+				"min_format": 42,
+				"max_format": 57,
+				"directory": "overlay_42_57"
+			},
+			{
+				"formats": {"min_inclusive": 46, "max_inclusive": 75},
+				"min_format": 46,
+				"max_format": 75,
+				"directory": "overlay_46"
+			},
+			{
+				"formats": {"min_inclusive": 53, "max_inclusive": 75},
+				"min_format": 53,
+				"max_format": 75,
+				"directory": "overlay_53"
+			},
+			{
+				"formats": {"min_inclusive": 52, "max_inclusive": 56},
+				"min_format": 52,
+				"max_format": 56,
+				"directory": "overlay_52_56"
+			},
+			{
+				"formats": {"min_inclusive": 55, "max_inclusive": 56},
+				"min_format": 55,
+				"max_format": 56,
+				"directory": "overlay_55_56"
+			},
+			{
+				"formats": { "min_inclusive": 57, "max_inclusive": 75 },
+				"min_format": 57,
+				"max_format": 75,
+				"directory": "overlay_57"
+			},
+			{
+				"formats": { "min_inclusive": 58, "max_inclusive": 75 },
+				"min_format": 58,
+				"max_format": 75,
+				"directory": "overlay_58"
+			},
+			{
+				"formats": { "min_inclusive": 58, "max_inclusive": 69 },
+				"min_format": 58,
+				"max_format": 69,
+				"directory": "overlay_58_69"
+			},
+			{
+				"formats": { "min_inclusive": 63, "max_inclusive": 75 },
+				"min_format": 63,
+				"max_format": 75,
+				"directory": "overlay_63"
+			},
+			{
+				"formats": { "min_inclusive": 63, "max_inclusive": 69 },
+				"min_format": 63,
+				"max_format": 69,
+				"directory": "overlay_63_69"
+			},
+			{
+				"formats": { "min_inclusive": 69, "max_inclusive": 75 },
+				"min_format": 69,
+				"max_format": 75,
+				"directory": "overlay_69"
+			},
+			{
+				"formats": { "min_inclusive": 69, "max_inclusive": 69 },
+				"min_format": 69,
+				"max_format": 69,
+				"directory": "overlay_69_69"
+			},
+			{
+				"formats": { "min_inclusive": 34, "max_inclusive": 74 },
+				"min_format": 34,
+				"max_format": 74,
+				"directory": "overlay_34_74"
+			},
+			{
+				"formats": { "min_inclusive": 70, "max_inclusive": 75 },
+				"min_format": 70,
+				"max_format": 75,
+				"directory": "overlay_70"
+			}
+		]
+	}
 }

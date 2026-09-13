@@ -2,34 +2,12 @@ Vanilla Tweaks Resource Pack
 Version: 1.21
 Packs:
 	DarkerDarkOakLeaves
+	DarkOakSaturation
+	RedIronGolemFlowers
 	HoeFix
 	HangingSignLogs
 	BushyLeaves
 	WavyWater
-	DarkOakSaturation
-	RedIronGolemFlowers
-	NoBowlParticles
-	ProperBreakParticles
-	PixelConsistentXPOrbs
-	PingColorIndicator
-	UnobtrusiveRain
-	UnobtrusiveSnow
-	UnobtrusiveParticles
-	LowerFire
-	LowerShield
-	DifferentStems
-	Age25Kelp
-	HungerPreview
-	QuieterRain
-	QuieterThunder
-	QuieterChests
-	QuieterDispensersDroppers
-	QuieterMinecarts
-	QuieterFire
-	QuieterNetherPortals
-	QuieterWater
-	QuieterConsumables
-	QuieterPistons
 	VariatedDirt
 	VariatedGrass
 	VariatedCobblestone
@@ -50,11 +28,25 @@ Packs:
 	VariatedFireflyBushes
 	OffsetBushes
 	VariatedVillagers
-	WavyPlants
-	TwinklingStars
-	SmootherOakLog
-	SmootherStones
-	ClearerWater
+	QuieterRain
+	QuieterThunder
+	QuieterChests
+	QuieterDispensersDroppers
+	QuieterMinecarts
+	QuieterFire
+	QuieterNetherPortals
+	QuieterWater
+	QuieterConsumables
+	QuieterPistons
+	DifferentStems
+	Age25Kelp
+	HungerPreview
+	UnobtrusiveRain
+	UnobtrusiveSnow
+	UnobtrusiveParticles
+	LowerFire
+	LowerShield
+	PingColorIndicator
 	CherryPicking
 	UnbundledHayBales
 	LessPurplePurpur
@@ -63,6 +55,13 @@ Packs:
 	HDShieldBanners
 	MossCarpetOverhang
 	CopperToolOxidization
+	NoBowlParticles
+	ProperBreakParticles
+	PixelConsistentXPOrbs
+	WavyPlants
+	TwinklingStars
+	SmootherOakLog
+	SmootherStones
 	NumberedHotbar
 	DarkUI
 

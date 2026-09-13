@@ -1,11 +1,11 @@
 {
-  "credit": "Created by Stridey",
-  "parent": "item/mangrove_leaves",
-  "textures": {
-    "1": "block/pale_oak_leaves",
-    "3": "block/pale_oak_leaves_bush1_dark",
-    "4": "block/pale_oak_leaves_side1",
-    "5": "block/pale_oak_leaves_bush2",
-    "side": "block/pale_oak_leaves_side2"
-  }
+	"credit": "Created by Stridey",
+	"parent": "item/mangrove_leaves",
+	"textures": {
+		"1": "block/pale_oak_leaves",
+		"3": "block/pale_oak_leaves_bush1_dark",
+		"4": "block/pale_oak_leaves_side1",
+		"5": "block/pale_oak_leaves_bush2",
+		"side": "block/pale_oak_leaves_side2"
+	}
 }
