@@ -71,11 +71,16 @@ public final class RotationFaker
 	
 	public void faceVectorClientIgnorePitch(Vec3 vec)
 	{
+		faceVectorClientIgnorePitch(vec, 360F);
+	}
+	
+	public void faceVectorClientIgnorePitch(Vec3 vec, float maxChange)
+	{
 		Rotation needed = RotationUtils.getNeededRotations(vec);
 		
 		LocalPlayer player = WurstClient.MC.player;
-		player.setYRot(
-			RotationUtils.limitAngleChange(player.getYRot(), needed.yaw()));
+		player.setYRot(RotationUtils.limitAngleChange(player.getYRot(),
+			needed.yaw(), maxChange));
 		player.setXRot(0);
 	}
 	
