@@ -113,7 +113,6 @@ public final class HackList implements UpdateListener
 	public final LiquidsHack liquidsHack = new LiquidsHack();
 	
 	public final MaceDmgHack maceDmgHack = new MaceDmgHack();
-	public final MassTpaHack massTpaHack = new MassTpaHack();
 	
 	public final MobEspHack mobEspHack = new MobEspHack();
 	public final MobSpawnEspHack mobSpawnEspHack = new MobSpawnEspHack();
