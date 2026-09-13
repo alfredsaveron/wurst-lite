@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackRepository;
 import net.wurstclient.DontBlock;
 import net.wurstclient.other_feature.OtherFeature;
@@ -19,26 +20,35 @@ import net.wurstclient.settings.CheckboxSetting;
 @DontBlock
 public final class WurstLitePackOtf extends OtherFeature
 {
-	private static final String PACK_ID = "fabric/wurst:default_pack";
+	private static final String PACK_ID_PREFIX = "wurst:default_pack";
 	
 	private final CheckboxSetting enabled =
-		new CheckboxSetting("Wurst Lite Pack via Vanilla Tweaks", false);
+		new CheckboxSetting("Wurst Lite Pack via vanillatweaks.net", false);
 	
 	public WurstLitePackOtf()
 	{
 		super("WurstLitePack",
-			"Enables the built-in Wurst Lite resource pack created with Vanilla Tweaks.");
+			"Enables the built-in Wurst Lite resource pack created with vanillatweaks.net.");
 		addSetting(enabled);
+	}
+	
+	private String findActualPackId(PackRepository repo)
+	{
+		for(Pack pack : repo.getAvailablePacks())
+			if(pack.getId().contains(PACK_ID_PREFIX))
+				return pack.getId();
+		return "fabric/wurst:default_pack";
 	}
 	
 	public boolean isPackActive()
 	{
 		Minecraft mc = Minecraft.getInstance();
-		if(mc.getResourcePackRepository() == null)
+		PackRepository repo = mc.getResourcePackRepository();
+		if(repo == null)
 			return enabled.isChecked();
 		
-		return mc.getResourcePackRepository().getSelectedIds()
-			.contains(PACK_ID);
+		String packId = findActualPackId(repo);
+		return repo.getSelectedIds().contains(packId);
 	}
 	
 	public void togglePack()
@@ -48,17 +58,19 @@ public final class WurstLitePackOtf extends OtherFeature
 		if(repo == null)
 			return;
 		
-		boolean currentlyActive = repo.getSelectedIds().contains(PACK_ID);
+		repo.reload();
+		String packId = findActualPackId(repo);
+		boolean currentlyActive = repo.getSelectedIds().contains(packId);
 		List<String> selectedIds = new ArrayList<>(repo.getSelectedIds());
 		
 		if(currentlyActive)
 		{
-			selectedIds.remove(PACK_ID);
+			selectedIds.remove(packId);
 			enabled.setChecked(false);
 		}else
 		{
-			if(!selectedIds.contains(PACK_ID))
-				selectedIds.add(PACK_ID);
+			if(!selectedIds.contains(packId))
+				selectedIds.add(packId);
 			enabled.setChecked(true);
 		}
 		

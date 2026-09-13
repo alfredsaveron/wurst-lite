@@ -43,6 +43,23 @@ public class WurstOptionsScreen extends Screen
 	@Override
 	public void init()
 	{
+		WurstLitePackOtf wurstLitePackOtf =
+			WurstClient.INSTANCE.getOtfs().wurstLitePackOtf;
+		addRenderableWidget(
+			Button
+				.builder(
+					Component.literal("Wurst Lite Pack via vanillatweaks.net: "
+						+ (wurstLitePackOtf.isPackActive() ? "ON" : "OFF")),
+					b -> {
+						wurstLitePackOtf.togglePack();
+						b.setMessage(Component
+							.literal("Wurst Lite Pack via vanillatweaks.net: "
+								+ (wurstLitePackOtf.isPackActive() ? "ON"
+									: "OFF")));
+					})
+				.bounds(width / 2 - 100, height / 4 + 144 - 48, 200, 20)
+				.build());
+		
 		addRenderableWidget(Button
 			.builder(Component.literal("Donate"),
 				b -> Util.getPlatform()
@@ -90,13 +107,6 @@ public class WurstOptionsScreen extends Screen
 				+ (vanillaSpoofOtf.isEnabled() ? "ON" : "OFF"),
 			vanillaSpoofOtf.getDescription(),
 			b -> vanillaSpoofOtf.doPrimaryAction());
-		
-		WurstLitePackOtf wurstLitePackOtf = wurst.getOtfs().wurstLitePackOtf;
-		new WurstOptionsButton(-154, 96,
-			() -> "Wurst Lite Pack via Vanilla Tweaks: "
-				+ (wurstLitePackOtf.isPackActive() ? "ON" : "OFF"),
-			wurstLitePackOtf.getDescription(),
-			b -> wurstLitePackOtf.togglePack());
 	}
 	
 	private void addManagerButtons()
