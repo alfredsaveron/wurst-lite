@@ -85,7 +85,7 @@ public abstract class EntityMixin
 	{
 		if((Object)this instanceof net.minecraft.client.player.LocalPlayer)
 		{
-			if(net.wurstclient.util.FreeLook.turn(y, x))
+			if(WurstClient.INSTANCE.getHax().freeLookHack.turn(y, x))
 				ci.cancel();
 		}
 	}

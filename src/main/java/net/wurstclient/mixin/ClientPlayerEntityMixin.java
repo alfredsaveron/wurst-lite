@@ -67,7 +67,6 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayer
 		ordinal = 0), method = "tick()V")
 	private void onTick(CallbackInfo ci)
 	{
-		net.wurstclient.util.FreeLook.tick();
 		EventManager.fire(UpdateEvent.INSTANCE);
 	}
 	

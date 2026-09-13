@@ -35,8 +35,7 @@ public abstract class CameraMixin
 		net.minecraft.world.entity.Entity focusedEntity, boolean thirdPerson,
 		boolean inverseView, float tickDelta, CallbackInfo ci)
 	{
-		if(net.wurstclient.util.FreeLook.active)
-			net.wurstclient.util.FreeLook.interpolate();
+		WurstClient.INSTANCE.getHax().freeLookHack.interpolate();
 	}
 	
 	@ModifyVariable(method = "setRotation(FF)V",
@@ -45,8 +44,8 @@ public abstract class CameraMixin
 		argsOnly = true)
 	private float modifyYRot(float yRot)
 	{
-		return net.wurstclient.util.FreeLook.active
-			? net.wurstclient.util.FreeLook.yaw : yRot;
+		return WurstClient.INSTANCE.getHax().freeLookHack.isActive()
+			? WurstClient.INSTANCE.getHax().freeLookHack.getYaw() : yRot;
 	}
 	
 	@ModifyVariable(method = "setRotation(FF)V",
@@ -55,8 +54,8 @@ public abstract class CameraMixin
 		argsOnly = true)
 	private float modifyXRot(float xRot)
 	{
-		return net.wurstclient.util.FreeLook.active
-			? net.wurstclient.util.FreeLook.pitch : xRot;
+		return WurstClient.INSTANCE.getHax().freeLookHack.isActive()
+			? WurstClient.INSTANCE.getHax().freeLookHack.getPitch() : xRot;
 	}
 	
 	@ModifyVariable(at = @At("HEAD"),
@@ -64,8 +63,8 @@ public abstract class CameraMixin
 		argsOnly = true)
 	private float changeClipToSpaceDistance(float desiredCameraDistance)
 	{
-		if(net.wurstclient.util.FreeLook.active)
-			return net.wurstclient.util.FreeLook.currentDistance;
+		if(WurstClient.INSTANCE.getHax().freeLookHack.isActive())
+			return WurstClient.INSTANCE.getHax().freeLookHack.getCurrentDistance();
 		
 		CameraDistanceHack cameraDistance =
 			WurstClient.INSTANCE.getHax().cameraDistanceHack;
