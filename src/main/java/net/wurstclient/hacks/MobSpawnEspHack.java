@@ -7,7 +7,6 @@
  */
 package net.wurstclient.hacks;
 
-import java.awt.Color;
 import java.util.Map.Entry;
 
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -34,7 +33,6 @@ import net.wurstclient.hacks.mobspawnesp.HitboxCheckSetting;
 import net.wurstclient.settings.CheckboxSetting;
 import net.wurstclient.settings.ChunkAreaSetting;
 import net.wurstclient.settings.ChunkAreaSetting.ChunkArea;
-import net.wurstclient.settings.ColorSetting;
 import net.wurstclient.settings.SliderSetting;
 import net.wurstclient.settings.SliderSetting.ValueDisplay;
 import net.wurstclient.util.EasyVertexBuffer;
@@ -52,11 +50,7 @@ public final class MobSpawnEspHack extends Hack
 	private final ChunkAreaSetting drawDistance =
 		new ChunkAreaSetting("Draw distance", "", ChunkArea.A9);
 	
-	private final ColorSetting nightColor = new ColorSetting("Night color",
-		"description.wurst.setting.mobspawnesp.night_color", Color.YELLOW);
-	
-	private final ColorSetting dayColor = new ColorSetting("Day color",
-		"description.wurst.setting.mobspawnesp.day_color", Color.RED);
+	private static final int COLOR = 0xA273A6;
 	
 	private final SliderSetting opacity =
 		new SliderSetting("Opacity", 0.5, 0, 1, 0.01, ValueDisplay.PERCENTAGE);
@@ -71,16 +65,11 @@ public final class MobSpawnEspHack extends Hack
 			DefaultVertexFormat.POSITION_COLOR_NORMAL, this::buildBuffer,
 			drawDistance);
 	
-	private int cachedDayColor;
-	private int cachedNightColor;
-	
 	public MobSpawnEspHack()
 	{
 		super("MobSpawnESP");
 		setCategory(Category.RENDER);
 		addSetting(drawDistance);
-		addSetting(nightColor);
-		addSetting(dayColor);
 		addSetting(opacity);
 		addSetting(depthTest);
 		addSetting(hitboxCheck);
@@ -92,9 +81,6 @@ public final class MobSpawnEspHack extends Hack
 		EVENTS.add(UpdateListener.class, this);
 		EVENTS.add(PacketInputListener.class, coordinator);
 		EVENTS.add(RenderListener.class, this);
-		
-		cachedDayColor = dayColor.getColorI();
-		cachedNightColor = nightColor.getColorI();
 	}
 	
 	@Override
@@ -110,14 +96,6 @@ public final class MobSpawnEspHack extends Hack
 	@Override
 	public void onUpdate()
 	{
-		if(dayColor.getColorI() != cachedDayColor
-			|| nightColor.getColorI() != cachedNightColor)
-		{
-			cachedDayColor = dayColor.getColorI();
-			cachedNightColor = nightColor.getColorI();
-			coordinator.reset();
-		}
-		
 		coordinator.update();
 	}
 	
@@ -181,12 +159,9 @@ public final class MobSpawnEspHack extends Hack
 		float z1 = pos.getZ() - region.z();
 		float z2 = z1 + 1;
 		
-		int color = MC.level.getBrightness(LightLayer.SKY, pos) < 8
-			? cachedDayColor : cachedNightColor;
-		
-		buffer.addVertex(x1, y, z1).setColor(color).setNormal(1, 0, 1);
-		buffer.addVertex(x2, y, z2).setColor(color).setNormal(1, 0, 1);
-		buffer.addVertex(x2, y, z1).setColor(color).setNormal(-1, 0, 1);
-		buffer.addVertex(x1, y, z2).setColor(color).setNormal(-1, 0, 1);
+		buffer.addVertex(x1, y, z1).setColor(COLOR).setNormal(1, 0, 1);
+		buffer.addVertex(x2, y, z2).setColor(COLOR).setNormal(1, 0, 1);
+		buffer.addVertex(x2, y, z1).setColor(COLOR).setNormal(-1, 0, 1);
+		buffer.addVertex(x1, y, z2).setColor(COLOR).setNormal(-1, 0, 1);
 	}
 }
