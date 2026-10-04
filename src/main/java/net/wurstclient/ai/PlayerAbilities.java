@@ -32,7 +32,7 @@ public record PlayerAbilities(boolean invulnerable, boolean creativeFlying,
 		boolean immuneToFallDamage = invulnerable || hax.noFallHack.isEnabled();
 		boolean noWaterSlowdown = hax.antiWaterPushHack.isPreventingSlowdown();
 		boolean jesus = hax.jesusHack.isEnabled();
-		boolean spider = hax.spiderHack.isEnabled();
+		boolean spider = false;
 		
 		return new PlayerAbilities(invulnerable, creativeFlying, flying,
 			immuneToFallDamage, noWaterSlowdown, jesus, spider);
