@@ -145,7 +145,6 @@ public final class HackList implements UpdateListener
 	public final PortalEspHack portalEspHack = new PortalEspHack();
 	public final PortalGuiHack portalGuiHack = new PortalGuiHack();
 	public final PotionSaverHack potionSaverHack = new PotionSaverHack();
-	public final ProtectHack protectHack = new ProtectHack();
 	
 	public final ReachHack reachHack = new ReachHack();
 	public final RemoteViewHack remoteViewHack = new RemoteViewHack();

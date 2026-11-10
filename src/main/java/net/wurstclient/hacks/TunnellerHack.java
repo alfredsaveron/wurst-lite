@@ -110,7 +110,6 @@ public final class TunnellerHack extends Hack
 		WURST.getHax().instantBunkerHack.setEnabled(false);
 		WURST.getHax().nukerHack.setEnabled(false);
 		WURST.getHax().nukerLegitHack.setEnabled(false);
-		WURST.getHax().protectHack.setEnabled(false);
 		WURST.getHax().speedNukerHack.setEnabled(false);
 		WURST.getHax().veinMinerHack.setEnabled(false);
 		
