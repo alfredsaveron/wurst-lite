@@ -19,6 +19,7 @@ import net.minecraft.client.gui.screens.multiplayer.JoinMultiplayerScreen;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.network.chat.Component;
 import net.wurstclient.WurstClient;
+import net.wurstclient.serverfinder.ServerFinderScreen;
 import net.wurstclient.util.LastServerRememberer;
 
 @Mixin(JoinMultiplayerScreen.class)
@@ -45,6 +46,12 @@ public class MultiplayerScreenMixin extends Screen
 							(JoinMultiplayerScreen)(Object)this))
 					.bounds(width / 2 - 154, 10, 100, 20).build());
 		updateLastServerButton();
+		
+		addRenderableWidget(
+			Button
+				.builder(Component.literal("Server Finder"),
+					b -> minecraft.setScreen(new ServerFinderScreen(this)))
+				.bounds(width / 2 + 54, 10, 100, 20).build());
 	}
 	
 	@Inject(at = @At("HEAD"),

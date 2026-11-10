@@ -22,12 +22,14 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.wurstclient.WurstClient;
 import net.wurstclient.altmanager.screens.AltManagerScreen;
+import net.wurstclient.serverfinder.ServerFinderScreen;
 
 @Mixin(TitleScreen.class)
 public abstract class TitleScreenMixin extends Screen
 {
 	private AbstractWidget realmsButton = null;
 	private Button altsButton;
+	private Button serverFinderButton;
 	
 	private TitleScreenMixin(WurstClient wurst, Component title)
 	{
@@ -56,10 +58,13 @@ public abstract class TitleScreenMixin extends Screen
 		if(realmsButton == null)
 			throw new IllegalStateException("Couldn't find realms button!");
 		
-		// make Realms button smaller
-		realmsButton.setWidth(98);
+		realmsButton.visible = false;
 		
-		// add AltManager button
+		addRenderableWidget(serverFinderButton = Button
+			.builder(Component.literal("Server Finder"),
+				b -> minecraft.setScreen(new ServerFinderScreen(this)))
+			.bounds(width / 2 - 100, realmsButton.getY(), 98, 20).build());
+		
 		addRenderableWidget(altsButton = Button
 			.builder(Component.literal("Alt Manager"),
 				b -> minecraft.setScreen(new AltManagerScreen(this,
@@ -70,12 +75,13 @@ public abstract class TitleScreenMixin extends Screen
 	@Inject(at = @At("RETURN"), method = "tick()V")
 	private void onTick(CallbackInfo ci)
 	{
-		if(realmsButton == null || altsButton == null)
+		if(realmsButton == null)
 			return;
 			
-		// adjust AltManager button if Realms button has been moved
-		// happens when ModMenu is installed
-		altsButton.setY(realmsButton.getY());
+		if(serverFinderButton != null)
+			serverFinderButton.setY(realmsButton.getY());
+		if(altsButton != null)
+			altsButton.setY(realmsButton.getY());
 	}
 	
 	/**

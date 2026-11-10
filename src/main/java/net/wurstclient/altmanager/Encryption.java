@@ -7,12 +7,12 @@
  */
 package net.wurstclient.altmanager;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -49,8 +49,6 @@ import net.wurstclient.util.json.WsonObject;
 
 public final class Encryption
 {
-	private static final String CHARSET = "UTF-8";
-	
 	private final Cipher encryptCipher;
 	private final Cipher decryptCipher;
 	
@@ -96,7 +94,7 @@ public final class Encryption
 			+ "DO NOT EDIT, RENAME OR DELETE THESE FILES! (unless you know what you're doing)\r\n"
 			+ "If you do, Wurst's Alt Manager can no longer read your alt list and will replace it with a blank one.\r\n"
 			+ "In other words, YOUR ALT LIST WILL BE DELETED.";
-		Files.write(readme, readmeText.getBytes("UTF-8"),
+		Files.write(readme, readmeText.getBytes(StandardCharsets.UTF_8),
 			StandardOpenOption.CREATE);
 		
 		return encFolder;
@@ -131,14 +129,17 @@ public final class Encryption
 			Files.createDirectories(newFolder);
 			
 			File[] oldFiles = oldFolder.toFile().listFiles();
-			for(File oldFile : oldFiles)
+			if(oldFiles != null)
 			{
-				Path fileDestination = newFolder.resolve(oldFile.getName());
-				Files.copy(oldFile.toPath(), fileDestination);
+				for(File oldFile : oldFiles)
+				{
+					Path fileDestination = newFolder.resolve(oldFile.getName());
+					Files.copy(oldFile.toPath(), fileDestination);
+				}
+				
+				for(File oldFile : oldFiles)
+					oldFile.delete();
 			}
-			
-			for(File oldFile : oldFiles)
-				oldFile.delete();
 			
 			Files.deleteIfExists(oldFolder);
 			
@@ -170,7 +171,8 @@ public final class Encryption
 	{
 		try
 		{
-			return new String(decrypt(Files.readAllBytes(path)), CHARSET);
+			return new String(decrypt(Files.readAllBytes(path)),
+				StandardCharsets.UTF_8);
 			
 		}catch(ReportedException e)
 		{
@@ -180,7 +182,7 @@ public final class Encryption
 	
 	public JsonElement parseFile(Path path) throws IOException, JsonException
 	{
-		try(BufferedReader reader = Files.newBufferedReader(path))
+		try
 		{
 			return JsonParser.parseString(loadEncryptedFile(path));
 			
@@ -229,7 +231,7 @@ public final class Encryption
 	{
 		try
 		{
-			Files.write(path, encrypt(content.getBytes(CHARSET)));
+			Files.write(path, encrypt(content.getBytes(StandardCharsets.UTF_8)));
 			
 		}catch(ReportedException e)
 		{
