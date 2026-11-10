@@ -7,8 +7,6 @@
  */
 package net.wurstclient.hacks;
 
-import java.awt.Color;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.core.BlockPos;
@@ -22,7 +20,6 @@ import net.wurstclient.events.RightClickListener;
 import net.wurstclient.events.UpdateListener;
 import net.wurstclient.hack.Hack;
 import net.wurstclient.settings.CheckboxSetting;
-import net.wurstclient.settings.ColorSetting;
 import net.wurstclient.settings.SliderSetting;
 import net.wurstclient.settings.SliderSetting.ValueDisplay;
 import net.wurstclient.util.InteractionSimulator;
@@ -32,14 +29,13 @@ import net.wurstclient.util.RenderUtils;
 public final class AirPlaceHack extends Hack
 	implements RightClickListener, UpdateListener, RenderListener
 {
+	private static final int COLOR = 0xA273A6;
+	
 	private final SliderSetting range =
 		new SliderSetting("Range", 5, 1, 6, 0.05, ValueDisplay.DECIMAL);
 	
 	private final CheckboxSetting guide = new CheckboxSetting("Guide",
 		"description.wurst.setting.airplace.guide", true);
-	
-	private final ColorSetting guideColor = new ColorSetting("Guide color",
-		"description.wurst.setting.airplace.guide_color", Color.RED);
 	
 	private BlockPos renderPos;
 	
@@ -49,7 +45,6 @@ public final class AirPlaceHack extends Hack
 		setCategory(Category.BLOCKS);
 		addSetting(range);
 		addSetting(guide);
-		addSetting(guideColor);
 	}
 	
 	@Override
@@ -124,10 +119,10 @@ public final class AirPlaceHack extends Hack
 		
 		AABB box = new AABB(renderPos);
 		
-		int quadColor = guideColor.getColorI(0x1A);
+		int quadColor = (0x1A << 24) | COLOR;
 		RenderUtils.drawSolidBox(matrixStack, box, quadColor, false);
 		
-		int lineColor = guideColor.getColorI(0xC0);
+		int lineColor = (0xC0 << 24) | COLOR;
 		RenderUtils.drawOutlinedBox(matrixStack, box, lineColor, false);
 	}
 }

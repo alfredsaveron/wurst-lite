@@ -6,7 +6,6 @@
   "description.wurst.setting.aimassist.aim_while_blocking": "Keeps aiming at entities while you're blocking with a shield or using items.",
   "description.wurst.hack.airplace": "Allows you to place blocks in mid-air.",
   "description.wurst.setting.airplace.guide": "Shows a guide for where blocks will be placed.",
-  "description.wurst.setting.airplace.guide_color": "Color of the block placing guide, if enabled.",
   "description.wurst.hack.anchoraura": "Automatically places (optional), charges, and detonates respawn anchors to kill entities around you.",
   "description.wurst.setting.anchoraura.range": "Determines how far AnchorAura will reach to place, charge and detonate anchors.",
   "description.wurst.setting.anchoraura.auto-place_anchors": "When enabled, AnchorAura will automatically place anchors near valid entities.\nWhen disabled, AnchorAura will only charge and detonate manually placed anchors.",
