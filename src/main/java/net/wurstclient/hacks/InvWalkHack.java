@@ -17,7 +17,6 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.wurstclient.Category;
 import net.wurstclient.SearchTags;
 import net.wurstclient.clickgui.screens.ClickGuiScreen;
 import net.wurstclient.events.UpdateListener;
@@ -49,7 +48,6 @@ public final class InvWalkHack extends Hack implements UpdateListener
 	public InvWalkHack()
 	{
 		super("InvWalk");
-		setCategory(Category.MOVEMENT);
 		addSetting(allowClickGUI);
 		addSetting(allowOther);
 		addSetting(allowSneak);
