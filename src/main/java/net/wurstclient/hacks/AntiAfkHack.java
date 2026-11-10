@@ -33,15 +33,18 @@ import net.wurstclient.settings.SliderSetting.ValueDisplay;
 public final class AntiAfkHack extends Hack
 	implements UpdateListener, RenderListener
 {
+	private static final String[] CHAT_MESSAGES =
+		{"lag?", "yo", "lag", "wb", "?", "hey"};
+	
 	private final CheckboxSetting useAi = new CheckboxSetting("Use AI",
 		"description.wurst.setting.antiafk.use_ai", true);
 	
 	private final SliderSetting aiRange = new SliderSetting("AI range",
-		"description.wurst.setting.antiafk.ai_range", 16, 1, 64, 1,
+		"description.wurst.setting.antiafk.ai_range", 6, 1, 64, 1,
 		ValueDisplay.AREA_FROM_RADIUS);
 	
 	private final SliderSetting nonAiRange = new SliderSetting("Non-AI range",
-		"description.wurst.setting.antiafk.non-ai_range", 1, 1, 64, 1,
+		"description.wurst.setting.antiafk.non-ai_range", 6, 1, 64, 1,
 		ValueDisplay.AREA_FROM_RADIUS);
 	
 	private final SliderSetting waitTime = new SliderSetting("Wait time",
@@ -57,7 +60,16 @@ public final class AntiAfkHack extends Hack
 		new CheckboxSetting("Show wait time",
 			"description.wurst.setting.antiafk.show_wait_time", true);
 	
+	private final CheckboxSetting sendChat = new CheckboxSetting(
+		"Send chat messages", "description.wurst.setting.antiafk.send_chat",
+		true);
+	
+	private final SliderSetting chatDelay = new SliderSetting("Chat delay",
+		"description.wurst.setting.antiafk.chat_delay", 60, 10, 300, 5,
+		ValueDisplay.DECIMAL.withSuffix("s"));
+	
 	private int timer;
+	private int chatTimer;
 	private RandomSource random = RandomSource.createNewThreadLocalInstance();
 	private BlockPos start;
 	private BlockPos nextBlock;
@@ -77,6 +89,8 @@ public final class AntiAfkHack extends Hack
 		addSetting(waitTime);
 		addSetting(waitTimeRand);
 		addSetting(showWaitTime);
+		addSetting(sendChat);
+		addSetting(chatDelay);
 	}
 	
 	@Override
@@ -96,6 +110,7 @@ public final class AntiAfkHack extends Hack
 		pathFinder =
 			new RandomPathFinder(randomize(start, aiRange.getValueI(), true));
 		creativeFlying = MC.player.getAbilities().flying;
+		setChatTimer();
 		
 		WURST.getHax().autoFishHack.setEnabled(false);
 		
@@ -111,11 +126,25 @@ public final class AntiAfkHack extends Hack
 		PathProcessor.releaseControls();
 		pathFinder = null;
 		processor = null;
+		chatTimer = 0;
 	}
 	
 	@Override
 	public void onUpdate()
 	{
+		if(sendChat.isChecked() && MC.getConnection() != null)
+		{
+			if(chatTimer > 0)
+				chatTimer--;
+			else
+			{
+				setChatTimer();
+				String message =
+					CHAT_MESSAGES[random.nextInt(CHAT_MESSAGES.length)];
+				MC.getConnection().sendChat(message);
+			}
+		}
+		
 		// check if player died
 		if(MC.player.getHealth() <= 0)
 		{
@@ -226,10 +255,19 @@ public final class AntiAfkHack extends Hack
 		timer = baseTime + randOffset;
 	}
 	
+	private void setChatTimer()
+	{
+		int base = (int)(chatDelay.getValue() * 20);
+		int jitter = (int)(base * 0.3);
+		chatTimer = base + random.nextInt(jitter * 2 + 1) - jitter;
+	}
+	
 	private BlockPos randomize(BlockPos pos, int range, boolean includeY)
 	{
 		int x = random.nextInt(2 * range + 1) - range;
-		int y = includeY ? random.nextInt(2 * range + 1) - range : 0;
+		int y = includeY
+			? Math.max(-1, Math.min(1, random.nextInt(2 * range + 1) - range))
+			: 0;
 		int z = random.nextInt(2 * range + 1) - range;
 		return pos.offset(x, y, z);
 	}

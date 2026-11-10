@@ -20,6 +20,8 @@
   "description.wurst.setting.antiafk.wait_time": "Time between movements in seconds.",
   "description.wurst.setting.antiafk.wait_time_randomization": "How much time can be randomly added or subtracted from the wait time, in seconds.",
   "description.wurst.setting.antiafk.show_wait_time": "Displays the remaining wait time in the HackList.",
+  "description.wurst.setting.antiafk.send_chat": "Occasionally sends casual messages to chat so you look active.",
+  "description.wurst.setting.antiafk.chat_delay": "Average time between sending chat messages.",
   "description.wurst.hack.antiblind": "Prevents blindness and darkness effects.\nIncompatible with OptiFine.",
   "description.wurst.hack.anticactus": "Protects you from cactus damage.",
   "description.wurst.hack.antientitypush": "Prevents you from getting pushed by players and mobs.",
