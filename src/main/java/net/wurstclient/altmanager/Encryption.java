@@ -1,10 +1,3 @@
-/*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
- *
- * This source code is subject to the terms of the GNU General Public
- * License, version 3. If a copy of the GPL was not distributed with this
- * file, You can obtain one at: https://www.gnu.org/licenses/gpl-3.0.txt
- */
 package net.wurstclient.altmanager;
 
 import java.io.File;
@@ -297,14 +290,12 @@ public final class Encryption
 		{
 			System.out.println("Generating RSA keypair.");
 			
-			// generate keypair
 			KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
 			generator.initialize(1024);
 			KeyPair pair = generator.generateKeyPair();
 			
 			KeyFactory factory = KeyFactory.getInstance("RSA");
 			
-			// save public key
 			try(ObjectOutputStream out =
 				new ObjectOutputStream(Files.newOutputStream(publicFile)))
 			{
@@ -315,7 +306,6 @@ public final class Encryption
 				out.writeObject(keySpec.getPublicExponent());
 			}
 			
-			// save private key
 			try(ObjectOutputStream out =
 				new ObjectOutputStream(Files.newOutputStream(privateFile)))
 			{
@@ -341,12 +331,10 @@ public final class Encryption
 		{
 			System.out.println("Generating AES key.");
 			
-			// generate key
 			KeyGenerator keygen = KeyGenerator.getInstance("AES");
 			keygen.init(128);
 			SecretKey key = keygen.generateKey();
 			
-			// save key
 			Cipher rsaCipher = Cipher.getInstance("RSA");
 			rsaCipher.init(Cipher.ENCRYPT_MODE, pair.getPublic());
 			Files.write(path, rsaCipher.doFinal(key.getEncoded()));
@@ -366,7 +354,6 @@ public final class Encryption
 	{
 		KeyFactory factory = KeyFactory.getInstance("RSA");
 		
-		// load public key
 		PublicKey publicKey;
 		try(ObjectInputStream in =
 			new ObjectInputStream(Files.newInputStream(publicFile)))
@@ -375,7 +362,6 @@ public final class Encryption
 				(BigInteger)in.readObject(), (BigInteger)in.readObject()));
 		}
 		
-		// load private key
 		PrivateKey privateKey;
 		try(ObjectInputStream in =
 			new ObjectInputStream(Files.newInputStream(privateFile)))
