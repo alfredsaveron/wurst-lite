@@ -36,10 +36,6 @@ public abstract class TitleScreenMixin extends Screen
 		super(title);
 	}
 	
-	/**
-	 * Adds the AltManager button to the title screen. This mixin must not
-	 * run in demo mode, as the Realms button doesn't exist there.
-	 */
 	@Inject(at = @At("RETURN"), method = "createNormalMenuOptions(II)V")
 	private void onInitWidgetsNormal(int y, int spacingY, CallbackInfo ci)
 	{
@@ -58,18 +54,41 @@ public abstract class TitleScreenMixin extends Screen
 		if(realmsButton == null)
 			throw new IllegalStateException("Couldn't find realms button!");
 		
-		realmsButton.visible = false;
+		int finderY = realmsButton.getY();
+		int realmsY = finderY + spacingY;
 		
 		addRenderableWidget(serverFinderButton = Button
 			.builder(Component.literal("Server Finder"),
 				b -> minecraft.setScreen(new ServerFinderScreen(this)))
-			.bounds(width / 2 - 100, realmsButton.getY(), 98, 20).build());
+			.bounds(width / 2 - 100, finderY, 200, 20).build());
+		
+		realmsButton.setY(realmsY);
+		realmsButton.setWidth(98);
+		realmsButton.visible = true;
 		
 		addRenderableWidget(altsButton = Button
 			.builder(Component.literal("Alt Manager"),
 				b -> minecraft.setScreen(new AltManagerScreen(this,
 					WurstClient.INSTANCE.getAltManager())))
-			.bounds(width / 2 + 2, realmsButton.getY(), 98, 20).build());
+			.bounds(width / 2 + 2, realmsY, 98, 20).build());
+	}
+	
+	@Inject(at = @At("RETURN"), method = "init()V")
+	private void onInit(CallbackInfo ci)
+	{
+		if(!WurstClient.INSTANCE.isEnabled() || realmsButton == null)
+			return;
+		
+		int threshold = realmsButton.getY();
+		for(AbstractWidget button : Screens.getButtons(this))
+		{
+			if(button == realmsButton || button == altsButton
+				|| button == serverFinderButton)
+				continue;
+			
+			if(button.getY() >= threshold - 12)
+				button.setY(button.getY() + 24);
+		}
 	}
 	
 	@Inject(at = @At("RETURN"), method = "tick()V")
@@ -78,16 +97,10 @@ public abstract class TitleScreenMixin extends Screen
 		if(realmsButton == null)
 			return;
 		
-		if(serverFinderButton != null)
-			serverFinderButton.setY(realmsButton.getY());
 		if(altsButton != null)
 			altsButton.setY(realmsButton.getY());
 	}
 	
-	/**
-	 * Stops the multiplayer button being grayed out if the user's Microsoft
-	 * account is parental-control'd or banned from online play.
-	 */
 	@Inject(at = @At("HEAD"),
 		method = "getMultiplayerDisabledReason()Lnet/minecraft/network/chat/Component;",
 		cancellable = true)

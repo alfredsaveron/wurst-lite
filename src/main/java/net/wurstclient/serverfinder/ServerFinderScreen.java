@@ -7,15 +7,27 @@
  */
 package net.wurstclient.serverfinder;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.lwjgl.glfw.GLFW;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -28,7 +40,6 @@ import net.minecraft.client.gui.screens.ConnectScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.ServerList;
-import net.minecraft.client.multiplayer.ServerStatusPinger;
 import net.minecraft.client.multiplayer.resolver.ServerAddress;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.StringUtil;
@@ -44,9 +55,9 @@ public final class ServerFinderScreen extends Screen
 	private Button addButton;
 	private ServerFinderList listGui;
 	
-	private final ServerStatusPinger pinger = new ServerStatusPinger();
 	private final List<String> queue = new ArrayList<>();
-	private final Set<String> activeAddresses = new HashSet<>();
+	private final AtomicInteger activeThreads = new AtomicInteger();
+	private ExecutorService executor;
 	private boolean searching = false;
 	private int scannedCount = 0;
 	
@@ -106,10 +117,7 @@ public final class ServerFinderScreen extends Screen
 	{
 		if(searching)
 		{
-			searching = false;
-			pinger.removeAll();
-			activeAddresses.clear();
-			searchButton.setMessage(Component.literal("Find"));
+			stopSearch();
 			return;
 		}
 		
@@ -117,56 +125,204 @@ public final class ServerFinderScreen extends Screen
 		searchButton.setMessage(Component.literal("Stop"));
 		listGui.clearEntries();
 		queue.clear();
-		activeAddresses.clear();
 		queue.addAll(Arrays.asList(ServerPool.SERVERS));
 		Collections.shuffle(queue);
 		scannedCount = 0;
+		executor = Executors.newFixedThreadPool(8);
 		pumpQueue();
+	}
+	
+	private void stopSearch()
+	{
+		searching = false;
+		searchButton.setMessage(Component.literal("Find"));
+		if(executor != null)
+		{
+			executor.shutdownNow();
+			executor = null;
+		}
+		activeThreads.set(0);
 	}
 	
 	private void pumpQueue()
 	{
-		if(!searching)
+		if(!searching || executor == null || executor.isShutdown())
 			return;
 		
-		while(activeAddresses.size() < 12 && !queue.isEmpty())
+		while(activeThreads.get() < 8 && !queue.isEmpty())
 		{
 			String ip = queue.remove(0);
-			activeAddresses.add(ip);
-			scannedCount++;
-			ServerData server = new ServerData("", ip, ServerData.Type.OTHER);
+			activeThreads.incrementAndGet();
 			
-			try
-			{
-				pinger.pingServer(server, () -> onPingSuccess(server, ip),
-					() -> {});
-			}catch(Exception e)
-			{
-				activeAddresses.remove(ip);
-			}
-		}
-		
-		if(queue.isEmpty() && activeAddresses.isEmpty())
-		{
-			searching = false;
-			searchButton.setMessage(Component.literal("Find"));
+			executor.submit(() -> {
+				try
+				{
+					DiscoveredServer server = pingServer(ip, 2500);
+					minecraft.execute(() -> {
+						scannedCount++;
+						if(!searching)
+							return;
+						
+						if(server != null)
+						{
+							int min = parseNumber(minPlayersBox.getValue(), 0);
+							int max =
+								parseNumber(maxPlayersBox.getValue(), 9999);
+							if(server.online >= min && server.online <= max)
+								listGui.addServer(server);
+						}
+					});
+				}finally
+				{
+					activeThreads.decrementAndGet();
+					minecraft.execute(() -> {
+						if(searching)
+						{
+							if(queue.isEmpty() && activeThreads.get() == 0)
+								stopSearch();
+							else
+								pumpQueue();
+						}
+					});
+				}
+			});
 		}
 	}
 	
-	private void onPingSuccess(ServerData server, String ip)
+	private static DiscoveredServer pingServer(String address, int timeoutMs)
 	{
-		minecraft.execute(() -> {
-			activeAddresses.remove(ip);
-			if(server.players != null)
+		String host = address;
+		int port = 25565;
+		int colonIndex = address.indexOf(':');
+		if(colonIndex != -1)
+		{
+			host = address.substring(0, colonIndex);
+			try
 			{
-				int online = server.players.online();
-				int min = parseNumber(minPlayersBox.getValue(), 0);
-				int max = parseNumber(maxPlayersBox.getValue(), 9999);
-				if(online >= min && online <= max)
-					listGui.addServer(server);
+				port = Integer.parseInt(address.substring(colonIndex + 1));
+			}catch(NumberFormatException ignored)
+			{
 			}
-			pumpQueue();
-		});
+		}
+		
+		long start = System.currentTimeMillis();
+		try(Socket socket = new Socket())
+		{
+			socket.connect(new InetSocketAddress(host, port), timeoutMs);
+			socket.setSoTimeout(timeoutMs);
+			
+			DataOutputStream out =
+				new DataOutputStream(socket.getOutputStream());
+			DataInputStream in = new DataInputStream(socket.getInputStream());
+			
+			ByteArrayOutputStream handshakeBytes = new ByteArrayOutputStream();
+			DataOutputStream handshake = new DataOutputStream(handshakeBytes);
+			handshake.writeByte(0x00);
+			writeVarInt(handshake, 767);
+			writeString(handshake, host);
+			handshake.writeShort(port);
+			writeVarInt(handshake, 1);
+			
+			writeVarInt(out, handshakeBytes.size());
+			out.write(handshakeBytes.toByteArray());
+			
+			out.writeByte(0x01);
+			out.writeByte(0x00);
+			out.flush();
+			
+			readVarInt(in);
+			int packetId = readVarInt(in);
+			if(packetId != 0x00)
+				return null;
+			
+			String jsonString = readString(in);
+			long ping = System.currentTimeMillis() - start;
+			
+			JsonObject json =
+				JsonParser.parseString(jsonString).getAsJsonObject();
+			JsonObject players = json.getAsJsonObject("players");
+			int online = players.get("online").getAsInt();
+			int max = players.get("max").getAsInt();
+			
+			String motd = "";
+			if(json.has("description"))
+				motd = parseMotd(json.get("description"));
+			
+			return new DiscoveredServer(address, online, max, motd, ping);
+			
+		}catch(Throwable t)
+		{
+			return null;
+		}
+	}
+	
+	private static void writeVarInt(DataOutputStream out, int value)
+		throws IOException
+	{
+		while((value & 0xFFFFFF80) != 0L)
+		{
+			out.writeByte((value & 0x7F) | 0x80);
+			value >>>= 7;
+		}
+		out.writeByte(value & 0x7F);
+	}
+	
+	private static int readVarInt(DataInputStream in) throws IOException
+	{
+		int value = 0;
+		int position = 0;
+		byte currentByte;
+		while(true)
+		{
+			currentByte = in.readByte();
+			value |= (currentByte & 0x7F) << position;
+			if((currentByte & 0x80) == 0)
+				break;
+			position += 7;
+			if(position >= 32)
+				throw new IOException("VarInt is too big");
+		}
+		return value;
+	}
+	
+	private static void writeString(DataOutputStream out, String string)
+		throws IOException
+	{
+		byte[] bytes = string.getBytes(StandardCharsets.UTF_8);
+		writeVarInt(out, bytes.length);
+		out.write(bytes);
+	}
+	
+	private static String readString(DataInputStream in) throws IOException
+	{
+		int length = readVarInt(in);
+		if(length < 0 || length > 262144)
+			throw new IOException("String too long: " + length);
+		byte[] bytes = new byte[length];
+		in.readFully(bytes);
+		return new String(bytes, StandardCharsets.UTF_8);
+	}
+	
+	private static String parseMotd(JsonElement element)
+	{
+		if(element == null)
+			return "";
+		if(element.isJsonPrimitive())
+			return element.getAsString();
+		if(element.isJsonObject())
+		{
+			JsonObject obj = element.getAsJsonObject();
+			StringBuilder sb = new StringBuilder();
+			if(obj.has("text"))
+				sb.append(obj.get("text").getAsString());
+			if(obj.has("extra") && obj.get("extra").isJsonArray())
+			{
+				for(JsonElement e : obj.getAsJsonArray("extra"))
+					sb.append(parseMotd(e));
+			}
+			return sb.toString();
+		}
+		return "";
 	}
 	
 	private int parseNumber(String text, int fallback)
@@ -186,9 +342,11 @@ public final class ServerFinderScreen extends Screen
 		if(selected == null)
 			return;
 		
-		ServerData server = selected.server;
+		DiscoveredServer server = selected.server;
+		ServerData serverData =
+			new ServerData(server.ip, server.ip, ServerData.Type.OTHER);
 		ConnectScreen.startConnecting(this, minecraft,
-			ServerAddress.parseString(server.ip), server, false, null);
+			ServerAddress.parseString(server.ip), serverData, false, null);
 	}
 	
 	private void addSelected()
@@ -197,16 +355,15 @@ public final class ServerFinderScreen extends Screen
 		if(selected == null)
 			return;
 		
-		ServerData server = selected.server;
+		DiscoveredServer server = selected.server;
 		ServerList serverList = new ServerList(minecraft);
 		serverList.load();
 		
 		if(serverList.get(server.ip) == null)
 		{
-			String name = server.name != null && !server.name.isEmpty()
-				? server.name : server.ip;
 			serverList.add(
-				new ServerData(name, server.ip, ServerData.Type.OTHER), false);
+				new ServerData(server.ip, server.ip, ServerData.Type.OTHER),
+				false);
 			serverList.save();
 			addButton.setMessage(Component.literal("Added!"));
 		}else
@@ -225,9 +382,6 @@ public final class ServerFinderScreen extends Screen
 	@Override
 	public void tick()
 	{
-		pinger.tick();
-		if(searching)
-			pumpQueue();
 		updateButtons();
 	}
 	
@@ -266,9 +420,27 @@ public final class ServerFinderScreen extends Screen
 	@Override
 	public void onClose()
 	{
-		searching = false;
-		pinger.removeAll();
+		stopSearch();
 		minecraft.setScreen(prevScreen);
+	}
+	
+	public static final class DiscoveredServer
+	{
+		public final String ip;
+		public final int online;
+		public final int max;
+		public final String motd;
+		public final long ping;
+		
+		public DiscoveredServer(String ip, int online, int max, String motd,
+			long ping)
+		{
+			this.ip = ip;
+			this.online = online;
+			this.max = max;
+			this.motd = motd;
+			this.ping = ping;
+		}
 	}
 	
 	public static final class ServerFinderList
@@ -282,7 +454,7 @@ public final class ServerFinderScreen extends Screen
 			this.screen = screen;
 		}
 		
-		public void addServer(ServerData server)
+		public void addServer(DiscoveredServer server)
 		{
 			for(Entry e : children())
 				if(e.server.ip.equalsIgnoreCase(server.ip))
@@ -298,11 +470,11 @@ public final class ServerFinderScreen extends Screen
 		
 		public static final class Entry extends ObjectSelectionList.Entry<Entry>
 		{
-			private final ServerData server;
+			public final DiscoveredServer server;
 			private final ServerFinderScreen screen;
 			private long lastClickTime;
 			
-			public Entry(ServerData server, ServerFinderScreen screen)
+			public Entry(DiscoveredServer server, ServerFinderScreen screen)
 			{
 				this.server = Objects.requireNonNull(server);
 				this.screen = screen;
@@ -340,21 +512,16 @@ public final class ServerFinderScreen extends Screen
 				String ip = server.ip;
 				context.drawString(font, ip, x + 4, y + 3, 0xFFFFFF);
 				
-				String playerCount = "";
-				if(server.players != null)
-					playerCount = server.players.online() + "/"
-						+ server.players.max() + " players";
-				
+				String playerCount =
+					server.online + "/" + server.max + " players";
 				int countWidth = font.width(playerCount);
 				context.drawString(font, playerCount,
 					x + entryWidth - countWidth - 6, y + 3, 0x55FF55);
 				
 				String motd = "";
 				if(server.motd != null)
-					motd = StringUtil.stripColor(server.motd.getString()).trim()
+					motd = StringUtil.stripColor(server.motd).trim()
 						.replaceAll("\\s+", " ");
-				if(motd.isEmpty() && server.version != null)
-					motd = server.version.getString();
 				if(motd.length() > 45)
 					motd = motd.substring(0, 42) + "...";
 				
