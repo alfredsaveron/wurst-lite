@@ -11,33 +11,42 @@ import net.wurstclient.Category;
 import net.wurstclient.SearchTags;
 import net.wurstclient.hack.DontSaveState;
 import net.wurstclient.hack.Hack;
+import net.wurstclient.settings.SignTextSetting;
 
 @SearchTags({"auto sign"})
 @DontSaveState
 public final class AutoSignHack extends Hack
 {
-	private String[] signText;
+	private final SignTextSetting signText = new SignTextSetting("Sign Text",
+		"Text to automatically write on signs.",
+		new String[]{"", "", "", ""});
 	
 	public AutoSignHack()
 	{
 		super("AutoSign");
 		setCategory(Category.BLOCKS);
-	}
-	
-	@Override
-	protected void onDisable()
-	{
-		signText = null;
+		addSetting(signText);
 	}
 	
 	public String[] getSignText()
 	{
-		return signText;
+		if(!isEnabled())
+			return null;
+		
+		if(signText.isEmpty())
+			return null;
+		
+		return signText.getLines();
 	}
 	
 	public void setSignText(String[] signText)
 	{
-		if(isEnabled() && this.signText == null)
-			this.signText = signText;
+		if(isEnabled() && this.signText.isEmpty())
+			this.signText.setLines(signText);
+	}
+	
+	public SignTextSetting getSignTextSetting()
+	{
+		return signText;
 	}
 }
