@@ -51,7 +51,8 @@ public final class EditSignTextScreen extends Screen
 		for(int i = 0; i < 4; i++)
 		{
 			int lineY = boardY + 16 + i * 16;
-			EditBox field = new EditBox(tr, boardX + 8, lineY, lineWidth, 14, Component.empty());
+			EditBox field = new EditBox(tr, boardX + 8, lineY, lineWidth, 14,
+				Component.empty());
 			field.setBordered(false);
 			field.setMaxLength(384);
 			field.setValue(setting.getLine(i));
@@ -73,8 +74,9 @@ public final class EditSignTextScreen extends Screen
 			.bounds(width / 2 - 32, buttonY, 64, 20).build();
 		addRenderableWidget(clearButton);
 		
-		cancelButton = Button.builder(Component.literal("Cancel"), b -> cancel())
-			.bounds(width / 2 + 38, buttonY, 68, 20).build();
+		cancelButton =
+			Button.builder(Component.literal("Cancel"), b -> cancel())
+				.bounds(width / 2 + 38, buttonY, 68, 20).build();
 		addRenderableWidget(cancelButton);
 	}
 	
@@ -118,16 +120,14 @@ public final class EditSignTextScreen extends Screen
 						setFocused(lineFields[i + 1]);
 						lineFields[i + 1].setFocused(true);
 						return true;
-					}
-					else
+					}else
 					{
 						done();
 						return true;
 					}
 				}
 			}
-		}
-		else if(keyCode == GLFW.GLFW_KEY_DOWN)
+		}else if(keyCode == GLFW.GLFW_KEY_DOWN)
 		{
 			for(int i = 0; i < 3; i++)
 			{
@@ -139,8 +139,7 @@ public final class EditSignTextScreen extends Screen
 					return true;
 				}
 			}
-		}
-		else if(keyCode == GLFW.GLFW_KEY_UP)
+		}else if(keyCode == GLFW.GLFW_KEY_UP)
 		{
 			for(int i = 1; i < 4; i++)
 			{
@@ -152,8 +151,7 @@ public final class EditSignTextScreen extends Screen
 					return true;
 				}
 			}
-		}
-		else if(keyCode == GLFW.GLFW_KEY_ESCAPE)
+		}else if(keyCode == GLFW.GLFW_KEY_ESCAPE)
 		{
 			cancel();
 			return true;
@@ -163,32 +161,44 @@ public final class EditSignTextScreen extends Screen
 	}
 	
 	@Override
-	public void render(GuiGraphics context, int mouseX, int mouseY, float partialTicks)
+	public void render(GuiGraphics context, int mouseX, int mouseY,
+		float partialTicks)
 	{
 		renderBackground(context, mouseX, mouseY, partialTicks);
 		
-		context.drawCenteredString(font, "Edit AutoSign Text", width / 2, boardY - 30, 0xFFFFFF);
-		context.drawCenteredString(font, "Text to write on signs automatically", width / 2, boardY - 18, 0xAAAAAA);
+		context.drawCenteredString(font, "Edit AutoSign Text", width / 2,
+			boardY - 30, 0xFFFFFF);
+		context.drawCenteredString(font, "Text to write on signs automatically",
+			width / 2, boardY - 18, 0xAAAAAA);
 		
 		int postWidth = 8;
 		int postHeight = 32;
 		int postX = (width - postWidth) / 2;
 		int postY = boardY + boardHeight;
-		context.fill(postX, postY, postX + postWidth, postY + postHeight, 0xFF5C3E1E);
+		context.fill(postX, postY, postX + postWidth, postY + postHeight,
+			0xFF5C3E1E);
 		
-		context.fill(boardX - 2, boardY - 2, boardX + boardWidth + 2, boardY + boardHeight + 2, 0xFF3D2813);
-		context.fill(boardX, boardY, boardX + boardWidth, boardY + boardHeight, 0xFF9E7342);
-		context.fill(boardX + 1, boardY + 1, boardX + boardWidth - 1, boardY + 2, 0xFFAF8453);
-		context.fill(boardX + 1, boardY + 1, boardX + 2, boardY + boardHeight - 1, 0xFFAF8453);
-		context.fill(boardX + 1, boardY + boardHeight - 2, boardX + boardWidth - 1, boardY + boardHeight - 1, 0xFF7D5528);
-		context.fill(boardX + boardWidth - 2, boardY + 1, boardX + boardWidth - 1, boardY + boardHeight - 1, 0xFF7D5528);
+		context.fill(boardX - 2, boardY - 2, boardX + boardWidth + 2,
+			boardY + boardHeight + 2, 0xFF3D2813);
+		context.fill(boardX, boardY, boardX + boardWidth, boardY + boardHeight,
+			0xFF9E7342);
+		context.fill(boardX + 1, boardY + 1, boardX + boardWidth - 1,
+			boardY + 2, 0xFFAF8453);
+		context.fill(boardX + 1, boardY + 1, boardX + 2,
+			boardY + boardHeight - 1, 0xFFAF8453);
+		context.fill(boardX + 1, boardY + boardHeight - 2,
+			boardX + boardWidth - 1, boardY + boardHeight - 1, 0xFF7D5528);
+		context.fill(boardX + boardWidth - 2, boardY + 1,
+			boardX + boardWidth - 1, boardY + boardHeight - 1, 0xFF7D5528);
 		
 		for(int i = 0; i < 4; i++)
 		{
 			int lineY = boardY + 16 + i * 16;
-			context.fill(boardX + 8, lineY + 13, boardX + boardWidth - 8, lineY + 14, 0x263D2813);
+			context.fill(boardX + 8, lineY + 13, boardX + boardWidth - 8,
+				lineY + 14, 0x263D2813);
 			if(lineFields[i].isFocused())
-				context.fill(boardX + 6, lineY - 1, boardX + boardWidth - 6, lineY + 14, 0x1AFFFFFF);
+				context.fill(boardX + 6, lineY - 1, boardX + boardWidth - 6,
+					lineY + 14, 0x1AFFFFFF);
 		}
 		
 		super.render(context, mouseX, mouseY, partialTicks);

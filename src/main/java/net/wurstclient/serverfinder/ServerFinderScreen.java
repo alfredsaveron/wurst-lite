@@ -61,34 +61,42 @@ public final class ServerFinderScreen extends Screen
 	{
 		Font font = minecraft.font;
 		
-		minPlayersBox = new EditBox(font, width / 2 - 110, 36, 40, 18, Component.empty());
+		minPlayersBox =
+			new EditBox(font, width / 2 - 110, 36, 40, 18, Component.empty());
 		minPlayersBox.setValue("5");
 		minPlayersBox.setMaxLength(5);
 		addWidget(minPlayersBox);
 		
-		maxPlayersBox = new EditBox(font, width / 2 - 20, 36, 40, 18, Component.empty());
+		maxPlayersBox =
+			new EditBox(font, width / 2 - 20, 36, 40, 18, Component.empty());
 		maxPlayersBox.setValue("25");
 		maxPlayersBox.setMaxLength(5);
 		addWidget(maxPlayersBox);
 		
-		searchButton = Button.builder(Component.literal(searching ? "Stop" : "Find"), b -> toggleSearch())
-			.bounds(width / 2 + 30, 35, 60, 20).build();
+		searchButton =
+			Button
+				.builder(Component.literal(searching ? "Stop" : "Find"),
+					b -> toggleSearch())
+				.bounds(width / 2 + 30, 35, 60, 20).build();
 		addRenderableWidget(searchButton);
 		
 		listGui = new ServerFinderList(minecraft, this);
 		addWidget(listGui);
 		
 		int buttonY = height - 28;
-		joinButton = Button.builder(Component.literal("Join Server"), b -> joinSelected())
+		joinButton = Button
+			.builder(Component.literal("Join Server"), b -> joinSelected())
 			.bounds(width / 2 - 154, buttonY, 100, 20).build();
 		addRenderableWidget(joinButton);
 		
-		addButton = Button.builder(Component.literal("Add to List"), b -> addSelected())
-			.bounds(width / 2 - 50, buttonY, 100, 20).build();
+		addButton =
+			Button.builder(Component.literal("Add to List"), b -> addSelected())
+				.bounds(width / 2 - 50, buttonY, 100, 20).build();
 		addRenderableWidget(addButton);
 		
-		Button backButton = Button.builder(Component.literal("Back"), b -> onClose())
-			.bounds(width / 2 + 54, buttonY, 100, 20).build();
+		Button backButton =
+			Button.builder(Component.literal("Back"), b -> onClose())
+				.bounds(width / 2 + 54, buttonY, 100, 20).build();
 		addRenderableWidget(backButton);
 		
 		updateButtons();
@@ -130,9 +138,9 @@ public final class ServerFinderScreen extends Screen
 			
 			try
 			{
-				pinger.pingServer(server, () -> onPingSuccess(server, ip), () -> {});
-			}
-			catch(Exception e)
+				pinger.pingServer(server, () -> onPingSuccess(server, ip),
+					() -> {});
+			}catch(Exception e)
 			{
 				activeAddresses.remove(ip);
 			}
@@ -166,8 +174,7 @@ public final class ServerFinderScreen extends Screen
 		try
 		{
 			return Integer.parseInt(text.trim());
-		}
-		catch(Exception e)
+		}catch(Exception e)
 		{
 			return fallback;
 		}
@@ -180,7 +187,8 @@ public final class ServerFinderScreen extends Screen
 			return;
 		
 		ServerData server = selected.server;
-		ConnectScreen.startConnecting(this, minecraft, ServerAddress.parseString(server.ip), server, false, null);
+		ConnectScreen.startConnecting(this, minecraft,
+			ServerAddress.parseString(server.ip), server, false, null);
 	}
 	
 	private void addSelected()
@@ -195,12 +203,13 @@ public final class ServerFinderScreen extends Screen
 		
 		if(serverList.get(server.ip) == null)
 		{
-			String name = server.name != null && !server.name.isEmpty() ? server.name : server.ip;
-			serverList.add(new ServerData(name, server.ip, ServerData.Type.OTHER), false);
+			String name = server.name != null && !server.name.isEmpty()
+				? server.name : server.ip;
+			serverList.add(
+				new ServerData(name, server.ip, ServerData.Type.OTHER), false);
 			serverList.save();
 			addButton.setMessage(Component.literal("Added!"));
-		}
-		else
+		}else
 		{
 			addButton.setMessage(Component.literal("Already in list"));
 		}
@@ -223,12 +232,14 @@ public final class ServerFinderScreen extends Screen
 	}
 	
 	@Override
-	public void render(GuiGraphics context, int mouseX, int mouseY, float partialTicks)
+	public void render(GuiGraphics context, int mouseX, int mouseY,
+		float partialTicks)
 	{
 		renderBackground(context, mouseX, mouseY, partialTicks);
 		listGui.render(context, mouseX, mouseY, partialTicks);
 		
-		context.drawCenteredString(font, "Server Finder", width / 2, 10, 0xFFFFFF);
+		context.drawCenteredString(font, "Server Finder", width / 2, 10,
+			0xFFFFFF);
 		
 		context.drawString(font, "Min:", width / 2 - 135, 41, 0xAAAAAA);
 		minPlayersBox.render(context, mouseX, mouseY, partialTicks);
@@ -238,13 +249,16 @@ public final class ServerFinderScreen extends Screen
 		
 		String status;
 		if(searching)
-			status = "Searching... (" + scannedCount + " checked, " + listGui.children().size() + " matches)";
+			status = "Searching... (" + scannedCount + " checked, "
+				+ listGui.children().size() + " matches)";
 		else if(listGui.children().isEmpty())
 			status = "Set player range and click Find.";
 		else
-			status = "Found " + listGui.children().size() + " matching servers.";
+			status =
+				"Found " + listGui.children().size() + " matching servers.";
 		
-		context.drawCenteredString(font, status, width / 2, 60, searching ? 0x55FF55 : 0xAAAAAA);
+		context.drawCenteredString(font, status, width / 2, 60,
+			searching ? 0x55FF55 : 0xAAAAAA);
 		
 		super.render(context, mouseX, mouseY, partialTicks);
 	}
@@ -257,7 +271,8 @@ public final class ServerFinderScreen extends Screen
 		minecraft.setScreen(prevScreen);
 	}
 	
-	public static final class ServerFinderList extends ObjectSelectionList<ServerFinderList.Entry>
+	public static final class ServerFinderList
+		extends ObjectSelectionList<ServerFinderList.Entry>
 	{
 		private final ServerFinderScreen screen;
 		
@@ -300,7 +315,8 @@ public final class ServerFinderScreen extends Screen
 			}
 			
 			@Override
-			public boolean mouseClicked(double mouseX, double mouseY, int button)
+			public boolean mouseClicked(double mouseX, double mouseY,
+				int button)
 			{
 				if(button != GLFW.GLFW_MOUSE_BUTTON_LEFT)
 					return false;
@@ -315,8 +331,9 @@ public final class ServerFinderScreen extends Screen
 			}
 			
 			@Override
-			public void render(GuiGraphics context, int index, int y, int x, int entryWidth,
-				int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta)
+			public void render(GuiGraphics context, int index, int y, int x,
+				int entryWidth, int entryHeight, int mouseX, int mouseY,
+				boolean hovered, float tickDelta)
 			{
 				Font font = Minecraft.getInstance().font;
 				
@@ -325,14 +342,17 @@ public final class ServerFinderScreen extends Screen
 				
 				String playerCount = "";
 				if(server.players != null)
-					playerCount = server.players.online() + "/" + server.players.max() + " players";
+					playerCount = server.players.online() + "/"
+						+ server.players.max() + " players";
 				
 				int countWidth = font.width(playerCount);
-				context.drawString(font, playerCount, x + entryWidth - countWidth - 6, y + 3, 0x55FF55);
+				context.drawString(font, playerCount,
+					x + entryWidth - countWidth - 6, y + 3, 0x55FF55);
 				
 				String motd = "";
 				if(server.motd != null)
-					motd = StringUtil.stripColor(server.motd.getString()).trim().replaceAll("\\s+", " ");
+					motd = StringUtil.stripColor(server.motd.getString()).trim()
+						.replaceAll("\\s+", " ");
 				if(motd.isEmpty() && server.version != null)
 					motd = server.version.getString();
 				if(motd.length() > 45)
@@ -342,9 +362,9 @@ public final class ServerFinderScreen extends Screen
 				
 				String pingText = server.ping > 0 ? server.ping + "ms" : "";
 				int pingWidth = font.width(pingText);
-				context.drawString(font, pingText, x + entryWidth - pingWidth - 6, y + 17, 0xAAAAAA);
+				context.drawString(font, pingText,
+					x + entryWidth - pingWidth - 6, y + 17, 0xAAAAAA);
 			}
 		}
 	}
 }
-

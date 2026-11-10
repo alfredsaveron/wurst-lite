@@ -28,56 +28,60 @@ import net.wurstclient.settings.CheckboxSetting;
 import net.wurstclient.settings.SliderSetting;
 import net.wurstclient.settings.SliderSetting.ValueDisplay;
 
-@SearchTags({ "anti afk", "afk", "AFKBot", "afk bot", "away" })
+@SearchTags({"anti afk", "afk", "AFKBot", "afk bot", "away"})
 @DontSaveState
 public final class AntiAfkHack extends Hack
-		implements UpdateListener, RenderListener {
-	private static final String[] CHAT_MESSAGES = { "lag?", "yo", "lag", "wb", "?", "hey" };
-
+	implements UpdateListener, RenderListener
+{
+	private static final String[] CHAT_MESSAGES =
+		{"lag?", "yo", "lag", "wb", "?", "hey"};
+	
 	private final CheckboxSetting useAi = new CheckboxSetting("Use AI",
-			"description.wurst.setting.antiafk.use_ai", true);
-
+		"description.wurst.setting.antiafk.use_ai", true);
+	
 	private final SliderSetting aiRange = new SliderSetting("AI range",
-			"description.wurst.setting.antiafk.ai_range", 6, 1, 64, 1,
-			ValueDisplay.AREA_FROM_RADIUS);
-
+		"description.wurst.setting.antiafk.ai_range", 6, 1, 64, 1,
+		ValueDisplay.AREA_FROM_RADIUS);
+	
 	private final SliderSetting nonAiRange = new SliderSetting("Non-AI range",
-			"description.wurst.setting.antiafk.non-ai_range", 6, 1, 64, 1,
-			ValueDisplay.AREA_FROM_RADIUS);
-
+		"description.wurst.setting.antiafk.non-ai_range", 6, 1, 64, 1,
+		ValueDisplay.AREA_FROM_RADIUS);
+	
 	private final SliderSetting waitTime = new SliderSetting("Wait time",
-			"description.wurst.setting.antiafk.wait_time", 2.5, 0, 60, 0.05,
-			ValueDisplay.DECIMAL.withSuffix("s"));
-
+		"description.wurst.setting.antiafk.wait_time", 2.5, 0, 60, 0.05,
+		ValueDisplay.DECIMAL.withSuffix("s"));
+	
 	private final SliderSetting waitTimeRand = new SliderSetting(
-			"Wait time randomization",
-			"description.wurst.setting.antiafk.wait_time_randomization", 0.5, 0, 60,
-			0.05, ValueDisplay.DECIMAL.withPrefix("\u00b1").withSuffix("s"));
-
-	private final CheckboxSetting showWaitTime = new CheckboxSetting("Show wait time",
+		"Wait time randomization",
+		"description.wurst.setting.antiafk.wait_time_randomization", 0.5, 0, 60,
+		0.05, ValueDisplay.DECIMAL.withPrefix("\u00b1").withSuffix("s"));
+	
+	private final CheckboxSetting showWaitTime =
+		new CheckboxSetting("Show wait time",
 			"description.wurst.setting.antiafk.show_wait_time", true);
-
-	private final CheckboxSetting sendChat = new CheckboxSetting(
-			"Send chat messages", "description.wurst.setting.antiafk.send_chat",
-			true);
-
+	
+	private final CheckboxSetting sendChat =
+		new CheckboxSetting("Send chat messages",
+			"description.wurst.setting.antiafk.send_chat", true);
+	
 	private final SliderSetting chatDelay = new SliderSetting("Chat delay",
-			"description.wurst.setting.antiafk.chat_delay", 60, 10, 300, 5,
-			ValueDisplay.DECIMAL.withSuffix("s"));
-
+		"description.wurst.setting.antiafk.chat_delay", 60, 10, 300, 5,
+		ValueDisplay.DECIMAL.withSuffix("s"));
+	
 	private int timer;
 	private int chatTimer;
 	private RandomSource random = RandomSource.createNewThreadLocalInstance();
 	private BlockPos start;
 	private BlockPos nextBlock;
-
+	
 	private RandomPathFinder pathFinder;
 	private PathProcessor processor;
 	private boolean creativeFlying;
-
-	public AntiAfkHack() {
+	
+	public AntiAfkHack()
+	{
 		super("AntiAFK");
-
+		
 		setCategory(Category.OTHER);
 		addSetting(useAi);
 		addSetting(aiRange);
@@ -88,31 +92,35 @@ public final class AntiAfkHack extends Hack
 		addSetting(sendChat);
 		addSetting(chatDelay);
 	}
-
+	
 	@Override
-	public String getRenderName() {
-		if (showWaitTime.isChecked() && timer > 0)
+	public String getRenderName()
+	{
+		if(showWaitTime.isChecked() && timer > 0)
 			return getName() + " [" + timer * 50 + "ms]";
-
+		
 		return getName();
 	}
-
+	
 	@Override
-	protected void onEnable() {
+	protected void onEnable()
+	{
 		start = BlockPos.containing(MC.player.position());
 		nextBlock = null;
-		pathFinder = new RandomPathFinder(randomize(start, aiRange.getValueI(), true));
+		pathFinder =
+			new RandomPathFinder(randomize(start, aiRange.getValueI(), true));
 		creativeFlying = MC.player.getAbilities().flying;
 		setChatTimer();
-
+		
 		WURST.getHax().autoFishHack.setEnabled(false);
-
+		
 		EVENTS.add(UpdateListener.class, this);
 		EVENTS.add(RenderListener.class, this);
 	}
-
+	
 	@Override
-	protected void onDisable() {
+	protected void onDisable()
+	{
 		EVENTS.remove(UpdateListener.class, this);
 		EVENTS.remove(RenderListener.class, this);
 		PathProcessor.releaseControls();
@@ -120,149 +128,170 @@ public final class AntiAfkHack extends Hack
 		processor = null;
 		chatTimer = 0;
 	}
-
+	
 	@Override
-	public void onUpdate() {
-		if (sendChat.isChecked() && MC.getConnection() != null) {
-			if (chatTimer > 0)
+	public void onUpdate()
+	{
+		if(sendChat.isChecked() && MC.getConnection() != null)
+		{
+			if(chatTimer > 0)
 				chatTimer--;
-			else {
+			else
+			{
 				setChatTimer();
-				String message = CHAT_MESSAGES[random.nextInt(CHAT_MESSAGES.length)];
+				String message =
+					CHAT_MESSAGES[random.nextInt(CHAT_MESSAGES.length)];
 				MC.getConnection().sendChat(message);
 			}
 		}
-
+		
 		// check if player died
-		if (MC.player.getHealth() <= 0) {
+		if(MC.player.getHealth() <= 0)
+		{
 			setEnabled(false);
 			return;
 		}
-
+		
 		MC.player.getAbilities().flying = creativeFlying;
-
-		if (useAi.isChecked()) {
+		
+		if(useAi.isChecked())
+		{
 			// prevent drowning
-			if (MC.player.isUnderWater()
-					&& !WURST.getHax().jesusHack.isEnabled()) {
+			if(MC.player.isUnderWater()
+				&& !WURST.getHax().jesusHack.isEnabled())
+			{
 				MC.options.keyJump.setDown(true);
 				return;
 			}
-
+			
 			// update timer
-			if (timer > 0) {
+			if(timer > 0)
+			{
 				timer--;
 				return;
 			}
-
+			
 			// find path
-			if (!pathFinder.isDone() && !pathFinder.isFailed()) {
+			if(!pathFinder.isDone() && !pathFinder.isFailed())
+			{
 				PathProcessor.lockControls();
-
+				
 				pathFinder.think();
-
-				if (!pathFinder.isDone() && !pathFinder.isFailed())
+				
+				if(!pathFinder.isDone() && !pathFinder.isFailed())
 					return;
-
+				
 				pathFinder.formatPath();
-
+				
 				// set processor
 				processor = pathFinder.getProcessor();
 			}
-
+			
 			// check path
-			if (processor != null
-					&& !pathFinder.isPathStillValid(processor.getIndex())
-					|| processor.getTicksOffPath() > 20) {
+			if(processor != null
+				&& !pathFinder.isPathStillValid(processor.getIndex())
+				|| processor.getTicksOffPath() > 20)
+			{
 				pathFinder = new RandomPathFinder(pathFinder);
 				return;
 			}
-
+			
 			// process path
-			if (!processor.isDone())
+			if(!processor.isDone())
 				processor.process();
-			else {
+			else
+			{
 				// reset and wait for timer
 				PathProcessor.releaseControls();
 				pathFinder = new RandomPathFinder(
-						randomize(start, aiRange.getValueI(), true));
+					randomize(start, aiRange.getValueI(), true));
 				setTimer();
 			}
-		} else {
+		}else
+		{
 			// set next block
-			if (timer <= 0 || nextBlock == null) {
+			if(timer <= 0 || nextBlock == null)
+			{
 				nextBlock = randomize(start, nonAiRange.getValueI(), false);
 				setTimer();
 			}
-
+			
 			// face block
 			WURST.getRotationFaker()
-					.faceVectorClientIgnorePitch(Vec3.atCenterOf(nextBlock));
-
+				.faceVectorClientIgnorePitch(Vec3.atCenterOf(nextBlock));
+			
 			// walk
-			if (MC.player.distanceToSqr(Vec3.atCenterOf(nextBlock)) > 0.5)
+			if(MC.player.distanceToSqr(Vec3.atCenterOf(nextBlock)) > 0.5)
 				MC.options.keyUp.setDown(true);
 			else
 				MC.options.keyUp.setDown(false);
-
+			
 			// swim up
 			MC.options.keyJump.setDown(MC.player.isInWater());
-
+			
 			// update timer
-			if (timer > 0)
+			if(timer > 0)
 				timer--;
 		}
 	}
-
+	
 	@Override
-	public void onRender(PoseStack matrixStack, float partialTicks) {
-		if (!useAi.isChecked())
+	public void onRender(PoseStack matrixStack, float partialTicks)
+	{
+		if(!useAi.isChecked())
 			return;
-
+		
 		PathCmd pathCmd = WURST.getCmds().pathCmd;
 		pathFinder.renderPath(matrixStack, pathCmd.isDebugMode(),
-				pathCmd.isDepthTest());
+			pathCmd.isDepthTest());
 	}
-
-	private void setTimer() {
-		int baseTime = (int) (waitTime.getValue() * 20);
+	
+	private void setTimer()
+	{
+		int baseTime = (int)(waitTime.getValue() * 20);
 		double randTime = waitTimeRand.getValue() * 20;
-		int randOffset = (int) (random.nextGaussian() * randTime);
+		int randOffset = (int)(random.nextGaussian() * randTime);
 		randOffset = Math.max(randOffset, -baseTime);
 		timer = baseTime + randOffset;
 	}
-
-	private void setChatTimer() {
-		int base = (int) (chatDelay.getValue() * 20);
-		int jitter = (int) (base * 0.3);
+	
+	private void setChatTimer()
+	{
+		int base = (int)(chatDelay.getValue() * 20);
+		int jitter = (int)(base * 0.3);
 		chatTimer = base + random.nextInt(jitter * 2 + 1) - jitter;
 	}
-
-	private BlockPos randomize(BlockPos pos, int range, boolean includeY) {
+	
+	private BlockPos randomize(BlockPos pos, int range, boolean includeY)
+	{
 		int x = random.nextInt(2 * range + 1) - range;
 		int y = includeY
-				? Math.max(-1, Math.min(1, random.nextInt(2 * range + 1) - range))
-				: 0;
+			? Math.max(-1, Math.min(1, random.nextInt(2 * range + 1) - range))
+			: 0;
 		int z = random.nextInt(2 * range + 1) - range;
 		return pos.offset(x, y, z);
 	}
-
-	private class RandomPathFinder extends PathFinder {
-		public RandomPathFinder(BlockPos goal) {
+	
+	private class RandomPathFinder extends PathFinder
+	{
+		public RandomPathFinder(BlockPos goal)
+		{
 			super(goal);
 			setThinkTime(10);
 			setFallingAllowed(false);
 			setDivingAllowed(false);
 		}
-
-		public RandomPathFinder(PathFinder pathFinder) {
+		
+		public RandomPathFinder(PathFinder pathFinder)
+		{
 			super(pathFinder);
 			setFallingAllowed(false);
 			setDivingAllowed(false);
 		}
-
+		
 		@Override
-		public ArrayList<PathPos> formatPath() {
+		public ArrayList<PathPos> formatPath()
+		{
 			failed = true;
 			return super.formatPath();
 		}

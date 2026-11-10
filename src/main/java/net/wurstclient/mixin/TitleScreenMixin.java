@@ -77,7 +77,7 @@ public abstract class TitleScreenMixin extends Screen
 	{
 		if(realmsButton == null)
 			return;
-			
+		
 		if(serverFinderButton != null)
 			serverFinderButton.setY(realmsButton.getY());
 		if(altsButton != null)

@@ -231,7 +231,8 @@ public final class Encryption
 	{
 		try
 		{
-			Files.write(path, encrypt(content.getBytes(StandardCharsets.UTF_8)));
+			Files.write(path,
+				encrypt(content.getBytes(StandardCharsets.UTF_8)));
 			
 		}catch(ReportedException e)
 		{

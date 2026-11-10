@@ -42,4 +42,3 @@ public final class SignTextEditButton extends AbstractListEditButton
 		return setting;
 	}
 }
-

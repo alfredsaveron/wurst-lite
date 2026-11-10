@@ -18,8 +18,7 @@ import net.wurstclient.settings.SignTextSetting;
 public final class AutoSignHack extends Hack
 {
 	private final SignTextSetting signText = new SignTextSetting("Sign Text",
-		"Text to automatically write on signs.",
-		new String[]{"", "", "", ""});
+		"Text to automatically write on signs.", new String[]{"", "", "", ""});
 	
 	public AutoSignHack()
 	{

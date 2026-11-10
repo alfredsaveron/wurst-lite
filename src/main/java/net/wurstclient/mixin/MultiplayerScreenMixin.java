@@ -47,11 +47,10 @@ public class MultiplayerScreenMixin extends Screen
 					.bounds(width / 2 - 154, 10, 100, 20).build());
 		updateLastServerButton();
 		
-		addRenderableWidget(
-			Button
-				.builder(Component.literal("Server Finder"),
-					b -> minecraft.setScreen(new ServerFinderScreen(this)))
-				.bounds(width / 2 + 54, 10, 100, 20).build());
+		addRenderableWidget(Button
+			.builder(Component.literal("Server Finder"),
+				b -> minecraft.setScreen(new ServerFinderScreen(this)))
+			.bounds(width / 2 + 54, 10, 100, 20).build());
 	}
 	
 	@Inject(at = @At("HEAD"),

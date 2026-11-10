@@ -28,16 +28,19 @@ public final class SignTextSetting extends Setting
 	private final String[] lines = new String[]{"", "", "", ""};
 	private final String[] defaultLines;
 	
-	public SignTextSetting(String name, WText description, String[] defaultLines)
+	public SignTextSetting(String name, WText description,
+		String[] defaultLines)
 	{
 		super(name, description);
 		Objects.requireNonNull(defaultLines);
 		for(int i = 0; i < 4; i++)
-			lines[i] = i < defaultLines.length && defaultLines[i] != null ? defaultLines[i] : "";
+			lines[i] = i < defaultLines.length && defaultLines[i] != null
+				? defaultLines[i] : "";
 		this.defaultLines = lines.clone();
 	}
 	
-	public SignTextSetting(String name, String description, String[] defaultLines)
+	public SignTextSetting(String name, String description,
+		String[] defaultLines)
 	{
 		this(name, WText.literal(description), defaultLines);
 	}
@@ -67,7 +70,8 @@ public final class SignTextSetting extends Setting
 		if(newLines == null)
 			return;
 		for(int i = 0; i < 4; i++)
-			lines[i] = i < newLines.length && newLines[i] != null ? newLines[i] : "";
+			lines[i] =
+				i < newLines.length && newLines[i] != null ? newLines[i] : "";
 		WurstClient.INSTANCE.saveSettings();
 	}
 	
@@ -109,9 +113,9 @@ public final class SignTextSetting extends Setting
 			if(i < array.size())
 			{
 				JsonElement element = array.get(i);
-				lines[i] = element.isJsonPrimitive() ? element.getAsString() : "";
-			}
-			else
+				lines[i] =
+					element.isJsonPrimitive() ? element.getAsString() : "";
+			}else
 				lines[i] = "";
 		}
 	}
@@ -141,4 +145,3 @@ public final class SignTextSetting extends Setting
 		return Collections.emptySet();
 	}
 }
-
