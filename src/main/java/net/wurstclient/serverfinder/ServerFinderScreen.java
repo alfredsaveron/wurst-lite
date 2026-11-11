@@ -28,6 +28,7 @@ import org.lwjgl.glfw.GLFW;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -72,27 +73,27 @@ public final class ServerFinderScreen extends Screen
 	{
 		Font font = minecraft.font;
 		
+		listGui = new ServerFinderList(minecraft, this);
+		addWidget(listGui);
+		
 		minPlayersBox =
-			new EditBox(font, width / 2 - 110, 36, 40, 18, Component.empty());
+			new EditBox(font, width / 2 - 110, 25, 40, 18, Component.empty());
 		minPlayersBox.setValue("5");
 		minPlayersBox.setMaxLength(5);
 		addWidget(minPlayersBox);
 		
 		maxPlayersBox =
-			new EditBox(font, width / 2 - 20, 36, 40, 18, Component.empty());
+			new EditBox(font, width / 2 - 25, 25, 40, 18, Component.empty());
 		maxPlayersBox.setValue("25");
 		maxPlayersBox.setMaxLength(5);
 		addWidget(maxPlayersBox);
 		
 		searchButton =
 			Button
-				.builder(Component.literal(searching ? "Stop" : "Find"),
+				.builder(Component.literal(searching ? "Stop" : "Find Servers"),
 					b -> toggleSearch())
-				.bounds(width / 2 + 30, 35, 60, 20).build();
+				.bounds(width / 2 + 25, 24, 90, 20).build();
 		addRenderableWidget(searchButton);
-		
-		listGui = new ServerFinderList(minecraft, this);
-		addWidget(listGui);
 		
 		int buttonY = height - 28;
 		joinButton = Button
@@ -135,7 +136,7 @@ public final class ServerFinderScreen extends Screen
 	private void stopSearch()
 	{
 		searching = false;
-		searchButton.setMessage(Component.literal("Find"));
+		searchButton.setMessage(Component.literal("Find Servers"));
 		if(executor != null)
 		{
 			executor.shutdownNow();
@@ -201,8 +202,7 @@ public final class ServerFinderScreen extends Screen
 			{
 				port = Integer.parseInt(address.substring(colonIndex + 1));
 			}catch(NumberFormatException ignored)
-			{
-			}
+			{}
 		}
 		
 		long start = System.currentTimeMillis();
@@ -380,6 +380,41 @@ public final class ServerFinderScreen extends Screen
 	}
 	
 	@Override
+	public boolean mouseClicked(double mouseX, double mouseY, int button)
+	{
+		minPlayersBox.mouseClicked(mouseX, mouseY, button);
+		maxPlayersBox.mouseClicked(mouseX, mouseY, button);
+		return super.mouseClicked(mouseX, mouseY, button);
+	}
+	
+	@Override
+	public boolean keyPressed(int keyCode, int scanCode, int modifiers)
+	{
+		if(minPlayersBox.keyPressed(keyCode, scanCode, modifiers)
+			|| minPlayersBox.canConsumeInput())
+			return true;
+		if(maxPlayersBox.keyPressed(keyCode, scanCode, modifiers)
+			|| maxPlayersBox.canConsumeInput())
+			return true;
+		if(keyCode == GLFW.GLFW_KEY_ENTER)
+		{
+			toggleSearch();
+			return true;
+		}
+		return super.keyPressed(keyCode, scanCode, modifiers);
+	}
+	
+	@Override
+	public boolean charTyped(char chr, int modifiers)
+	{
+		if(minPlayersBox.charTyped(chr, modifiers))
+			return true;
+		if(maxPlayersBox.charTyped(chr, modifiers))
+			return true;
+		return super.charTyped(chr, modifiers);
+	}
+	
+	@Override
 	public void tick()
 	{
 		updateButtons();
@@ -390,15 +425,46 @@ public final class ServerFinderScreen extends Screen
 		float partialTicks)
 	{
 		renderBackground(context, mouseX, mouseY, partialTicks);
+		
+		context.fill(0, 64, width, height - 38, 0x88000000);
+		
 		listGui.render(context, mouseX, mouseY, partialTicks);
 		
-		context.drawCenteredString(font, "Server Finder", width / 2, 10,
+		if(listGui.children().isEmpty())
+		{
+			if(searching)
+			{
+				context.drawCenteredString(font, "Scanning servers...",
+					width / 2, height / 2 - 10, 0x55FF55);
+				context.drawCenteredString(font, "Matches will appear here.",
+					width / 2, height / 2 + 5, 0xAAAAAA);
+			}else
+			{
+				context.drawCenteredString(font, "No servers found yet.",
+					width / 2, height / 2 - 10, 0xFFFFFF);
+				context.drawCenteredString(font,
+					"Set player range above and click Find Servers.", width / 2,
+					height / 2 + 5, 0xAAAAAA);
+			}
+		}
+		
+		context.fill(0, 0, width, 64, 0xDD000000);
+		context.fill(0, 63, width, 64, 0x44FFFFFF);
+		
+		context.fill(0, height - 38, width, height, 0xDD000000);
+		context.fill(0, height - 38, width, height - 37, 0x44FFFFFF);
+		
+		PoseStack pose = context.pose();
+		pose.pushPose();
+		pose.translate(0, 0, 300);
+		
+		context.drawCenteredString(font, "Server Finder", width / 2, 8,
 			0xFFFFFF);
 		
-		context.drawString(font, "Min:", width / 2 - 135, 41, 0xAAAAAA);
+		context.drawString(font, "Min:", width / 2 - 135, 29, 0xCCCCCC);
 		minPlayersBox.render(context, mouseX, mouseY, partialTicks);
 		
-		context.drawString(font, "Max:", width / 2 - 45, 41, 0xAAAAAA);
+		context.drawString(font, "Max:", width / 2 - 50, 29, 0xCCCCCC);
 		maxPlayersBox.render(context, mouseX, mouseY, partialTicks);
 		
 		String status;
@@ -406,15 +472,17 @@ public final class ServerFinderScreen extends Screen
 			status = "Searching... (" + scannedCount + " checked, "
 				+ listGui.children().size() + " matches)";
 		else if(listGui.children().isEmpty())
-			status = "Set player range and click Find.";
+			status = "Ready to scan.";
 		else
 			status =
 				"Found " + listGui.children().size() + " matching servers.";
 		
-		context.drawCenteredString(font, status, width / 2, 60,
-			searching ? 0x55FF55 : 0xAAAAAA);
+		context.drawCenteredString(font, status, width / 2, 48,
+			searching ? 0x55FF55 : 0x888888);
 		
 		super.render(context, mouseX, mouseY, partialTicks);
+		
+		pose.popPose();
 	}
 	
 	@Override
@@ -450,7 +518,7 @@ public final class ServerFinderScreen extends Screen
 		
 		public ServerFinderList(Minecraft minecraft, ServerFinderScreen screen)
 		{
-			super(minecraft, screen.width, screen.height - 105, 74, 34);
+			super(minecraft, screen.width, screen.height - 102, 64, 36);
 			this.screen = screen;
 		}
 		
@@ -509,8 +577,12 @@ public final class ServerFinderScreen extends Screen
 			{
 				Font font = Minecraft.getInstance().font;
 				
+				context.fill(x - 2, y - 2, x + entryWidth + 2,
+					y + entryHeight - 2,
+					hovered ? 0x30FFFFFF : 0x15FFFFFF);
+				
 				String ip = server.ip;
-				context.drawString(font, ip, x + 4, y + 3, 0xFFFFFF);
+				context.drawString(font, ip, x + 4, y + 3, 0x55FFFF);
 				
 				String playerCount =
 					server.online + "/" + server.max + " players";
@@ -522,15 +594,17 @@ public final class ServerFinderScreen extends Screen
 				if(server.motd != null)
 					motd = StringUtil.stripColor(server.motd).trim()
 						.replaceAll("\\s+", " ");
-				if(motd.length() > 45)
-					motd = motd.substring(0, 42) + "...";
+				if(motd.length() > 50)
+					motd = motd.substring(0, 47) + "...";
 				
-				context.drawString(font, motd, x + 4, y + 17, 0x888888);
+				context.drawString(font, motd, x + 4, y + 17, 0xCCCCCC);
 				
 				String pingText = server.ping > 0 ? server.ping + "ms" : "";
 				int pingWidth = font.width(pingText);
+				int pingColor = server.ping < 100 ? 0x55FF55
+					: server.ping < 200 ? 0xFFFF55 : 0xFF5555;
 				context.drawString(font, pingText,
-					x + entryWidth - pingWidth - 6, y + 17, 0xAAAAAA);
+					x + entryWidth - pingWidth - 6, y + 17, pingColor);
 			}
 		}
 	}
