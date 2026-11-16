@@ -417,8 +417,9 @@ public final class ServerFinderScreen extends Screen
 		{
 			context.drawCenteredString(font, "Scanning server pool...",
 				width / 2, height / 2 - 10, 0xFFFFFF);
-			context.drawCenteredString(font, "Servers will appear here shortly.",
-				width / 2, height / 2 + 5, 0xAAAAAA);
+			context.drawCenteredString(font,
+				"Servers will appear here shortly.", width / 2, height / 2 + 5,
+				0xAAAAAA);
 		}
 		
 		super.render(context, mouseX, mouseY, partialTicks);

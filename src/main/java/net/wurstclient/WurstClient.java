@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import net.wurstclient.altmanager.AltManager;
 import net.wurstclient.altmanager.Encryption;
@@ -50,7 +51,7 @@ public enum WurstClient
 	public static Minecraft MC;
 	public static IMinecraftClient IMC;
 	
-	public static final String VERSION = "0.78";
+	public static final String VERSION = determineVersion();
 	public static final String MC_VERSION = "1.21.1";
 	
 	private PlausibleAnalytics plausible;
@@ -319,5 +320,22 @@ public enum WurstClient
 	public AltManager getAltManager()
 	{
 		return altManager;
+	}
+	
+	private static String determineVersion()
+	{
+		try
+		{
+			return FabricLoader.getInstance().getModContainer("wurst")
+				.map(c -> c.getMetadata().getVersion().getFriendlyString())
+				.filter(v -> !v.contains("${"))
+				.map(v -> v.startsWith("v") ? v.substring(1) : v)
+				.map(v -> v.contains("-MC") ? v.substring(0, v.indexOf("-MC"))
+					: v)
+				.orElse("0.80.216");
+		}catch(Throwable ignored)
+		{
+			return "0.80.216";
+		}
 	}
 }

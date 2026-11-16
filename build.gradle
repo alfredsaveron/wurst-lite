@@ -11,7 +11,20 @@ plugins {
 
 def ENV = System.getenv()
 
-version = project.mod_version
+def getGitCommitCount() {
+	try {
+		def count = providers.exec {
+			commandLine "git", "rev-list", "--count", "HEAD"
+		}.standardOutput.asText.get().trim()
+		return count.isInteger() ? count : "216"
+	} catch (Exception ignored) {
+		return "216"
+	}
+}
+
+def baseVersion = project.hasProperty("mod_base_version") ? project.mod_base_version : "0.80"
+def commitCount = getGitCommitCount()
+version = "v${baseVersion}.${commitCount}-MC${project.minecraft_version}"
 group = project.maven_group
 
 base {
