@@ -12,7 +12,9 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
 import com.mojang.authlib.GameProfile;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.resources.PlayerSkin;
@@ -40,17 +42,33 @@ public abstract class PlayerInfoMixin
 			if(WurstClient.INSTANCE.isEnabled()
 				&& WurstClient.INSTANCE.getHax() != null)
 			{
+				PlayerSkin current = cir.getReturnValue();
+				PlayerSkin stolenSkin =
+					WurstClient.INSTANCE.getHax().skinStealerHack
+						.getStolenSkin();
 				ResourceLocation stolenCape =
 					WurstClient.INSTANCE.getHax().capeStealerHack
 						.getStolenCape();
-				if(stolenCape != null)
+				
+				if(stolenSkin != null || stolenCape != null)
 				{
-					PlayerSkin original = cir.getReturnValue();
-					cir.setReturnValue(new PlayerSkin(original.texture(),
-						original.textureUrl(), stolenCape,
-						original.elytraTexture() != null
-							? original.elytraTexture() : stolenCape,
-						original.model(), original.secure()));
+					ResourceLocation skinTexture = stolenSkin != null
+						? stolenSkin.texture() : current.texture();
+					String skinUrl = stolenSkin != null
+						? stolenSkin.textureUrl() : current.textureUrl();
+					PlayerSkin.Model model = stolenSkin != null
+						? stolenSkin.model() : current.model();
+					
+					ResourceLocation capeTexture =
+						stolenCape != null ? stolenCape : current.capeTexture();
+					ResourceLocation elytraTexture = stolenCape != null
+						? (current.elytraTexture() != null
+							? current.elytraTexture() : stolenCape)
+						: current.elytraTexture();
+					
+					cir.setReturnValue(new PlayerSkin(skinTexture, skinUrl,
+						capeTexture, elytraTexture, model, stolenSkin != null
+							? stolenSkin.secure() : current.secure()));
 				}
 			}
 		}

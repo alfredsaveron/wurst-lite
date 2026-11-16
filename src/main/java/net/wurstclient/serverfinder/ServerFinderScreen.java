@@ -578,8 +578,7 @@ public final class ServerFinderScreen extends Screen
 				Font font = Minecraft.getInstance().font;
 				
 				context.fill(x - 2, y - 2, x + entryWidth + 2,
-					y + entryHeight - 2,
-					hovered ? 0x30FFFFFF : 0x15FFFFFF);
+					y + entryHeight - 2, hovered ? 0x30FFFFFF : 0x15FFFFFF);
 				
 				String ip = server.ip;
 				context.drawString(font, ip, x + 4, y + 3, 0x55FFFF);
