@@ -424,7 +424,7 @@ public final class ServerFinderScreen extends Screen
 	public void render(GuiGraphics context, int mouseX, int mouseY,
 		float partialTicks)
 	{
-		renderBackground(context, mouseX, mouseY, partialTicks);
+		renderMenuBackground(context);
 		
 		context.fill(0, 64, width, height - 38, 0x88000000);
 		
