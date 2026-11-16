@@ -22,14 +22,12 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.wurstclient.WurstClient;
 import net.wurstclient.altmanager.screens.AltManagerScreen;
-import net.wurstclient.serverfinder.ServerFinderScreen;
 
 @Mixin(TitleScreen.class)
 public abstract class TitleScreenMixin extends Screen
 {
 	private AbstractWidget realmsButton = null;
 	private Button altsButton;
-	private Button serverFinderButton;
 	
 	private TitleScreenMixin(WurstClient wurst, Component title)
 	{
@@ -54,51 +52,22 @@ public abstract class TitleScreenMixin extends Screen
 		if(realmsButton == null)
 			throw new IllegalStateException("Couldn't find realms button!");
 		
-		int finderY = realmsButton.getY();
-		int realmsY = finderY + spacingY;
-		
-		addRenderableWidget(serverFinderButton = Button
-			.builder(Component.literal("Server Finder"),
-				b -> minecraft.setScreen(new ServerFinderScreen(this)))
-			.bounds(width / 2 - 100, finderY, 200, 20).build());
-		
-		realmsButton.setY(realmsY);
 		realmsButton.setWidth(98);
-		realmsButton.visible = true;
 		
 		addRenderableWidget(altsButton = Button
 			.builder(Component.literal("Alt Manager"),
 				b -> minecraft.setScreen(new AltManagerScreen(this,
 					WurstClient.INSTANCE.getAltManager())))
-			.bounds(width / 2 + 2, realmsY, 98, 20).build());
-	}
-	
-	@Inject(at = @At("RETURN"), method = "init()V")
-	private void onInit(CallbackInfo ci)
-	{
-		if(!WurstClient.INSTANCE.isEnabled() || realmsButton == null)
-			return;
-		
-		int threshold = realmsButton.getY();
-		for(AbstractWidget button : Screens.getButtons(this))
-		{
-			if(button == realmsButton || button == altsButton
-				|| button == serverFinderButton)
-				continue;
-			
-			if(button.getY() >= threshold - 12)
-				button.setY(button.getY() + 24);
-		}
+			.bounds(width / 2 + 2, realmsButton.getY(), 98, 20).build());
 	}
 	
 	@Inject(at = @At("RETURN"), method = "tick()V")
 	private void onTick(CallbackInfo ci)
 	{
-		if(realmsButton == null)
+		if(realmsButton == null || altsButton == null)
 			return;
 		
-		if(altsButton != null)
-			altsButton.setY(realmsButton.getY());
+		altsButton.setY(realmsButton.getY());
 	}
 	
 	@Inject(at = @At("HEAD"),
